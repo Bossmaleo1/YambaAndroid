@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -36,8 +37,7 @@ fun HomeApp(
     val navBackStackEntry by navController2.currentBackStackEntryAsState()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     val listState = rememberLazyListState()
-    /*val currentRoute =
-        navBackStackEntry?.destination?.route ?: WazzabyDrawerDestinations.HOME_ROUTE*/
+
     var switch by rememberSaveable { mutableStateOf(true) }
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf(
@@ -53,7 +53,7 @@ fun HomeApp(
         )
     )
     Scaffold(topBar = {
-        //DrawerAppBar(scope, drawerState, "DiaspoPay",viewItem, context)
+
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
@@ -87,8 +87,9 @@ fun HomeApp(
                             expanded = expanded,
                             onDismissRequest = { expanded = false }
                         ) {
+
                             DropdownMenuItem(
-                                text = { Text("xxxx") },
+                                text = { Text("Profil") },
                                 onClick = { /* Handle edit! */ },
                                 leadingIcon = {
                                     Icon(
@@ -97,7 +98,7 @@ fun HomeApp(
                                     )
                                 })
                             DropdownMenuItem(
-                                text = { Text("xxxx") },
+                                text = { Text("Historique") },
                                 onClick = { /* Handle settings! */ },
                                 leadingIcon = {
                                     Icon(
@@ -105,6 +106,38 @@ fun HomeApp(
                                         contentDescription = null
                                     )
                                 })
+
+                            DropdownMenuItem(
+                                text = { Text("Paramètres") },
+                                onClick = { /* Handle send feedback! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.Settings,
+                                        contentDescription = null
+                                    )
+                                },
+                                trailingIcon = { Text("F11", textAlign = TextAlign.Center) })
+                            DropdownMenuItem(
+                                text = { Text("A propos") },
+                                onClick = { /* Handle settings! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.Help,
+                                        contentDescription = null
+                                    )
+                                })
+                            MenuDefaults.Divider()
+                            DropdownMenuItem(
+                                text = { Text("Déconnexion") },
+                                onClick = { /* Handle settings! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.PowerSettingsNew,
+                                        contentDescription = null
+                                    )
+                                })
+
+
                         }
                     },
                     scrollBehavior = scrollBehavior,
@@ -112,12 +145,19 @@ fun HomeApp(
                 )
             }) { innerPadding ->
 
-            if (switch) {
-                Column(Modifier.padding(top = 100.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)) {
+            Column(
+                Modifier.padding(
+                    top = 50.dp,
+                    bottom = 0.dp,
+                    start = 0.dp,
+                    end = 0.dp
+                )
+            ) {
+                if (switch) {
                     SearchView()
+                } else {
+                    AddAdView()
                 }
-            } else {
-                AddAdView()
             }
 
         }

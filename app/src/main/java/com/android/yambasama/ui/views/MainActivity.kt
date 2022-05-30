@@ -1,4 +1,4 @@
-package com.android.yambasama.ui
+package com.android.yambasama.ui.views
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -63,6 +63,10 @@ fun MainView(navController: NavHostController, context: Any) {
         }
 
         composable(route = Route.homeView) {
+            HomeApp(navController, scope, drawerState, context/*,  userViewModel*/)
+        }
+
+        composable(route = Route.announcement) {
             HomeApp(navController, scope, drawerState, context/*,  userViewModel*/)
         }
     }
