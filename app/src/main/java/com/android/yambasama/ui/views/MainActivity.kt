@@ -67,7 +67,7 @@ fun MainView(navController: NavHostController, context: Any) {
         }
 
         composable(route = Route.announcement) {
-            HomeApp(navController, scope, drawerState, context/*,  userViewModel*/)
+            SearchResult(navController, context)
         }
     }
 }

@@ -2,10 +2,8 @@ package com.android.yambasama.ui.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -35,7 +33,7 @@ fun HomeApp(
 ) {
     val navController2 = rememberNavController()
     val navBackStackEntry by navController2.currentBackStackEntryAsState()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val listState = rememberLazyListState()
 
     var switch by rememberSaveable { mutableStateOf(true) }
@@ -44,30 +42,28 @@ fun HomeApp(
         BottomNavigationItem(
             R.drawable.baseline_search_24,
             "Recherche",
-            Route.historyTabView
+            Route.searchTabView
         ),
         BottomNavigationItem(
             R.drawable.baseline_add_circle_black_24,
             "Ajouter une annonce",
-            Route.homeTabView
+            Route.announcementTabView
         )
     )
     Scaffold(topBar = {
-
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
-                SmallTopAppBar(
+                TopAppBar(
                     navigationIcon = {
 
                     },
                     actions = {
-
                         var expanded by remember { mutableStateOf(false) }
                         IconButton(onClick = { /* doSomething() */ }) {
                             BadgedBox(badge = { Badge { Text("8") } }) {
                                 Icon(
-                                    imageVector = Icons.Filled.Notifications,
+                                    imageVector = Icons.Outlined.Notifications,
                                     contentDescription = "Localized description"
                                 )
                             }
@@ -77,7 +73,7 @@ fun HomeApp(
                             expanded = true
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.MoreVert,
+                                imageVector = Icons.Outlined.MoreVert,
                                 contentDescription = "Localized description"
                             )
                         }
@@ -126,7 +122,6 @@ fun HomeApp(
                                         contentDescription = null
                                     )
                                 })
-                            MenuDefaults.Divider()
                             DropdownMenuItem(
                                 text = { Text("Déconnexion") },
                                 onClick = { /* Handle settings! */ },
@@ -154,7 +149,7 @@ fun HomeApp(
                 )
             ) {
                 if (switch) {
-                    SearchView()
+                    SearchView(navController)
                 } else {
                     AddAdView()
                 }
@@ -182,19 +177,7 @@ fun HomeApp(
                 }
             }
         }, floatingActionButton = {
-            /*if (switch) {
-                ExtendedFloatingActionButton(
-                    icon = { Icon(Icons.Filled.EuroSymbol, "") },
-                    text = {
-                        Text(
-                            text = "Envoyer de l'argent",
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    },
-                    onClick = {/*do something*/ },
-                    elevation = FloatingActionButtonDefaults.elevation(8.dp),
-                )
-            }*/
+
         }, content = { innerPadding -> })
 
 }

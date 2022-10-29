@@ -21,11 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.ui.views.model.Route
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchView() {
+fun SearchView(navController: NavHostController) {
     var departure by rememberSaveable { mutableStateOf("") }
     var destination by rememberSaveable { mutableStateOf("") }
     var travelDate by rememberSaveable { mutableStateOf("") }
@@ -99,7 +101,7 @@ fun SearchView() {
                 .width(280.dp)
                 .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
             onClick = {
-                //navController.navigate(Route.homeView)
+                navController.navigate(Route.announcement)
                 // Toast.makeText(context,"MALEO MALEO MALEO",Toast.LENGTH_LONG).show()
                 // Log.d("Test1", "Here");
             }) {

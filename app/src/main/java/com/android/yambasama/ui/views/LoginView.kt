@@ -6,11 +6,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.QuestionAnswer
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -114,14 +119,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             )
         }
 
-        Divider(
-            color = colorResource(R.color.Purple700),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(30.dp)
-        )
-
-        TextField(
+        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text(stringResource(id = R.string.your_email)) },
@@ -129,15 +127,16 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Filled.Email,
+                        imageVector = Icons.Outlined.Email,
                         contentDescription = "",
                         tint = colorResource(R.color.Purple700)
                     )
                 }
             },
+            shape = RoundedCornerShape(12.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text(stringResource(id = R.string.your_password)) },
@@ -147,7 +146,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Filled.Lock,
+                        imageVector = Icons.Outlined.Lock,
                         contentDescription = "",
                         tint = colorResource(R.color.Purple700)
                     )
@@ -164,7 +163,8 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             },
 
             modifier = Modifier
-                .padding(top = 30.dp)
+                .padding(top = 30.dp),
+            shape = RoundedCornerShape(12.dp)
         )
 
         Button(
@@ -179,7 +179,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             Text(stringResource(R.string.connexion), color = Color.White)
         }
 
-        Spacer(Modifier.size(20.dp))
+        Spacer(Modifier.size(10.dp))
 
         ClickableText(
             buildAnnotatedString {
@@ -202,14 +202,6 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             onClick = {
 
             })
-
-        Divider(
-            color = colorResource(R.color.Purple700),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        )
-
     }
 
     Column(
@@ -221,9 +213,14 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
     ) {
 
         Button(onClick = {  navController.navigate("inscription_step_first") }) {
-            Icon(
+            /*Icon(
                 painterResource(id = R.drawable.baseline_question_answer_24),
                 contentDescription = null,
+                tint = Color.White
+            )*/
+            Icon(
+                imageVector = Icons.Outlined.QuestionAnswer,
+                contentDescription = "Localized description",
                 tint = Color.White
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
