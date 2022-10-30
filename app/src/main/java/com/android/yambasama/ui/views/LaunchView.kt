@@ -33,6 +33,9 @@ fun LaunchView() {
             .padding(60.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "©Yamba 2022 version 1.0", style = MaterialTheme.typography.titleSmall )
+        Text(
+            text = "©Yamba 2022 version 1.0",
+            style = MaterialTheme.typography.titleSmall
+        )
     }
 }

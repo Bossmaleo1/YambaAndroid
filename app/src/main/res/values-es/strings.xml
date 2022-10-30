@@ -14,5 +14,6 @@
     <string name="talk">intervención</string>
     <string name="like">Me gusta</string>
     <string name="dislike">Disgusto</string>
+    <string name="open_account">Abrir una cuenta</string>
     <string name="new_message">Nuevo mensaje</string>
 </resources>

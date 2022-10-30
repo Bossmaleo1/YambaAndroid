@@ -4,13 +4,17 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Login
+import androidx.compose.material.icons.outlined.ManageAccounts
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +49,8 @@ import com.android.yambasama.ui.views.model.Route
 @Composable
 @ExperimentalMaterial3Api
 fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */context: Any) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("sidneymaleoregis@gmail.com") }
+    var password by rememberSaveable { mutableStateOf("Nfkol3324012020@!") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
     val isLoading = remember { mutableStateOf(false) }
 
@@ -100,45 +104,44 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
         verticalArrangement = Arrangement.Top
     ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo2),
-                contentDescription = "The Application Launcher",
-                modifier = Modifier
-                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
-                    .height(100.dp)
-                    .width(100.dp)
-            )
-        }
-
-        Divider(
-            color = colorResource(R.color.Purple700),
+        Text(
+            text = stringResource(R.string.app_name),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(30.dp)
+                .padding(top = 50.dp),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary,
+            fontSize = 40.sp
         )
 
-        TextField(
+        OutlinedTextField(
             value = email,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            ),
             onValueChange = { email = it },
             label = { Text(stringResource(id = R.string.your_email)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             placeholder = { Text("") },
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Filled.Email,
                         contentDescription = "",
-                        tint = colorResource(R.color.Purple700)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+            shape = RoundedCornerShape(12.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = password,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            ),
             onValueChange = { password = it },
             label = { Text(stringResource(id = R.string.your_password)) },
             visualTransformation =
@@ -149,7 +152,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
                     Icon(
                         imageVector = Icons.Filled.Lock,
                         contentDescription = "",
-                        tint = colorResource(R.color.Purple700)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             },
@@ -162,24 +165,11 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
                     Icon(painter = visibilityIcon, contentDescription = description)
                 }
             },
-
             modifier = Modifier
-                .padding(top = 30.dp)
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+            shape = RoundedCornerShape(12.dp)
         )
-
-        Button(
-            modifier = Modifier
-                .width(280.dp)
-                .padding(top = 30.dp),
-            onClick = {
-                navController.navigate(Route.homeView)
-                // Toast.makeText(context,"MALEO MALEO MALEO",Toast.LENGTH_LONG).show()
-                // Log.d("Test1", "Here");
-            }) {
-            Text(stringResource(R.string.connexion), color = Color.White)
-        }
-
-        Spacer(Modifier.size(20.dp))
 
         ClickableText(
             buildAnnotatedString {
@@ -189,47 +179,56 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
                 )
                 withStyle(
                     style = SpanStyle(
-                        color = colorResource(R.color.Purple700),
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
                         fontSize = 15.sp
                     )
                 ) {
-                    // append(stringResource(id = password_forget))
+                    append(stringResource(R.string.password_forget))
                 }
 
                 pop()
             },
             onClick = {
 
-            })
-
-        Divider(
-            color = colorResource(R.color.Purple700),
-            modifier = Modifier
+            }, modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp)
         )
 
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.End
-    ) {
-
-        Button(onClick = {  navController.navigate("inscription_step_first") }) {
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+            onClick = {
+                //viewModelLogin(userViewModel, email,password, context)
+            }) {
             Icon(
-                painterResource(id = R.drawable.baseline_question_answer_24),
+                imageVector = Icons.Outlined.Login,
                 contentDescription = null,
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(id = R.string.inscription), color = Color.White)
+            Text(stringResource(R.string.connexion))
         }
 
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+            onClick = {
+
+            }) {
+            Icon(
+                imageVector = Icons.Outlined.ManageAccounts,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Text(stringResource(R.string.open_account))
+        }
     }
 
 }
