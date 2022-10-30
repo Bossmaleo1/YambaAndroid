@@ -15,4 +15,5 @@
     <string name="like">Like</string>
     <string name="dislike">Dislike</string>
     <string name="new_message">New message</string>
+    <string name="open_account">Opening an account</string>
 </resources>

@@ -16,4 +16,5 @@
     <string name="like">нравится</string>
     <string name="dislike">не нравится</string>
     <string name="new_message">новое сообщение</string>
+    <string name="open_account">открытие счета</string>
 </resources>
