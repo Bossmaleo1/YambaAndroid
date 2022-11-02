@@ -17,4 +17,7 @@
     <string name="new_message">New message</string>
     <string name="open_account">Opening an account</string>
     <string name="re_search">Research</string>
+    <string name="departure">Departure</string>
+    <string name="destination">Destination</string>
+    <string name="travel_date">Travel Date</string>
 </resources>

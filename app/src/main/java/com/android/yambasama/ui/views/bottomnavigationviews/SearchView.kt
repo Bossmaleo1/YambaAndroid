@@ -1,17 +1,16 @@
 package com.android.yambasama.ui.views.bottomnavigationviews
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +26,7 @@ fun SearchView() {
     var departure by rememberSaveable { mutableStateOf("") }
     var destination by rememberSaveable { mutableStateOf("") }
     var travelDate by rememberSaveable { mutableStateOf("") }
+    var enabled by remember { mutableStateOf(true) }
 
     Column(
         modifier = Modifier
@@ -40,8 +40,9 @@ fun SearchView() {
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
             ),
             onValueChange = { departure = it },
-            label = { Text("Departure") },
+            label = { Text(stringResource(id = R.string.departure)) },
             placeholder = { Text("") },
+            enabled = false,
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
@@ -52,7 +53,10 @@ fun SearchView() {
                 }
             },
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)
+                .clickable {
+                    Log.d("MALEO", "MALEO IS THE GOD OF PROGRAMMING")
+                },
             shape = RoundedCornerShape(12.dp)
         )
 
@@ -62,8 +66,9 @@ fun SearchView() {
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
             ),
             onValueChange = { destination = it },
-            label = { Text("Destination") },
+            label = { Text(stringResource(id = R.string.destination)) },
             placeholder = { Text("") },
+            enabled = false,
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
@@ -74,7 +79,10 @@ fun SearchView() {
                 }
             },
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)
+                .clickable {
+                    Log.d("MALEO", "MALEO IS THE GOD OF PROGRAMMING")
+                },
             shape = RoundedCornerShape(12.dp)
         )
 
@@ -84,10 +92,13 @@ fun SearchView() {
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
             ),
             onValueChange = { travelDate = it },
-            label = { Text("Travel Date") },
+            label = { Text(stringResource(id = R.string.travel_date)) },
             placeholder = { Text("") },
+            enabled = false,
             leadingIcon = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+
+                }) {
                     Icon(
                         imageVector = Icons.Outlined.Today,
                         contentDescription = "",
@@ -96,7 +107,10 @@ fun SearchView() {
                 }
             },
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+                .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)
+                .clickable {
+                    Log.d("MALEO", "MALEO IS THE GOD OF PROGRAMMING")
+                },
             shape = RoundedCornerShape(12.dp)
         )
 
