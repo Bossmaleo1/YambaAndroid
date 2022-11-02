@@ -18,4 +18,8 @@
     <string name="new_message">новое сообщение</string>
     <string name="open_account">открытие счета</string>
     <string name="re_search">Исследовать</string>
+    <string name="departure">Вылет из</string>
+    <string name="destination">Назначения</string>
+    <string name="travel_date">Дата поездки</string>
+
 </resources>

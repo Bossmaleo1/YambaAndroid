@@ -18,5 +18,8 @@
     <string name="new_message">Nova mensagem</string>
     <string name="open_account">Abrindo uma conta</string>
     <string name="re_search">Pesquisar</string>
+    <string name="departure">Salida</string>
+    <string name="destination">Destination</string>
+    <string name="travel_date">Data de viagem</string>
 
 </resources>
