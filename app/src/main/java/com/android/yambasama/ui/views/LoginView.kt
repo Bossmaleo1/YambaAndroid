@@ -203,6 +203,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
             border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
             onClick = {
                 //viewModelLogin(userViewModel, email,password, context)
+                navController.navigate(Route.homeView)
             }) {
             Icon(
                 imageVector = Icons.Outlined.Login,

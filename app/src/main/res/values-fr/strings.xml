@@ -16,4 +16,5 @@
     <string name="dislike">Ne pas aimer</string>
     <string name="new_message">Nouveau message</string>
     <string name="open_account">Ouvrir un compte</string>
+    <string name="re_search">Rechercher</string>
 </resources>

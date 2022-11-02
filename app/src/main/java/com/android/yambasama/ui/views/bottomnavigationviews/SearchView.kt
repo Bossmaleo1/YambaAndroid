@@ -1,8 +1,11 @@
 package com.android.yambasama.ui.views.bottomnavigationviews
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,70 +34,89 @@ fun SearchView() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        TextField(
+        OutlinedTextField(
             value = departure,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            ),
             onValueChange = { departure = it },
             label = { Text("Departure") },
             placeholder = { Text("") },
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Filled.Email,
+                        imageVector = Icons.Outlined.FlightTakeoff,
                         contentDescription = "",
-                        tint = colorResource(R.color.Purple700)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             },
             modifier = Modifier
                 .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+            shape = RoundedCornerShape(12.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = destination,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            ),
             onValueChange = { destination = it },
             label = { Text("Destination") },
             placeholder = { Text("") },
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Filled.Email,
+                        imageVector = Icons.Outlined.FlightLand,
                         contentDescription = "",
-                        tint = colorResource(R.color.Purple700)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             },
             modifier = Modifier
                 .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+            shape = RoundedCornerShape(12.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = travelDate,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            ),
             onValueChange = { travelDate = it },
             label = { Text("Travel Date") },
             placeholder = { Text("") },
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Filled.Email,
+                        imageVector = Icons.Outlined.Today,
                         contentDescription = "",
-                        tint = colorResource(R.color.Purple700)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             },
             modifier = Modifier
                 .padding(top = 20.dp, bottom = 0.dp, start = 0.dp, end = 0.dp),
+            shape = RoundedCornerShape(12.dp)
         )
 
-        Button(
+        OutlinedButton(
             modifier = Modifier
                 .width(280.dp)
                 .padding(top = 30.dp),
+            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
             onClick = {
                 //navController.navigate(Route.homeView)
                 // Toast.makeText(context,"MALEO MALEO MALEO",Toast.LENGTH_LONG).show()
                 // Log.d("Test1", "Here");
             }) {
-            Text("RECHERCHER", color = Color.White)
+            Icon(
+                imageVector = Icons.Outlined.Search,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Text(stringResource(R.string.re_search))
         }
     }
 }
