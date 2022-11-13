@@ -42,13 +42,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.R.string.password_forget
+import com.android.yambasama.data.model.dataLocal.TokenRoom
+import com.android.yambasama.data.model.dataLocal.UserRoom
+import com.android.yambasama.data.model.dataRemote.User
+import com.android.yambasama.data.util.Resource
+import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import javax.inject.Inject
 import com.android.yambasama.ui.views.model.Route
 
 
 @Composable
 @ExperimentalMaterial3Api
-fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */context: Any) {
+fun Login(navController: NavHostController, userViewModel: UserViewModel, context: Any) {
     var email by rememberSaveable { mutableStateOf("sidneymaleoregis@gmail.com") }
     var password by rememberSaveable { mutableStateOf("Nfkol3324012020@!") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
@@ -93,6 +98,87 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
 
                 }
             )
+        }
+    }
+
+    fun getUser(userViewModel: UserViewModel, userName: String, token: String, context: Any) {
+        userViewModel.getUser(userName, token)
+        userViewModel.user.observe(context as LifecycleOwner) { user->
+            when (user) {
+                is Resource.Success -> {
+                    Log.d("Test1", "'user':'${user.data?.Users?.get(0)?.lastName}'");
+                    val user = user.data?.Users?.get(0) as User
+                    //we save the user Token
+                    userViewModel.saveToken(
+                        TokenRoom(
+                            1,
+                            //we split the bear characters
+                            token.split(" ")[1])
+                    )
+
+                    //We save the user
+                    userViewModel.saveUser(
+                        UserRoom(
+                            user.id,
+                            user.firstName,
+                            user.lastName,
+                            user.roles[0],
+                            user.phone,
+                            user.nationality,
+                            user.sex,
+                            user.state,
+                            token.split(" ")[1],
+                            user.email,
+                            user.username,
+                            user.pushNotifications?.get(0)?.keyPush,
+                            user.images[0].imageName
+                        )
+
+
+                    )
+                    hideProgressBar()
+                    navController.navigate(Route.homeView)
+                }
+
+                is Resource.Error -> {
+                    hideProgressBar()
+                    user.message?.let {
+                        Toast.makeText(context as Context, "An error occurred : $it", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
+        }
+    }
+
+    fun viewModelLogin(userViewModel: UserViewModel, userName: String, password: String, context: Any) {
+        userViewModel.getToken(userName, password)
+        userViewModel.token.observe(context as LifecycleOwner) {token->
+            when (token) {
+                is Resource.Success -> {
+                    Log.d("Test1", "'token':'${token.data?.token}'");
+                    token.data?.token?.let {
+                        getUser(userViewModel, userName,
+                            "Bearer $it",context as LifecycleOwner)
+                    }
+                }
+
+                is Resource.Error -> {
+                    hideProgressBar()
+                    token.message?.let {
+                        Toast.makeText(context as Context, "An error occurred : $it", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
         }
     }
 
@@ -202,8 +288,7 @@ fun Login(navController: NavHostController,/* userViewModel: UserViewModel, */co
                 .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
             border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
             onClick = {
-                //viewModelLogin(userViewModel, email,password, context)
-                navController.navigate(Route.homeView)
+                viewModelLogin(userViewModel, email,password, context)
             }) {
             Icon(
                 imageVector = Icons.Outlined.Login,

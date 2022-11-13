@@ -2,7 +2,6 @@ package com.android.yambasama.ui.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,12 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
 import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
@@ -30,11 +30,12 @@ fun HomeApp(
     navController: NavHostController,
     scope: CoroutineScope,
     drawerState: DrawerState,
-    context: Any/*, userViewModel: UserViewModel*/
+    context: Any,
+    userViewModel: UserViewModel
 ) {
     val navController2 = rememberNavController()
     val navBackStackEntry by navController2.currentBackStackEntryAsState()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val listState = rememberLazyListState()
     /*val currentRoute =
         navBackStackEntry?.destination?.route ?: WazzabyDrawerDestinations.HOME_ROUTE*/
@@ -42,13 +43,13 @@ fun HomeApp(
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf(
         BottomNavigationItem(
-            R.drawable.baseline_search_24,
-            "Recherche",
+            Icons.Outlined.Search,
+            stringResource(R.string.re_search),
             Route.historyTabView
         ),
         BottomNavigationItem(
-            R.drawable.baseline_add_circle_black_24,
-            "Ajouter une annonce",
+           Icons.Outlined.Add,
+            stringResource(R.string.add_an_ad),
             Route.homeTabView
         )
     )
@@ -114,7 +115,7 @@ fun HomeApp(
 
             if (switch) {
                 Column(Modifier.padding(top = 100.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)) {
-                    SearchView()
+                    SearchView(navController)
                 }
             } else {
                 AddAdView()
@@ -128,11 +129,12 @@ fun HomeApp(
                     NavigationBarItem(
                         icon = {
                             Icon(
-                                painter = painterResource(id = item.id),
+                                item.id,
                                 contentDescription = null
                             )
                         },
-                        label = { Text(item.title) },
+                        label = { Text(
+                            remember {item.title}) },
                         selected = selectedItem == index,
                         onClick = {
                             selectedItem = index

@@ -20,4 +20,5 @@
     <string name="departure">Departure</string>
     <string name="destination">Destination</string>
     <string name="travel_date">Travel Date</string>
+    <string name="add_an_ad">Add an ad</string>
 </resources>
