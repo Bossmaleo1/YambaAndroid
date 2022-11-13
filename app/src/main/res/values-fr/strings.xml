@@ -20,4 +20,5 @@
     <string name="departure">Départ</string>
     <string name="destination">Destination</string>
     <string name="travel_date">Date de voyage</string>
+    <string name="add_an_ad">Ajouter une annonce</string>
 </resources>
