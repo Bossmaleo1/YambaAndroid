@@ -22,4 +22,5 @@
     <string name="destination">Назначения</string>
     <string name="travel_date">Дата поездки</string>
     <string name="add_an_ad">Добавить объявление</string>
+    <string name="search">поиск</string>
 </resources>
