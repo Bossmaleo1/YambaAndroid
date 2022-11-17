@@ -28,6 +28,7 @@ import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import android.widget.DatePicker
 import android.app.DatePickerDialog
+import java.text.SimpleDateFormat
 import java.util.*
 
 @ExperimentalMaterial3Api
@@ -58,14 +59,17 @@ fun SearchView(navController: NavHostController) {
     // store date in string format
     val mDate = remember { mutableStateOf("") }
 
+    val formatter: SimpleDateFormat = SimpleDateFormat("EEE d MMM yy", Locale.getDefault())
+
     // Declaring DatePickerDialog and setting
     // initial values as current values (present year, month and day)
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth/${mMonth+1}/$mYear"
+            mDate.value = formatter.format(Date(mYear,mMonth,mDayOfMonth))
         }, mYear, mMonth, mDay
     )
+
 
     Column(
         modifier = Modifier
@@ -175,9 +179,7 @@ fun SearchView(navController: NavHostController) {
                 .width(280.dp),
             border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
             onClick = {
-                //navController.navigate(Route.homeView)
-                // Toast.makeText(context,"MALEO MALEO MALEO",Toast.LENGTH_LONG).show()
-                // Log.d("Test1", "Here");
+
             }) {
             Icon(
                 imageVector = Icons.Outlined.Search,
