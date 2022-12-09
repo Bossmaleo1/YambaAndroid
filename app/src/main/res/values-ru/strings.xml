@@ -23,4 +23,10 @@
     <string name="travel_date">Дата поездки</string>
     <string name="add_an_ad">Добавить объявление</string>
     <string name="search">поиск</string>
+    <string name="about">О</string>
+    <string name="settings">Настройки</string>
+    <string name="account">Счет</string>
+    <string name="contact_us">Свяжитесь с нами</string>
+    <string name="guest_friend">Пригласить своих друзей</string>
+    <string name="logout">Выйти</string>
 </resources>

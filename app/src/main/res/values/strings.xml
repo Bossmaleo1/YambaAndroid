@@ -22,4 +22,11 @@
     <string name="destination">Destination</string>
     <string name="travel_date">Travel Date</string>
     <string name="search">Search</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="account">Account</string>
+    <string name="contact_us">Contact us</string>
+    <string name="guest_friend">Invite your friends</string>
+
 </resources>

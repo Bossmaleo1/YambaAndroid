@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = Route.homeView) {
-                HomeApp(navController, scope, drawerState, context,  userViewModel)
+                HomeApp(navController, scope, drawerState, context,dropViewModel,userViewModel)
             }
 
             composable(route = Route.searchLocalizeView) {

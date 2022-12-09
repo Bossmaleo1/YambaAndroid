@@ -12,11 +12,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -58,8 +60,24 @@ fun SearchLocation(navController: NavHostController) {
 
         Scaffold(topBar = {
             Column (
-                modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
-                Row {
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surface),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
+
+                Row (modifier = Modifier.padding(bottom = 10.dp)) {
+
+                    IconButton(onClick = {
+                        navController.navigateUp()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
                     OutlinedTextField(
                         value = searchLocation,
                         singleLine = true,
@@ -83,7 +101,7 @@ fun SearchLocation(navController: NavHostController) {
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 10.dp, bottom = 10.dp, start = 30.dp, end = 30.dp)
+                            .padding(top = 0.dp, bottom = 0.dp, start = 0.dp, end = 30.dp)
                             .height(45.dp),
                         shape = RoundedCornerShape(22.dp)
                     )
@@ -94,7 +112,7 @@ fun SearchLocation(navController: NavHostController) {
             content= {innerPadding ->
                 LazyColumn(contentPadding = innerPadding, state = listState) {
                     items(1000) {location ->
-                        SearchTownItem()
+                            SearchTownItem()
                     }
                 }
             })
