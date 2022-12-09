@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
 import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
@@ -31,6 +32,7 @@ fun HomeApp(
     scope: CoroutineScope,
     drawerState: DrawerState,
     context: Any,
+    dropViewModel: DropViewModel,
     userViewModel: UserViewModel
 ) {
     val navController2 = rememberNavController()
@@ -58,7 +60,7 @@ fun HomeApp(
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
-                SmallTopAppBar(
+                TopAppBar(
                     navigationIcon = {
 
                     },
@@ -89,7 +91,12 @@ fun HomeApp(
                             onDismissRequest = { expanded = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("xxxx") },
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.account),
+                                        maxLines = 1
+                                    )
+                                },
                                 onClick = { /* Handle edit! */ },
                                 leadingIcon = {
                                     Icon(
@@ -97,12 +104,83 @@ fun HomeApp(
                                         contentDescription = null
                                     )
                                 })
+
                             DropdownMenuItem(
-                                text = { Text("xxxx") },
-                                onClick = { /* Handle settings! */ },
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.settings),
+                                        maxLines = 1
+                                    )
+                                },
+                                onClick = { /* Handle edit! */ },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Outlined.History,
+                                        Icons.Outlined.Settings,
+                                        contentDescription = null
+                                    )
+                                })
+
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.contact_us),
+                                        maxLines = 1
+                                    )
+                                },
+                                onClick = { /* Handle edit! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.ContactPage,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.guest_friend),
+                                        maxLines = 1
+                                    )
+                                },
+                                onClick = { /* Handle edit! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.PeopleOutline,
+                                        contentDescription = null
+                                    )
+                                })
+
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.about),
+                                        maxLines = 1
+                                    )
+                                },
+                                onClick = { /* Handle edit! */ },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.HelpOutline,
+                                        contentDescription = null
+                                    )
+                                })
+
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        stringResource(id = R.string.logout)
+                                    )
+                                },
+                                onClick = {
+                                    /* Handle settings! */
+                                    dropViewModel.deleteAll()
+                                    //transferViewModel.initTransfer()
+                                    navController.navigate(Route.loginView)
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.Logout,
                                         contentDescription = null
                                     )
                                 })

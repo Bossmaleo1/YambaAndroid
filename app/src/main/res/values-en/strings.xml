@@ -22,4 +22,10 @@
     <string name="travel_date">Travel Date</string>
     <string name="add_an_ad">Add an ad</string>
     <string name="search">Search</string>
+    <string name="about">Sobre</string>
+    <string name="settings">Ajustes</string>
+    <string name="account">Cuenta</string>
+    <string name="contact_us">Contáctenos</string>
+    <string name="guest_friend">Invita a tus amigos</string>
+    <string name="logout">Logout</string>
 </resources>

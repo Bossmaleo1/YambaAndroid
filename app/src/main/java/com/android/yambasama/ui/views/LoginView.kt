@@ -131,7 +131,7 @@ fun Login(navController: NavHostController, userViewModel: UserViewModel, contex
                             user.email,
                             user.username,
                             user.pushNotifications?.get(0)?.keyPush,
-                            user.images[0].imageName
+                            (if (user.images.isNotEmpty())  user.images[0].imageName else  "")
                         )
 
 
