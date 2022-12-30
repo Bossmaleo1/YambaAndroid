@@ -1,7 +1,9 @@
 package com.android.yambasama.presentation.di
 
 import android.app.Application
+import com.android.yambasama.domain.usecase.address.GetAddressUseCase
 import com.android.yambasama.domain.usecase.user.*
+import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import dagger.Module
@@ -35,6 +37,18 @@ class FactoryModule {
             getSavedUserUseCase,
             getSavedTokenUseCase,
             deleteSavedUserUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideAddressViewModelFactory(
+        application: Application,
+        getAddressUseCase: GetAddressUseCase
+    ): AddressViewModelFactory {
+        return  AddressViewModelFactory(
+            application,
+            getAddressUseCase
         )
     }
 

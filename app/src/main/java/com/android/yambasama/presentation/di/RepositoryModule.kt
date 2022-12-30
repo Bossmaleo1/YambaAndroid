@@ -1,8 +1,11 @@
 package com.android.yambasama.presentation.di
 
+import com.android.yambasama.data.repository.AddressRepositoryImpl
 import com.android.yambasama.data.repository.UserRepositoryImpl
+import com.android.yambasama.data.repository.dataSource.address.AddressRemoteDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserRemoteDataSource
+import com.android.yambasama.domain.repository.AddressRepository
 import com.android.yambasama.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -20,5 +23,13 @@ class RepositoryModule {
         userLocalDataSource: UserLocalDataSource
     ): UserRepository {
         return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAddressRepository(
+        addressRemoteDataSource: AddressRemoteDataSource
+    ): AddressRepository {
+        return AddressRepositoryImpl(addressRemoteDataSource)
     }
 }

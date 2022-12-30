@@ -79,7 +79,7 @@ fun SearchView(navController: NavHostController) {
         val iso = locale.isO3Country
         val code = locale.country
         val name = locale.displayCountry
-        Log.d("${name}", "isoCode : ${iso} code : ${code} Name : ${name} ")
+        //Log.d("${name}", "isoCode : ${iso} code : ${code} Name : ${name} ")
     }
 
     AnimatedVisibility(

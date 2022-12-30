@@ -15,16 +15,17 @@ import com.android.yambasama.domain.usecase.user.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class UserViewModel(
-    private val app: Application,
-    private val getUserUseCase: GetUserUseCase,
-    private val getTokenUseCase: GetTokenUseCase,
-    private val saveUserUseCase: SaveUserUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase,
-    private val getSavedUserUseCase: GetSavedUserUseCase,
-    private val getSavedTokenUseCase: GetSavedTokenUseCase,
-    private val deleteSavedUserUseCase: DeleteSavedUserUseCase
+class UserViewModel @Inject constructor(
+                private val app: Application,
+                private val getUserUseCase: GetUserUseCase,
+                private val getTokenUseCase: GetTokenUseCase,
+                private val saveUserUseCase: SaveUserUseCase,
+                private val saveTokenUseCase: SaveTokenUseCase,
+                private val getSavedUserUseCase: GetSavedUserUseCase,
+                private val getSavedTokenUseCase: GetSavedTokenUseCase,
+                private val deleteSavedUserUseCase: DeleteSavedUserUseCase
 ) : AndroidViewModel(app) {
     val token : MutableLiveData<Resource<ApiTokenResponse>> = MutableLiveData()
     val user : MutableLiveData<Resource<ApiUserResponse>> = MutableLiveData()

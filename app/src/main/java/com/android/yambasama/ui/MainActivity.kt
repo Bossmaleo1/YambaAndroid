@@ -16,6 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.android.yambasama.presentation.viewModel.address.AddressViewModel
+import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
@@ -24,7 +26,7 @@ import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
 import com.android.yambasama.ui.views.Login
-import com.android.yambasama.ui.views.bottomnavigationviews.searchView.SearchLocation
+import com.android.yambasama.ui.views.bottomnavigationviews.searchView.SearchAddress
 import com.android.yambasama.ui.views.model.Route
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +43,10 @@ class MainActivity : ComponentActivity() {
     lateinit var userFactory: UserViewModelFactory
     @Inject
     lateinit var dropFactory: DropViewModelFactory
+    @Inject
+    lateinit var addressFactory: AddressViewModelFactory
     private lateinit var userViewModel: UserViewModel
+    private lateinit var addressViewModel: AddressViewModel
     private lateinit var dropViewModel: DropViewModel
     var token: String? = null
 
@@ -75,6 +80,7 @@ class MainActivity : ComponentActivity() {
     private fun initViewModel() {
         userViewModel = ViewModelProvider(this, userFactory)[UserViewModel::class.java]
         dropViewModel = ViewModelProvider(this, dropFactory)[DropViewModel::class.java]
+        addressViewModel = ViewModelProvider(this,addressFactory)[AddressViewModel::class.java]
     }
 
     @Composable
@@ -106,7 +112,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = Route.searchLocalizeView) {
-                SearchLocation(navController)
+                SearchAddress(navController, context, addressViewModel, userViewModel)
             }
         }
     }
