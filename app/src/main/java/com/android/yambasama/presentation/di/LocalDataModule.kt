@@ -2,7 +2,7 @@ package com.android.yambasama.presentation.di
 
 import com.android.yambasama.data.db.dao.UserDAO
 import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
-import com.android.yambasama.data.repository.dataSourceImpl.UserLocalDataSourceImpl
+import com.android.yambasama.data.repository.dataSourceImpl.user.UserLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.android.yambasama.data.repository.dataSourceImpl
+package com.android.yambasama.data.repository.dataSourceImpl.user
 
 import com.android.yambasama.data.db.dao.UserDAO
 import com.android.yambasama.data.model.dataLocal.TokenRoom

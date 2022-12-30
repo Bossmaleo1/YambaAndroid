@@ -6,7 +6,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,9 +13,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,18 +27,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.address.AddressViewModel
+import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
 import kotlinx.coroutines.delay
-import java.util.*
 
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchLocation(navController: NavHostController) {
+fun SearchAddress(
+    navController: NavHostController,
+    context: Any,
+    addressViewModel: AddressViewModel,
+    userViewModel: UserViewModel
+) {
     var visibleSearch by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     var searchLocation by rememberSaveable { mutableStateOf("") }
+    val token by userViewModel.tokenValue.observeAsState()
 
 
     AnimatedVisibility(
@@ -110,11 +117,34 @@ fun SearchLocation(navController: NavHostController) {
 
         },
             content= {innerPadding ->
-                LazyColumn(contentPadding = innerPadding, state = listState) {
-                    items(1000) {location ->
-                            SearchTownItem()
-                    }
+                if (addressViewModel.currentPage.value == 1) {
+                    addressViewModel.getAddress(
+                        isoCode = "",
+                        code = "",
+                        airportCode = "",
+                        airportName = "",
+                        townName = "",
+                        addressViewModel.currentPage.value,
+                        pagination = true,
+                        token = token?.token!!
+                    )
                 }
+
+                InfiniteListAddressRemote(
+                    listState = listState,
+                    listItems = remember { addressViewModel.addressStateRemoteList },
+                    paddingValues = PaddingValues(
+                        top = 0.dp,
+                        bottom = innerPadding.calculateBottomPadding() + 100.dp
+                    ),
+                    addressViewModel = addressViewModel,
+                    isoCode = "",
+                    code = "",
+                    airportCode = "",
+                    airportName = "",
+                    townName = "",
+                    token = token?.token!!
+                )
             })
     }
 

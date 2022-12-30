@@ -1,4 +1,4 @@
-package com.android.yambasama.data.repository.dataSourceImpl
+package com.android.yambasama.data.repository.dataSourceImpl.user
 
 import com.android.yambasama.data.api.service.UserAPIService
 import com.android.yambasama.data.model.api.ApiLogin

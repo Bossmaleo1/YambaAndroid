@@ -16,13 +16,7 @@ import java.util.*
 @ExperimentalMaterial3Api
 @Composable
 fun SearchTownItem() {
-    /**
-    modifier = Modifier
-    .fillMaxWidth()
-    .wrapContentHeight()
-    .padding(2.5.dp),
-    shape = RoundedCornerShape(corner = CornerSize(10.dp))
-     * */
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
