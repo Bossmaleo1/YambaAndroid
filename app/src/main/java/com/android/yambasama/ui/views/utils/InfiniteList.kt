@@ -36,7 +36,7 @@ fun InfiniteListAddressRemote(
     ) {
 
         items(listItems) { address ->
-            SearchTownItem()
+            SearchTownItem(address)
         }
 
         items(count = 1) {

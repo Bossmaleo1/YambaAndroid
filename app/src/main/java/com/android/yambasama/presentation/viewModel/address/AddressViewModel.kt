@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class AddressViewModel @Inject constructor(
     private val app: Application,
-                                           private val getAddressUseCase: GetAddressUseCase
+    private val getAddressUseCase: GetAddressUseCase
 ): AndroidViewModel(app) {
 
     private val addressList: MutableLiveData<List<Address>> = MutableLiveData()

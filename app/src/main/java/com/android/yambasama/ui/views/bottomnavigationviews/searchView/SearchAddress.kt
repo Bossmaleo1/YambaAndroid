@@ -1,11 +1,14 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchView
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +32,7 @@ import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
 import kotlinx.coroutines.delay
 
@@ -45,7 +49,7 @@ fun SearchAddress(
     val listState = rememberLazyListState()
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    var searchLocation by rememberSaveable { mutableStateOf("") }
+    var searchAddress by rememberSaveable { mutableStateOf("") }
     val token by userViewModel.tokenValue.observeAsState()
 
 
@@ -86,14 +90,33 @@ fun SearchAddress(
                     }
 
                     OutlinedTextField(
-                        value = searchLocation,
+                        value = searchAddress,
                         singleLine = true,
                         textStyle = TextStyle( fontSize = 12.sp),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                         ),
-                        onValueChange = {locationName ->
-
+                        onValueChange = {
+                            addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
+                            addressViewModel.currentPage.value = 1
+                            searchAddress = it
+                            addressViewModel.getAddress(
+                                isoCode = searchAddress,
+                                code = searchAddress,
+                                airportCode = searchAddress,
+                                airportName = searchAddress,
+                                townName = searchAddress,
+                                addressViewModel.currentPage.value,
+                                pagination = true,
+                                token = token?.token!!
+                            )
+                            /*contactLists.removeAll(contactLists)
+                            contactLists.addAll(contactTempLists.filter { value -> value.name.uppercase(
+                                Locale.getDefault()
+                            )
+                                .contains(
+                                    contactName.uppercase(Locale.getDefault())
+                                )  })*/
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         placeholder = { Text(text= stringResource(id = R.string.search), fontSize = 12.sp) },
@@ -109,7 +132,7 @@ fun SearchAddress(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 0.dp, bottom = 0.dp, start = 0.dp, end = 30.dp)
-                            .height(45.dp),
+                            .height(60.dp),
                         shape = RoundedCornerShape(22.dp)
                     )
                 }
@@ -117,7 +140,7 @@ fun SearchAddress(
 
         },
             content= {innerPadding ->
-                if (addressViewModel.currentPage.value == 1) {
+                if (addressViewModel.currentPage.value == 1 && searchAddress.isEmpty()) {
                     addressViewModel.getAddress(
                         isoCode = "",
                         code = "",
@@ -128,9 +151,37 @@ fun SearchAddress(
                         pagination = true,
                         token = token?.token!!
                     )
+                } /*else {
+                    addressViewModel.getAddress(
+                        isoCode = searchAddress,
+                        code = searchAddress,
+                        airportCode = searchAddress,
+                        airportName = searchAddress,
+                        townName = searchAddress,
+                        addressViewModel.currentPage.value,
+                        pagination = true,
+                        token = token?.token!!
+                    )
+                }*/
+
+                LazyColumn(
+                    contentPadding =  PaddingValues(
+                        top = 0.dp,
+                        bottom = innerPadding.calculateBottomPadding() + 100.dp
+                    ),
+                    state = listState
+                ) {
+
+                    items(addressViewModel.addressStateRemoteList) { address ->
+                        SearchTownItem(address)
+                    }
+
+                    items(count = 1) {
+                        AddressShimmer()
+                    }
                 }
 
-                InfiniteListAddressRemote(
+                /*InfiniteListAddressRemote(
                     listState = listState,
                     listItems = remember { addressViewModel.addressStateRemoteList },
                     paddingValues = PaddingValues(
@@ -138,17 +189,15 @@ fun SearchAddress(
                         bottom = innerPadding.calculateBottomPadding() + 100.dp
                     ),
                     addressViewModel = addressViewModel,
-                    isoCode = "",
-                    code = "",
-                    airportCode = "",
-                    airportName = "",
-                    townName = "",
+                    isoCode = searchAddress,
+                    code = searchAddress,
+                    airportCode = searchAddress,
+                    airportName = searchAddress,
+                    townName = searchAddress,
                     token = token?.token!!
-                )
+                )*/
             })
     }
-
-
 
     LaunchedEffect(true) {
         delay(3)

@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            composable(route = Route.homeView) {
+            composable(route = Route.homeView) { backStackEntry ->
                 HomeApp(navController, scope, drawerState, context,dropViewModel,userViewModel)
             }
 
