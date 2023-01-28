@@ -10,20 +10,20 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.android.yambasama.data.model.dataRemote.Address
 import java.util.*
 
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchTownItem() {
-
+fun SearchTownItem(address: Address) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
-        //colors = CardDefaults.cardColors(Color.Transparent),
-        onClick = {}
+        onClick = {
+        }
     ) {
         Column {
             Row(
@@ -39,7 +39,7 @@ fun SearchTownItem() {
                 )
 
                 Text(
-                    text = "Aeroport Maya Maya (Brazzaville)",
+                    text = "${address.townName} (${address.airportName} / ${address.code})",
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleSmall
                 )
