@@ -101,22 +101,15 @@ fun SearchAddress(
                             addressViewModel.currentPage.value = 1
                             searchAddress = it
                             addressViewModel.getAddress(
-                                isoCode = searchAddress,
-                                code = searchAddress,
-                                airportCode = searchAddress,
-                                airportName = searchAddress,
                                 townName = searchAddress,
                                 addressViewModel.currentPage.value,
                                 pagination = true,
                                 token = token?.token!!
                             )
-                            /*contactLists.removeAll(contactLists)
-                            contactLists.addAll(contactTempLists.filter { value -> value.name.uppercase(
-                                Locale.getDefault()
-                            )
-                                .contains(
-                                    contactName.uppercase(Locale.getDefault())
-                                )  })*/
+                            if (searchAddress.length === 0) {
+                                addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
+                                addressViewModel.addressStateRemoteList.addAll(addressViewModel.addressStateRemoteListTemp)
+                            }
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         placeholder = { Text(text= stringResource(id = R.string.search), fontSize = 12.sp) },
@@ -140,29 +133,16 @@ fun SearchAddress(
 
         },
             content= {innerPadding ->
-                if (addressViewModel.currentPage.value == 1 && searchAddress.isEmpty()) {
-                    addressViewModel.getAddress(
-                        isoCode = "",
-                        code = "",
-                        airportCode = "",
-                        airportName = "",
-                        townName = "",
-                        addressViewModel.currentPage.value,
-                        pagination = true,
-                        token = token?.token!!
-                    )
-                } /*else {
-                    addressViewModel.getAddress(
-                        isoCode = searchAddress,
-                        code = searchAddress,
-                        airportCode = searchAddress,
-                        airportName = searchAddress,
-                        townName = searchAddress,
-                        addressViewModel.currentPage.value,
-                        pagination = true,
-                        token = token?.token!!
-                    )
-                }*/
+                if (addressViewModel.currentPage.value == 1
+                    && searchAddress.isEmpty()
+                    && (addressViewModel.addressStateRemoteList.size == 0)) {
+                        addressViewModel.getAddress(
+                            townName = "",
+                            addressViewModel.currentPage.value,
+                            pagination = true,
+                            token = token?.token!!
+                        )
+                }
 
                 LazyColumn(
                     contentPadding =  PaddingValues(

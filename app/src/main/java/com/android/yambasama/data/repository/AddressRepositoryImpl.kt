@@ -22,10 +22,6 @@ class AddressRepositoryImpl(
     override suspend fun getAddress(
         page: Int,
         pagination: Boolean,
-        isoCode: String,
-        code: String,
-        airportName: String,
-        airportCode: String,
         townName: String,
         token: String
     ): Resource<ApiAddressResponse> {
@@ -33,10 +29,6 @@ class AddressRepositoryImpl(
             addressRemoteDataSource.getAddress(
                 page,
                 pagination,
-                isoCode,
-                code,
-                airportName,
-                airportCode,
                 townName,
                 token
             )

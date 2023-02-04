@@ -12,20 +12,12 @@ class AddressRemoteDataSourceImpl(
     override suspend fun getAddress(
         page: Int,
         pagination: Boolean,
-        isoCode: String,
-        code: String,
-        airportCode: String,
-        airportName: String,
         townName: String,
         token: String
     ): Response<ApiAddressResponse> {
         return addressAPIService.getAddress(
             page,
             pagination,
-            isoCode,
-            code,
-            airportCode,
-            airportName,
             townName,
             token
         )

@@ -9,13 +9,9 @@ class GetAddressUseCase(private val addressRepository: AddressRepository) {
     suspend fun execute(
         page: Int,
         pagination: Boolean,
-        isoCode: String,
-        code: String,
-        airportName: String,
-        airportCode: String,
         townName: String,
         token: String
     ): Resource<ApiAddressResponse> {
-        return addressRepository.getAddress(page,pagination,isoCode,code,airportName,airportCode,townName,token)
+        return addressRepository.getAddress(page,pagination,townName,token)
     }
 }

@@ -7,10 +7,6 @@ interface AddressRemoteDataSource {
     suspend fun getAddress(
         page: Int,
         pagination: Boolean,
-        isoCode: String,
-        code: String,
-        airportCode: String,
-        airportName: String,
         townName: String,
         token: String
     ): Response<ApiAddressResponse>
