@@ -29,6 +29,7 @@ class AddressViewModel @Inject constructor(
     val addressListValue: LiveData<List<Address>> = addressList
 
     val addressStateRemoteList = mutableStateListOf<Address>()
+    val addressStateRemoteListTemp = mutableStateListOf<Address>()
     val currentPage : MutableState<Int> = mutableStateOf(1)
 
     init {
@@ -36,10 +37,6 @@ class AddressViewModel @Inject constructor(
     }
 
     fun getAddress(
-        isoCode: String,
-        code: String,
-        airportCode: String,
-        airportName: String,
         townName: String,
         page: Int,
         pagination: Boolean,
@@ -47,12 +44,16 @@ class AddressViewModel @Inject constructor(
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             if (isNetworkAvailable(app)) {
-                val apiResult = getAddressUseCase.execute(page, pagination, isoCode, code,airportCode, airportName, townName, "Bearer $token")
+                val apiResult = getAddressUseCase.execute(page, pagination, townName, "Bearer $token")
                     apiResult.data?.let {
                         addressList.postValue(it.address)
-                        addressStateRemoteList.addAll(it.address)
+                        if (addressStateRemoteList.size == 0) {
+                            addressStateRemoteList.addAll(it.address)
+                        }
+                        if(addressStateRemoteListTemp.size == 0) {
+                            addressStateRemoteListTemp.addAll(it.address)
+                        }
                         currentPage.value = page
-                        Log.d("MALEOMAYEKO9393", "${it.address}")
                     }
             } else {
                 Toast.makeText(app.applicationContext,"Internet is not available", Toast.LENGTH_LONG).show()

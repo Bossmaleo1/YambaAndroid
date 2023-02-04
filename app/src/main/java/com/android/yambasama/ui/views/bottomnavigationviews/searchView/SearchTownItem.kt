@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import com.android.yambasama.data.model.dataRemote.Address
 import java.util.*
@@ -23,6 +24,11 @@ fun SearchTownItem(address: Address) {
             .wrapContentHeight(),
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
         onClick = {
+            Log.d("MALEOMALEO9393","${address.id} -------- ${address.townName}")
+            // Je dois faire passer les messages de l'addresse avec
+            // des séparateurs de - ou , ou ; ou |
+            // Puis je lirai ça avec un split pour reconstituer une Address
+            // Plutôt de refaire un truc avec du SQLite
         }
     ) {
         Column {
@@ -39,7 +45,7 @@ fun SearchTownItem(address: Address) {
                 )
 
                 Text(
-                    text = "${address.townName} (${address.airportName} / ${address.code})",
+                    text = "${address.townName} (${address.airportName} (${address.airportCode}) / ${address.code}",
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleSmall
                 )

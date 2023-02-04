@@ -14,14 +14,6 @@ interface AddressAPIService {
         page: Int,
         @Query("pagination")
         pagination: Boolean,
-        @Query("isoCode")
-        isoCode: String,
-        @Query("code")
-        code: String,
-        @Query("airportCode")
-        airportCode: String,
-        @Query("airportName")
-        airportName: String,
         @Query("townName")
         townName: String,
         @Header("Authorization")

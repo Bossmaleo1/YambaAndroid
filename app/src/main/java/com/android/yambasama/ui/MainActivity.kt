@@ -13,9 +13,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
@@ -107,7 +109,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            composable(route = Route.homeView) { backStackEntry ->
+            composable(
+                route = Route.homeView+"?userAddress={userAddress}",
+                arguments = listOf(
+                    navArgument("userAddress") {
+                            //type = NavType.StringType
+                        defaultValue = ""
+                    }
+                )
+            ) { backStackEntry ->
                 HomeApp(navController, scope, drawerState, context,dropViewModel,userViewModel)
             }
 
