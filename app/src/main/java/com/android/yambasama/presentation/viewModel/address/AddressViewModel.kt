@@ -8,58 +8,86 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.yambasama.data.model.api.ApiAddressResponse
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.ScreenState.AddressScreenState
+import com.android.yambasama.ui.UIEvent.UIEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AddressViewModel @Inject constructor(
     private val app: Application,
     private val getAddressUseCase: GetAddressUseCase
-): AndroidViewModel(app) {
+) : AndroidViewModel(app) {
 
     private val addressList: MutableLiveData<List<Address>> = MutableLiveData()
     val addressListValue: LiveData<List<Address>> = addressList
 
     val addressStateRemoteList = mutableStateListOf<Address>()
     val addressStateRemoteListTemp = mutableStateListOf<Address>()
-    val currentPage : MutableState<Int> = mutableStateOf(1)
+    val currentPage: MutableState<Int> = mutableStateOf(1)
+
+    private val _screenState = mutableStateOf(
+        AddressScreenState(
+            addressList = mutableListOf(),
+            searchInputValue = ""
+        )
+    )
+    val screenState: State<AddressScreenState> = _screenState
+    private val _uiEventFlow = MutableSharedFlow<UIEvent>()
+    val uiEventFlow = _uiEventFlow.asSharedFlow()
 
     init {
 
     }
 
     fun getAddress(
-        townName: String,
-        page: Int,
-        pagination: Boolean,
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             if (isNetworkAvailable(app)) {
-                val apiResult = getAddressUseCase.execute(page, pagination, townName, "Bearer $token")
-                    apiResult.data?.let {
-                        addressList.postValue(it.address)
-                        if (addressStateRemoteList.size == 0) {
-                            addressStateRemoteList.addAll(it.address)
-                        }
-                        if(addressStateRemoteListTemp.size == 0) {
-                            addressStateRemoteListTemp.addAll(it.address)
-                        }
-                        currentPage.value = page
-                    }
+                val apiResult =
+                    getAddressUseCase.execute(
+                        page = screenState.value.currentPage,
+                        pagination =  true,
+                        townName = screenState.value.searchInputValue,
+                        token = "Bearer $token"
+                    )
+                apiResult.data?.let { apiAddressResponse ->
+                    getAdressResult(apiAddressResponse.address)
+                }
+                _screenState.value = _screenState.value.copy(
+                    isConnected = true,
+                    isLoad = false,
+                    isError = false,
+                    initCall = screenState.value.initCall++
+                )
             } else {
-                Toast.makeText(app.applicationContext,"Internet is not available", Toast.LENGTH_LONG).show()
+                _screenState.value = _screenState.value.copy(
+                    isConnected = false,
+                    isError = false
+                )
             }
         } catch (e: Exception) {
-            Log.d("MALEO93AdressException", "${e.message}")
+            _screenState.value = _screenState.value.copy(
+                isError = true,
+                isConnected = true,
+                isLoad = false
+            )
+
+
         }
     }
 
@@ -94,5 +122,61 @@ class AddressViewModel @Inject constructor(
 
     fun initAddress() {
         addressStateRemoteList.removeAll(addressStateRemoteList)
+        _screenState.value = _screenState.value.copy(
+            addressList = mutableListOf()
+        )
     }
+
+    fun onEvent(event: AddressEvent) {
+        when (event) {
+            is AddressEvent.SearchValueEntered -> {
+                _screenState.value = _screenState.value.copy(
+                    searchInputValue = event.value,
+                    isLoad = true,
+                    currentPage = 1,
+                    addressList = mutableListOf()
+                )
+                getAddress(
+                    token = event.value
+                )
+
+                if (event.value.isEmpty()) {
+                    _screenState.value = _screenState.value.copy(
+                        addressList = mutableListOf(),
+                        addressListTemp = mutableListOf()
+                    )
+                }
+            }
+            is AddressEvent.AddressInit -> {
+                if (
+                    event.value.isEmpty()
+                    && screenState.value.currentPage == 1
+                    && screenState.value.addressList.isEmpty()
+                ) {
+                    _screenState.value = _screenState.value.copy(
+                        isLoad = true,
+                        searchInputValue = ""
+                    )
+                    getAddress(
+                        token = event.token
+                    )
+                }
+            }
+            is AddressEvent.ItemClicked -> {
+
+            }
+        }
+    }
+
+
+    private fun getAdressResult(address: List<Address>) {
+        if (screenState.value.addressList.isEmpty()) {
+            screenState.value.addressList = address
+        }
+        if (screenState.value.addressListTemp.isEmpty()) {
+            screenState.value.addressListTemp = address
+        }
+    }
+
+
 }

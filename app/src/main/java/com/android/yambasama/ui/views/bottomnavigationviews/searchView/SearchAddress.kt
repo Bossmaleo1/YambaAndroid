@@ -16,6 +16,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -32,6 +33,7 @@ import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
 import kotlinx.coroutines.delay
@@ -51,6 +53,8 @@ fun SearchAddress(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     var searchAddress by rememberSaveable { mutableStateOf("") }
     val token by userViewModel.tokenValue.observeAsState()
+    val screenState = addressViewModel.screenState.value
+    val scaffoldState = rememberScaffoldState()
 
 
     AnimatedVisibility(
@@ -69,90 +73,98 @@ fun SearchAddress(
         } + fadeOut()
     ) {
 
-        Scaffold(topBar = {
-            Column (
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
+        Scaffold(scaffoldState = scaffoldState,
+            topBar = {
+                Column(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.surface),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
 
-                Row (modifier = Modifier.padding(bottom = 10.dp)) {
+                    Row(modifier = Modifier.padding(bottom = 10.dp)) {
 
-                    IconButton(onClick = {
-                        navController.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.primary
+                        IconButton(onClick = {
+                            navController.navigateUp()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        OutlinedTextField(
+                            value = searchAddress,
+                            singleLine = true,
+                            textStyle = TextStyle(fontSize = 12.sp),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            ),
+                            onValueChange = {
+                                /*addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
+                                addressViewModel.currentPage.value = 1
+                                searchAddress = it
+                                addressViewModel.getAddress(
+                                    townName = searchAddress,
+                                    addressViewModel.currentPage.value,
+                                    pagination = true,
+                                    token = token?.token!!
+                                )
+                                if (searchAddress.length === 0) {
+                                    addressViewModel.addressStateRemoteList.removeAll(
+                                        addressViewModel.addressStateRemoteList
+                                    )
+                                    addressViewModel.addressStateRemoteList.addAll(addressViewModel.addressStateRemoteListTemp)
+                                }*/
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            placeholder = {
+                                Text(
+                                    text = stringResource(id = R.string.search),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            leadingIcon = {
+                                IconButton(onClick = { }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Search,
+                                        contentDescription = "",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 0.dp, bottom = 0.dp, start = 0.dp, end = 30.dp)
+                                .height(60.dp),
+                            shape = RoundedCornerShape(22.dp)
                         )
                     }
+                }
 
-                    OutlinedTextField(
-                        value = searchAddress,
-                        singleLine = true,
-                        textStyle = TextStyle( fontSize = 12.sp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                        ),
-                        onValueChange = {
-                            addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
-                            addressViewModel.currentPage.value = 1
-                            searchAddress = it
-                            addressViewModel.getAddress(
-                                townName = searchAddress,
-                                addressViewModel.currentPage.value,
-                                pagination = true,
-                                token = token?.token!!
-                            )
-                            if (searchAddress.length === 0) {
-                                addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
-                                addressViewModel.addressStateRemoteList.addAll(addressViewModel.addressStateRemoteListTemp)
-                            }
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        placeholder = { Text(text= stringResource(id = R.string.search), fontSize = 12.sp) },
-                        leadingIcon = {
-                            IconButton(onClick = { }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = "",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 0.dp, bottom = 0.dp, start = 0.dp, end = 30.dp)
-                            .height(60.dp),
-                        shape = RoundedCornerShape(22.dp)
+            },
+            content = { innerPadding ->
+
+                LaunchedEffect(screenState.initCall == 1) {
+                    addressViewModel.onEvent(
+                        AddressEvent.AddressInit(
+                            value = screenState.searchInputValue,
+                            token =token?.token!!
+                        )
                     )
                 }
-            }
 
-        },
-            content= {innerPadding ->
-                if (addressViewModel.currentPage.value == 1
-                    && searchAddress.isEmpty()
-                    && (addressViewModel.addressStateRemoteList.size == 0)) {
-                        addressViewModel.getAddress(
-                            townName = "",
-                            addressViewModel.currentPage.value,
-                            pagination = true,
-                            token = token?.token!!
-                        )
-                }
 
                 LazyColumn(
-                    contentPadding =  PaddingValues(
+                    contentPadding = PaddingValues(
                         top = 0.dp,
                         bottom = innerPadding.calculateBottomPadding() + 100.dp
                     ),
                     state = listState
                 ) {
 
-                    items(addressViewModel.addressStateRemoteList) { address ->
+                    items(screenState.addressList) { address ->
                         SearchTownItem(address)
                     }
 

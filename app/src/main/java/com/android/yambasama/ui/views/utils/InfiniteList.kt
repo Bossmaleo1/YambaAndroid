@@ -47,9 +47,9 @@ fun InfiniteListAddressRemote(
     listState.OnBottomReached(buffer = 2) {
         addressViewModel.getAddress(
             townName,
-            page = addressViewModel.currentPage.value+1,
+            /*page = addressViewModel.currentPage.value+1,
             pagination = true,
-            token
+            token*/
         )
     }
 
