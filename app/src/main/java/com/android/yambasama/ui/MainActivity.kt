@@ -122,7 +122,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = Route.searchLocalizeView) {
-                SearchAddress(navController, context, addressViewModel, userViewModel)
+                SearchAddress(navController, addressViewModel, userViewModel)
             }
         }
     }

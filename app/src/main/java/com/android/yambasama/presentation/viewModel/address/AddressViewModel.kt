@@ -32,13 +32,6 @@ class AddressViewModel @Inject constructor(
     private val getAddressUseCase: GetAddressUseCase
 ) : AndroidViewModel(app) {
 
-    private val addressList: MutableLiveData<List<Address>> = MutableLiveData()
-    val addressListValue: LiveData<List<Address>> = addressList
-
-    val addressStateRemoteList = mutableStateListOf<Address>()
-    val addressStateRemoteListTemp = mutableStateListOf<Address>()
-    val currentPage: MutableState<Int> = mutableStateOf(1)
-
     private val _screenState = mutableStateOf(
         AddressScreenState(
             addressList = mutableListOf(),
@@ -49,45 +42,43 @@ class AddressViewModel @Inject constructor(
     private val _uiEventFlow = MutableSharedFlow<UIEvent>()
     val uiEventFlow = _uiEventFlow.asSharedFlow()
 
-    init {
-
-    }
-
     fun getAddress(
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            if (isNetworkAvailable(app)) {
+        if (isNetworkAvailable(app)) {
+
+            try {
+
                 val apiResult =
                     getAddressUseCase.execute(
                         page = screenState.value.currentPage,
-                        pagination =  true,
+                        pagination = true,
                         townName = screenState.value.searchInputValue,
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAddressResponse ->
                     getAdressResult(apiAddressResponse.address)
                 }
+
                 _screenState.value = _screenState.value.copy(
                     isConnected = true,
                     isLoad = false,
                     isError = false,
                     initCall = screenState.value.initCall++
                 )
-            } else {
+
+            } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
-                    isConnected = false,
-                    isError = false
+                    isError = true,
+                    isConnected = true,
+                    isLoad = false
                 )
             }
-        } catch (e: Exception) {
+        } else {
             _screenState.value = _screenState.value.copy(
-                isError = true,
-                isConnected = true,
-                isLoad = false
+                isConnected = false,
+                isError = false
             )
-
-
         }
     }
 
@@ -95,10 +86,19 @@ class AddressViewModel @Inject constructor(
         if (context == null) return false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network =
+                connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                    Log.d("MALEOTEST", "Testing !! Testing !!")
+                    return true
+                }
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+            /*if (capabilities != null) {
                 when {
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                         return true
@@ -110,18 +110,21 @@ class AddressViewModel @Inject constructor(
                         return true
                     }
                 }
-            }
+            }*/
         } else {
-            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            /*val activeNetworkInfo = connectivityManager.activeNetworkInfo
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
                 return true
-            }
+            }*/
+            @Suppress("DEPRECATION") val networkInfo =
+                connectivityManager.activeNetworkInfo ?: return false
+            @Suppress("DEPRECATION")
+            return networkInfo.isConnected
         }
-        return false
+
     }
 
     fun initAddress() {
-        addressStateRemoteList.removeAll(addressStateRemoteList)
         _screenState.value = _screenState.value.copy(
             addressList = mutableListOf()
         )
@@ -137,7 +140,7 @@ class AddressViewModel @Inject constructor(
                     addressList = mutableListOf()
                 )
                 getAddress(
-                    token = event.value
+                    token = event.token
                 )
 
                 if (event.value.isEmpty()) {
@@ -165,6 +168,25 @@ class AddressViewModel @Inject constructor(
             is AddressEvent.ItemClicked -> {
 
             }
+            is AddressEvent.IsConnected -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = "Vous êtes déconnecter, veuillez revoir votre connexion"
+                        )
+                    )
+                }
+            }
+            is AddressEvent.IsError -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = "Une erreur réseau vient de se produire"
+                        )
+                    )
+                }
+            }
+
         }
     }
 
