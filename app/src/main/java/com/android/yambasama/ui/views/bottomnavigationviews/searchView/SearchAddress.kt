@@ -34,28 +34,27 @@ import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.collectLatest
 
 
 @ExperimentalMaterial3Api
 @Composable
 fun SearchAddress(
     navController: NavHostController,
-    context: Any,
     addressViewModel: AddressViewModel,
     userViewModel: UserViewModel
 ) {
     var visibleSearch by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
-    val context = LocalContext.current
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     var searchAddress by rememberSaveable { mutableStateOf("") }
     val token by userViewModel.tokenValue.observeAsState()
     val screenState = addressViewModel.screenState.value
     val scaffoldState = rememberScaffoldState()
-
 
     AnimatedVisibility(
         visible = visibleSearch,
@@ -102,21 +101,13 @@ fun SearchAddress(
                                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                             ),
                             onValueChange = {
-                                /*addressViewModel.addressStateRemoteList.removeAll(addressViewModel.addressStateRemoteList)
-                                addressViewModel.currentPage.value = 1
                                 searchAddress = it
-                                addressViewModel.getAddress(
-                                    townName = searchAddress,
-                                    addressViewModel.currentPage.value,
-                                    pagination = true,
-                                    token = token?.token!!
-                                )
-                                if (searchAddress.length === 0) {
-                                    addressViewModel.addressStateRemoteList.removeAll(
-                                        addressViewModel.addressStateRemoteList
+                                addressViewModel.onEvent(
+                                    AddressEvent.SearchValueEntered(
+                                        value = it,
+                                        token =token?.token!!
                                     )
-                                    addressViewModel.addressStateRemoteList.addAll(addressViewModel.addressStateRemoteListTemp)
-                                }*/
+                                )
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             placeholder = {
@@ -141,6 +132,7 @@ fun SearchAddress(
                             shape = RoundedCornerShape(22.dp)
                         )
                     }
+
                 }
 
             },
@@ -163,31 +155,34 @@ fun SearchAddress(
                     ),
                     state = listState
                 ) {
-
                     items(screenState.addressList) { address ->
                         SearchTownItem(address)
                     }
-
-                    items(count = 1) {
-                        AddressShimmer()
+                    if (screenState.isLoad) {
+                        items(count = 1) {
+                            AddressShimmer()
+                        }
                     }
+
                 }
 
-                /*InfiniteListAddressRemote(
-                    listState = listState,
-                    listItems = remember { addressViewModel.addressStateRemoteList },
-                    paddingValues = PaddingValues(
-                        top = 0.dp,
-                        bottom = innerPadding.calculateBottomPadding() + 100.dp
-                    ),
-                    addressViewModel = addressViewModel,
-                    isoCode = searchAddress,
-                    code = searchAddress,
-                    airportCode = searchAddress,
-                    airportName = searchAddress,
-                    townName = searchAddress,
-                    token = token?.token!!
-                )*/
+                if (screenState.isError) {
+                    addressViewModel.onEvent(AddressEvent.IsError)
+                } else if (!screenState.isConnected) {
+                    addressViewModel.onEvent(AddressEvent.IsConnected)
+                }
+
+                LaunchedEffect(key1 = true) {
+                    addressViewModel.uiEventFlow.collectLatest {event->
+                        when(event) {
+                            is UIEvent.ShowMessage-> {
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    message = event.message
+                                )
+                            }
+                        }
+                    }
+                }
             })
     }
 

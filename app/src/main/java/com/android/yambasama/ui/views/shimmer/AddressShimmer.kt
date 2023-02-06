@@ -55,65 +55,38 @@ fun AddressShimmer() {
     ShimmerGridItem(brush = brush)
     ShimmerGridItem(brush = brush)
     ShimmerGridItem(brush = brush)
+    ShimmerGridItem(brush = brush)
+    ShimmerGridItem(brush = brush)
 }
 
 @ExperimentalMaterial3Api
 @Composable
 fun ShimmerGridItem(brush: Brush) {
+    Spacer(modifier = Modifier.height(10.dp))
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
+        Spacer(modifier = Modifier.height(20.dp))
         Spacer(
             modifier = Modifier
-                .size(80.dp)
-                .clip(RoundedCornerShape(10.dp))
+                .size(30.dp)
+                .clip(RoundedCornerShape(15.dp))
                 .background(brush)
         )
         Spacer(modifier = Modifier.width(10.dp))
         Column(verticalArrangement = Arrangement.Center) {
             Spacer(
                 modifier = Modifier
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .fillMaxWidth(fraction = 0.5f)
-                    .background(brush)
-            )
-
-            Spacer(modifier = Modifier.height(10.dp)) //creates an empty space between
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .fillMaxWidth(fraction = 0.7f)
-                    .background(brush)
-            )
-
-            Spacer(modifier = Modifier.height(10.dp)) //creates an empty space between
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .height(30.dp)
+                    .clip(RoundedCornerShape(15.dp))
                     .fillMaxWidth(fraction = 0.9f)
                     .background(brush)
             )
         }
     }
+    Spacer(modifier = Modifier.height(15.dp))
 }
 
-@ExperimentalMaterial3Api
-@Composable
-@Preview(showBackground = true)
-fun ShimmerPreview() {
-    ShimmerGridItem(
-        brush = Brush.linearGradient(
-            listOf(
-                Color.LightGray.copy(alpha = 0.9f),
-                Color.LightGray.copy(alpha = 0.4f),
-                Color.LightGray.copy(alpha = 0.9f)
-            )
-        )
-    )
-}
