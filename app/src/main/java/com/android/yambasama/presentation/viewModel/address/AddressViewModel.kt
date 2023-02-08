@@ -77,7 +77,8 @@ class AddressViewModel @Inject constructor(
         } else {
             _screenState.value = _screenState.value.copy(
                 isConnected = false,
-                isError = false
+                isError = false,
+                isLoad = false
             )
         }
     }

@@ -158,6 +158,7 @@ fun SearchAddress(
                     items(screenState.addressList) { address ->
                         SearchTownItem(address)
                     }
+                    Log.d("MALEOTEST", "Boss ${screenState.isLoad}")
                     if (screenState.isLoad) {
                         items(count = 1) {
                             AddressShimmer()
