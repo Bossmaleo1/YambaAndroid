@@ -93,30 +93,12 @@ class AddressViewModel @Inject constructor(
             val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
             return when {
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    Log.d("MALEOTEST", "Testing !! Testing !!")
                     return true
                 }
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
                 else -> false
             }
-            /*if (capabilities != null) {
-                when {
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                        return true
-                    }
-                }
-            }*/
         } else {
-            /*val activeNetworkInfo = connectivityManager.activeNetworkInfo
-            if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
-                return true
-            }*/
             @Suppress("DEPRECATION") val networkInfo =
                 connectivityManager.activeNetworkInfo ?: return false
             @Suppress("DEPRECATION")

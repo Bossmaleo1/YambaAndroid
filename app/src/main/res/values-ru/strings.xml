@@ -10,7 +10,6 @@
     <!-- Untranslate zone-->
     <string name="private_message">Private Message</string>
     <string name="public_message">Public Message</string>
-
     <string name="talks">переговоры</string>
     <string name="talk">вмешательство</string>
     <string name="like">нравится</string>
@@ -29,4 +28,5 @@
     <string name="contact_us">Свяжитесь с нами</string>
     <string name="guest_friend">Пригласить своих друзей</string>
     <string name="logout">Выйти</string>
+    <string name="network_error">Вы отключены, пожалуйста, проверьте подключение</string>
 </resources>

@@ -37,6 +37,7 @@ import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
+import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.collectLatest
@@ -158,10 +159,19 @@ fun SearchAddress(
                     items(screenState.addressList) { address ->
                         SearchTownItem(address)
                     }
-                    Log.d("MALEOTEST", "Boss ${screenState.isLoad}")
+
                     if (screenState.isLoad) {
                         items(count = 1) {
                             AddressShimmer()
+                        }
+                    }
+
+                    if (!screenState.isConnected) {
+                        items(count = 1) {
+                            networkError(
+                                title = stringResource(R.string.network_error),
+                                iconValue = 0
+                            )
                         }
                     }
 

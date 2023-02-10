@@ -28,5 +28,5 @@
     <string name="account">Account</string>
     <string name="contact_us">Contact us</string>
     <string name="guest_friend">Invite your friends</string>
-
+    <string name="network_error">You are disconnected, please review your connection</string>
 </resources>

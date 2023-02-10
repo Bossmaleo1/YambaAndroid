@@ -66,9 +66,6 @@ fun SearchView(navController: NavHostController) {
             mDate.value = formatter.format(Date(mYear,mMonth,mDayOfMonth))
         }, mYear, mMonth, mDay
     )
-
-    val localeCG = Locale("fr")
-    val localeEN = Locale("en")
     val listCountries = Locale.getISOCountries()
 
     listCountries.forEach { country ->
@@ -76,9 +73,6 @@ fun SearchView(navController: NavHostController) {
         //Log.d("Country", " IsoCode : ${country.isO3Country}")
         //Log.d(" ${country.language}", " IsoCode : ${country.country}")
         val locale = Locale(Locale.getDefault().isO3Language, country)
-        val iso = locale.isO3Country
-        val code = locale.country
-        val name = locale.displayCountry
         //Log.d("${name}", "isoCode : ${iso} code : ${code} Name : ${name} ")
     }
 
