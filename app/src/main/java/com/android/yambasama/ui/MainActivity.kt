@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,7 +26,7 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
-import com.android.yambasama.ui.views.Login
+import com.android.yambasama.ui.views.login
 import com.android.yambasama.ui.views.bottomnavigationviews.searchView.SearchAddress
 import com.android.yambasama.ui.views.model.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,7 +102,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = Route.loginView) {
-                Login(navController,userViewModel, context)
+                login(navController,userViewModel, context)
                 BackHandler {
                     activity?.finish()
                 }

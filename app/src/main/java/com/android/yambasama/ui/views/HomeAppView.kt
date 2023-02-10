@@ -231,6 +231,7 @@ fun HomeApp(
                                     200
                                 } + fadeOut()
                             ) {
+
                                 if (user?.imageUrl?.length == 0) {
                                     Image(
                                         painter = painterResource(id = R.drawable.ic_profile_colorier),
@@ -258,7 +259,6 @@ fun HomeApp(
                     }
                 )
             }) { innerPadding ->
-
             if (switch) {
                 Column(Modifier.padding(top = 100.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)) {
                     SearchView(navController)

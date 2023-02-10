@@ -28,4 +28,5 @@
     <string name="contact_us">Nous contacter</string>
     <string name="guest_friend">Inviter vos amis</string>
     <string name="logout">Déconnexion</string>
+    <string name="network_error">Vous êtes déconnecter, veuillez revoir votre connexion</string>
 </resources>
