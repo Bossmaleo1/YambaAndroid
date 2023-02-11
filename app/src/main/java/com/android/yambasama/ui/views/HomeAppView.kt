@@ -243,12 +243,17 @@ fun HomeApp(
                                     )
                                 } else {
                                     Image(
-                                        painter = rememberAsyncImagePainter("${BuildConfig.BASE_URL_DEV}/images/${user?.imageUrl}"),
+                                        painter = rememberAsyncImagePainter(
+                                            model = "${BuildConfig.BASE_URL_DEV}/images/${user?.imageUrl}",
+                                            placeholder = painterResource(id = R.drawable.ic_profile_colorier),
+                                            error = painterResource(id = R.drawable.ic_profile_colorier),
+                                        ),
                                         modifier = Modifier
                                             .height(40.dp)
                                             .width(40.dp)
                                             .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
-                                        contentDescription = "Profile picture description"
+                                        contentDescription = "Profile picture description",
+                                        contentScale = ContentScale.Crop,
                                     )
                                 }
                             }

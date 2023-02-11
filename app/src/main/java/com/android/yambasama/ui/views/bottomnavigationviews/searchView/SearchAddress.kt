@@ -165,7 +165,7 @@ fun SearchAddress(
                     if (!screenState.isNetworkConnected) {
                         items(count = 1) {
                             networkError(
-                                title = stringResource(R.string.is_connect_error),
+                                title = stringResource(R.string.network_error),
                                 iconValue = 0
                             )
                         }
