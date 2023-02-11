@@ -1,6 +1,5 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchView
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -23,7 +22,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,10 +34,8 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
-import com.android.yambasama.ui.views.utils.InfiniteListAddressRemote
 import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -166,14 +162,14 @@ fun SearchAddress(
                         }
                     }
 
-                    if (!screenState.isConnected) {
+                    if (!screenState.isNetworkConnected) {
                         items(count = 1) {
                             networkError(
                                 title = stringResource(R.string.is_connect_error),
                                 iconValue = 0
                             )
                         }
-                    } else if (screenState.isError) {
+                    } else if (screenState.isNetworkError) {
                         items(count = 1) {
                             networkError(
                                 title = stringResource(R.string.is_connect_error),
@@ -184,10 +180,10 @@ fun SearchAddress(
 
                 }
 
-                if (screenState.isError) {
-                    addressViewModel.onEvent(AddressEvent.IsError)
-                } else if (!screenState.isConnected) {
-                    addressViewModel.onEvent(AddressEvent.IsConnected)
+                if (screenState.isNetworkError) {
+                    addressViewModel.onEvent(AddressEvent.IsNetworkError)
+                } else if (!screenState.isNetworkConnected) {
+                    addressViewModel.onEvent(AddressEvent.IsNetworkConnected)
                 }
 
                 LaunchedEffect(key1 = true) {
