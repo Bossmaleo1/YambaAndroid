@@ -29,4 +29,5 @@
     <string name="guest_friend">Пригласить своих друзей</string>
     <string name="logout">Выйти</string>
     <string name="network_error">Вы отключены, пожалуйста, проверьте подключение</string>
+    <string name="is_connect_error">Только что произошла ошибка сервера</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import com.android.yambasama.R
 import javax.inject.Inject
 
 class AddressViewModel @Inject constructor(
@@ -155,7 +157,7 @@ class AddressViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = "Vous êtes déconnecter, veuillez revoir votre connexion"
+                            message = app.getString(R.string.network_error)
                         )
                     )
                 }
@@ -164,7 +166,7 @@ class AddressViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = "Une erreur réseau vient de se produire"
+                            message = app.getString(R.string.is_connect_error)
                         )
                     )
                 }

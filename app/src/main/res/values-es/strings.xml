@@ -28,5 +28,6 @@
     <string name="contact_us">Contáctenos</string>
     <string name="guest_friend">Invita a tus amigos</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="is_connect_error">Acaba de ocurrir un error del servidor</string>
     <string name="network_error">Estás desconectado, revisa tu conexión</string>
 </resources>
