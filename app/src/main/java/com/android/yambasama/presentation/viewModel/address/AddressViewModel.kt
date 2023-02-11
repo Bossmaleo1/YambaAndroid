@@ -5,18 +5,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.yambasama.data.model.api.ApiAddressResponse
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
@@ -63,23 +55,23 @@ class AddressViewModel @Inject constructor(
                 }
 
                 _screenState.value = _screenState.value.copy(
-                    isConnected = true,
+                    isNetworkConnected = true,
                     isLoad = false,
-                    isError = false,
+                    isNetworkError = false,
                     initCall = screenState.value.initCall++
                 )
 
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
-                    isError = true,
-                    isConnected = true,
+                    isNetworkError = true,
+                    isNetworkConnected = true,
                     isLoad = false
                 )
             }
         } else {
             _screenState.value = _screenState.value.copy(
-                isConnected = false,
-                isError = false,
+                isNetworkConnected = false,
+                isNetworkError = false,
                 isLoad = false
             )
         }
@@ -153,7 +145,7 @@ class AddressViewModel @Inject constructor(
             is AddressEvent.ItemClicked -> {
 
             }
-            is AddressEvent.IsConnected -> {
+            is AddressEvent.IsNetworkConnected -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
@@ -162,7 +154,7 @@ class AddressViewModel @Inject constructor(
                     )
                 }
             }
-            is AddressEvent.IsError -> {
+            is AddressEvent.IsNetworkError -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
