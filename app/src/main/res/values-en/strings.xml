@@ -29,4 +29,5 @@
     <string name="guest_friend">Invita a tus amigos</string>
     <string name="logout">Logout</string>
     <string name="network_error">You are disconnected, please review your connection</string>
+    <string name="is_connect_error">A server error has just occurred</string>
 </resources>

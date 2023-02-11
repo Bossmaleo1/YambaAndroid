@@ -27,7 +27,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -251,10 +253,21 @@ fun HomeApp(
                                 }
                             }
 
-                            Text(
-                                modifier = Modifier.padding(start = 10.dp),
-                                text = "Yamba"
-                            )
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(start = 10.dp),
+                                    text = stringResource(R.string.app_name)
+                                )
+
+                                Text(
+                                    modifier = Modifier.padding(start = 10.dp),
+                                    fontSize = 15.sp,
+                                    text = "${user?.firstName} ${user?.lastName}",
+                                    fontWeight = FontWeight.Normal
+                                )
+                            }
                         }
                     }
                 )

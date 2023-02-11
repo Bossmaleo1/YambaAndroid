@@ -2,6 +2,7 @@ package com.android.yambasama.ui.views.viewsError
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.SignalWifiStatusbarConnectedNoInternet4
 import androidx.compose.material3.Card
@@ -34,19 +35,22 @@ fun networkError(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            if (iconValue == 0) {
-                Icon(
-                    Icons.Outlined.SignalWifiStatusbarConnectedNoInternet4,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    tint = Color.Red
-                )
-            }
+            Icon(
+                if (iconValue == 0) {
+                    Icons.Outlined.SignalWifiStatusbarConnectedNoInternet4
+                } else {
+                    Icons.Outlined.Block
+                },
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                tint = Color.Red
+            )
 
             Text(
                 text = title,
                 color = Color.Red,
-                modifier = Modifier.padding(start = 4.dp, top = 10.dp))
+                modifier = Modifier.padding(start = 4.dp, top = 10.dp)
+            )
         }
     }
 }
