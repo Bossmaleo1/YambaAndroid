@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material.icons.outlined.SignalCellularConnectedNoInternet0Bar
 import androidx.compose.material.icons.outlined.SignalWifiStatusbarConnectedNoInternet4
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,10 +37,16 @@ fun networkError(
         ) {
 
             Icon(
-                if (iconValue == 0) {
-                    Icons.Outlined.SignalWifiStatusbarConnectedNoInternet4
-                } else {
-                    Icons.Outlined.Block
+                when (iconValue) {
+                    0 -> {
+                        Icons.Outlined.SignalCellularConnectedNoInternet0Bar
+                    }
+                    1 -> {
+                        Icons.Outlined.Block
+                    }
+                    else -> {
+                        Icons.Outlined.Block
+                    }
                 },
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
