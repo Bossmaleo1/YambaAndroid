@@ -30,4 +30,7 @@
     <string name="logout">Выйти</string>
     <string name="network_error">Вы отключены, пожалуйста, проверьте подключение</string>
     <string name="is_connect_error">Только что произошла ошибка сервера</string>
+    <string name="is_login_empty_email_field">Ваше поле электронной почты пусто, пожалуйста, заполните его</string>
+    <string name="is_login_empty_password_field">Поле для пароля пусто, пожалуйста, заполните его</string>
+    <string name="is_login_empty_2_field">Поля для пароля и электронной почты пусты, пожалуйста, заполните их</string>
 </resources>

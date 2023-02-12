@@ -22,12 +22,15 @@
     <string name="travel_date">Travel Date</string>
     <string name="add_an_ad">Add an ad</string>
     <string name="search">Search</string>
-    <string name="about">Sobre</string>
-    <string name="settings">Ajustes</string>
-    <string name="account">Cuenta</string>
-    <string name="contact_us">Contáctenos</string>
-    <string name="guest_friend">Invita a tus amigos</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="account">Account</string>
+    <string name="contact_us">Contact us</string>
+    <string name="guest_friend">Invite your friends</string>
     <string name="logout">Logout</string>
     <string name="network_error">You are disconnected, please review your connection</string>
     <string name="is_connect_error">A server error has just occurred</string>
+    <string name="is_login_empty_email_field">Your email field is empty, please fill it in</string>
+    <string name="is_login_empty_password_field">Your password field is empty, please fill them in</string>
+    <string name="is_login_empty_2_field">Your password and email fields are empty, please fill them in</string>
 </resources>

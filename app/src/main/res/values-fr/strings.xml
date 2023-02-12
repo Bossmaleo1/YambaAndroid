@@ -25,9 +25,12 @@
     <string name="about">A propos</string>
     <string name="settings">Paramètres</string>
     <string name="account">Compte</string>
-    <string name="contact_us">Nous contacter</string>
+    <string name="contact_us">Contactez-nous</string>
     <string name="guest_friend">Inviter vos amis</string>
     <string name="logout">Déconnexion</string>
     <string name="is_connect_error">Vous êtes déconnecter, veuillez revoir votre connexion</string>
     <string name="network_error">Une erreur serveur vient de  se produire</string>
+    <string name="is_login_empty_email_field">Votre champ email est vide, veuillez le remplir</string>
+    <string name="is_login_empty_password_field">Votre champ mot de passe est vide, veuillez les remplir</string>
+    <string name="is_login_empty_2_field">Vos champs mot de passe et email sont vides, veuillez les remplir</string>
 </resources>

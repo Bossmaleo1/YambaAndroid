@@ -25,8 +25,7 @@ class FactoryModule {
         saveUserUseCase: SaveUserUseCase,
         saveTokenUseCase: SaveTokenUseCase,
         getSavedUserUseCase: GetSavedUserUseCase,
-        getSavedTokenUseCase: GetSavedTokenUseCase,
-        deleteSavedUserUseCase: DeleteSavedUserUseCase
+        getSavedTokenUseCase: GetSavedTokenUseCase
     ): UserViewModelFactory {
         return UserViewModelFactory(
             application,
@@ -35,8 +34,7 @@ class FactoryModule {
             saveUserUseCase,
             saveTokenUseCase,
             getSavedUserUseCase,
-            getSavedTokenUseCase,
-            deleteSavedUserUseCase
+            getSavedTokenUseCase
         )
     }
 

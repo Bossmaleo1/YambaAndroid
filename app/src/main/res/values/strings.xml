@@ -30,4 +30,7 @@
     <string name="guest_friend">Invite your friends</string>
     <string name="is_connect_error">You are disconnected, please review your connection</string>
     <string name="network_error">A server error has just occurred</string>
+    <string name="is_login_empty_email_field">Your email field is empty, please fill it in</string>
+    <string name="is_login_empty_password_field">Your password field is empty, please fill them in</string>
+    <string name="is_login_empty_2_field">Your password and email fields are empty, please fill them in</string>
 </resources>

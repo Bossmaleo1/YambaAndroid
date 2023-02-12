@@ -5,5 +5,6 @@ sealed class AddressEvent {
     data class SearchValueEntered(val value : String,val token: String):AddressEvent()
     object ItemClicked : AddressEvent()
     object IsNetworkConnected:AddressEvent()
+    object InitAddressState:AddressEvent()
     object IsNetworkError:AddressEvent()
 }
