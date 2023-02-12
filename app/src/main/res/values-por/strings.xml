@@ -31,4 +31,7 @@
     <string name="logout">Sair</string>
     <string name="network_error">Você está desconectado, revise sua conexão</string>
     <string name="is_connect_error">Um erro de servidor acabou de ocorrer</string>
+    <string name="is_login_empty_email_field">Seu campo de e-mail está vazio, por favor preencha-o</string>
+    <string name="is_login_empty_password_field">Seu campo de senha está vazio, por favor preencha-os</string>
+    <string name="is_login_empty_2_field">Seus campos de senha e e-mail estão vazios, preencha-os</string>
 </resources>

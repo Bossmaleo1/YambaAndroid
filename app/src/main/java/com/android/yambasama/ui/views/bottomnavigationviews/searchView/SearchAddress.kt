@@ -32,6 +32,7 @@ import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.viewsError.networkError
@@ -49,9 +50,14 @@ fun SearchAddress(
     var visibleSearch by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     var searchAddress by rememberSaveable { mutableStateOf("") }
-    val token by userViewModel.tokenValue.observeAsState()
     val screenState = addressViewModel.screenState.value
+    val screenStateUser = userViewModel.screenState.value
     val scaffoldState = rememberScaffoldState()
+
+    userViewModel.onEvent(AuthEvent.GetSavedToken)
+    if (screenStateUser.tokenRoom.isNotEmpty()) {
+        userViewModel.onEvent(AuthEvent.GetSavedUserByToken)
+    }
 
     AnimatedVisibility(
         visible = visibleSearch,
@@ -99,12 +105,15 @@ fun SearchAddress(
                             ),
                             onValueChange = {
                                 searchAddress = it
-                                addressViewModel.onEvent(
-                                    AddressEvent.SearchValueEntered(
-                                        value = it,
-                                        token =token?.token!!
+                                if (screenStateUser.tokenRoom.isNotEmpty()) {
+                                    addressViewModel.onEvent(
+                                        AddressEvent.SearchValueEntered(
+                                            value = it,
+                                            token = screenStateUser.tokenRoom[0].token/*token?.token!!*/
+                                        )
                                     )
-                                )
+                                }
+
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             placeholder = {
@@ -136,12 +145,14 @@ fun SearchAddress(
             content = { innerPadding ->
 
                 LaunchedEffect(screenState.initCall == 1) {
-                    addressViewModel.onEvent(
-                        AddressEvent.AddressInit(
-                            value = screenState.searchInputValue,
-                            token =token?.token!!
+                    if (screenStateUser.tokenRoom.isNotEmpty()) {
+                        addressViewModel.onEvent(
+                            AddressEvent.AddressInit(
+                                value = screenState.searchInputValue,
+                                token = screenStateUser.tokenRoom[0].token
+                            )
                         )
-                    )
+                    }
                 }
 
 

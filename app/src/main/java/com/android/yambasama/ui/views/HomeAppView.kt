@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,8 +38,12 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.android.yambasama.BuildConfig
 import com.android.yambasama.R
+import com.android.yambasama.data.model.dataLocal.UserRoom
+import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
 import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
@@ -50,17 +55,11 @@ import kotlinx.coroutines.delay
 @ExperimentalMaterial3Api
 fun HomeApp(
     navController: NavHostController,
-    scope: CoroutineScope,
-    drawerState: DrawerState,
-    context: Any,
     dropViewModel: DropViewModel,
     userViewModel: UserViewModel
 ) {
-    val navController2 = rememberNavController()
-    val navBackStackEntry by navController2.currentBackStackEntryAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    /*val currentRoute =
-        navBackStackEntry?.destination?.route ?: WazzabyDrawerDestinations.HOME_ROUTE*/
+    val screenState = userViewModel.screenState.value
     var switch by rememberSaveable { mutableStateOf(true) }
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf(
@@ -75,17 +74,18 @@ fun HomeApp(
             Route.homeTabView
         )
     )
-    userViewModel.getSavedToken()
-        .observe(LocalContext.current as LifecycleOwner) { tokenRoom -> }
-    val token by userViewModel.tokenValue.observeAsState()
-    if (!token?.token.isNullOrBlank()) {
-        userViewModel.getSavedUserByToken(token?.token!!)
-            .observe(LocalContext.current as LifecycleOwner) {}
+
+    userViewModel.onEvent(AuthEvent.GetSavedToken)
+    //We test is the token exist
+    if (screenState.tokenRoom.isNotEmpty()) {
+        if (screenState.tokenRoom[0] !== null) {
+            userViewModel.onEvent(AuthEvent.GetSavedUserByToken)
+        }
     }
-    val user by userViewModel.userValue.observeAsState()
     var visibleSearch by remember { mutableStateOf(false) }
 
-    Scaffold(topBar = {
+    Scaffold(
+        topBar = {
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
@@ -204,7 +204,7 @@ fun HomeApp(
                                 onClick = {
                                     /* Handle settings! */
                                     dropViewModel.deleteAll()
-                                    //transferViewModel.initTransfer()
+                                    userViewModel.onEvent(AuthEvent.InitUserState)
                                     navController.navigate(Route.loginView)
                                 },
                                 leadingIcon = {
@@ -217,61 +217,63 @@ fun HomeApp(
                     },
                     scrollBehavior = scrollBehavior,
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            AnimatedVisibility(
-                                visible = visibleSearch,
-                                enter = slideInHorizontally(animationSpec = tween(durationMillis = 200)) { fullWidth ->
-                                    // Offsets the content by 1/3 of its width to the left, and slide towards right
-                                    // Overwrites the default animation with tween for this slide animation.
-                                    -fullWidth / 3
-                                } + fadeIn(
-                                    // Overwrites the default animation with tween
-                                    animationSpec = tween(durationMillis = 200)
-                                ),
-                                exit = slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                                    // Overwrites the ending position of the slide-out to 200 (pixels) to the right
-                                    200
-                                } + fadeOut()
-                            ) {
+                        if (screenState.userRoom.isNotEmpty() && screenState.userRoom[0] !== null) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                AnimatedVisibility(
+                                    visible = visibleSearch,
+                                    enter = slideInHorizontally(animationSpec = tween(durationMillis = 200)) { fullWidth ->
+                                        // Offsets the content by 1/3 of its width to the left, and slide towards right
+                                        // Overwrites the default animation with tween for this slide animation.
+                                        -fullWidth / 3
+                                    } + fadeIn(
+                                        // Overwrites the default animation with tween
+                                        animationSpec = tween(durationMillis = 200)
+                                    ),
+                                    exit = slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
+                                        // Overwrites the ending position of the slide-out to 200 (pixels) to the right
+                                        200
+                                    } + fadeOut()
+                                ) {
 
-                                if (user?.imageUrl?.length == 0) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.ic_profile_colorier),
-                                        modifier = Modifier.size(40.dp),
-                                        contentScale = ContentScale.Crop,
-                                        contentDescription = "Profile picture description"
+                                    if (screenState.userRoom[0].imageUrl?.length == 0) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.ic_profile_colorier),
+                                            modifier = Modifier.size(40.dp),
+                                            contentScale = ContentScale.Crop,
+                                            contentDescription = "Profile picture description"
+                                        )
+                                    } else {
+                                        Image(
+                                            painter = rememberAsyncImagePainter(
+                                                model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom[0].imageUrl}",
+                                                placeholder = painterResource(id = R.drawable.ic_profile_colorier),
+                                                error = painterResource(id = R.drawable.ic_profile_colorier),
+                                            ),
+                                            modifier = Modifier
+                                                .height(40.dp)
+                                                .width(40.dp)
+                                                .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
+                                            contentDescription = "Profile picture description",
+                                            contentScale = ContentScale.Crop,
+                                        )
+                                    }
+                                }
+
+                                Column(
+                                    verticalArrangement = Arrangement.Center,
+                                ) {
+                                    Text(
+                                        modifier = Modifier.padding(start = 10.dp),
+                                        text = stringResource(R.string.app_name)
                                     )
-                                } else {
-                                    Image(
-                                        painter = rememberAsyncImagePainter(
-                                            model = "${BuildConfig.BASE_URL_DEV}/images/${user?.imageUrl}",
-                                            placeholder = painterResource(id = R.drawable.ic_profile_colorier),
-                                            error = painterResource(id = R.drawable.ic_profile_colorier),
-                                        ),
-                                        modifier = Modifier
-                                            .height(40.dp)
-                                            .width(40.dp)
-                                            .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
-                                        contentDescription = "Profile picture description",
-                                        contentScale = ContentScale.Crop,
+
+                                    Text(
+                                        modifier = Modifier.padding(start = 10.dp),
+                                        fontSize = 15.sp,
+                                        text = "${screenState.userRoom[0].firstName} ${screenState.userRoom[0].lastName}",
+                                        fontWeight = FontWeight.Normal
                                     )
                                 }
-                            }
-
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Text(
-                                    modifier = Modifier.padding(start = 10.dp),
-                                    text = stringResource(R.string.app_name)
-                                )
-
-                                Text(
-                                    modifier = Modifier.padding(start = 10.dp),
-                                    fontSize = 15.sp,
-                                    text = "${user?.firstName} ${user?.lastName}",
-                                    fontWeight = FontWeight.Normal
-                                )
                             }
                         }
                     }
@@ -307,21 +309,7 @@ fun HomeApp(
                     )
                 }
             }
-        }, floatingActionButton = {
-            /*if (switch) {
-                ExtendedFloatingActionButton(
-                    icon = { Icon(Icons.Filled.EuroSymbol, "") },
-                    text = {
-                        Text(
-                            text = "Envoyer de l'argent",
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    },
-                    onClick = {/*do something*/ },
-                    elevation = FloatingActionButtonDefaults.elevation(8.dp),
-                )
-            }*/
-        }, content = { innerPadding -> })
+        }, floatingActionButton = {}, content = { innerPadding -> })
 
     LaunchedEffect(true) {
         delay(3)

@@ -40,9 +40,7 @@ class AddressViewModel @Inject constructor(
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(app)) {
-
             try {
-
                 val apiResult =
                     getAddressUseCase.execute(
                         page = screenState.value.currentPage,
@@ -144,6 +142,18 @@ class AddressViewModel @Inject constructor(
             }
             is AddressEvent.ItemClicked -> {
 
+            }
+            is AddressEvent.InitAddressState -> {
+                _screenState.value = _screenState.value.copy(
+                    isNetworkConnected = true,
+                    isLoad = false,
+                    isNetworkError = false,
+                    currentPage = 1,
+                    initCall = 0,
+                    addressList = mutableListOf(),
+                    addressListTemp = mutableListOf(),
+                    searchInputValue = ""
+                )
             }
             is AddressEvent.IsNetworkConnected -> {
                 viewModelScope.launch {

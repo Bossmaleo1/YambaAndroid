@@ -30,4 +30,7 @@
     <string name="logout">Cerrar sesión</string>
     <string name="is_connect_error">Acaba de ocurrir un error del servidor</string>
     <string name="network_error">Estás desconectado, revisa tu conexión</string>
+    <string name="is_login_empty_email_field">Su campo de correo electrónico está vacío, complételo</string>
+    <string name="is_login_empty_password_field">Su campo de contraseña está vacío, complételo</string>
+    <string name="is_login_empty_2_field">Su contraseña y los campos de correo electrónico están vacíos, complételos</string>
 </resources>

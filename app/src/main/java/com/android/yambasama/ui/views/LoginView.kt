@@ -1,6 +1,7 @@
 package com.android.yambasama.ui.views
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.outlined.Login
 import androidx.compose.material.icons.outlined.ManageAccounts
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.Scaffold
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +41,13 @@ import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.User
 import com.android.yambasama.data.util.Resource
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.Event.AuthEvent
+import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.model.Route
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -47,262 +56,235 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
     var email by rememberSaveable { mutableStateOf("sidneymaleoregis@gmail.com") }
     var password by rememberSaveable { mutableStateOf("Nfkol3324012020@!") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
-    val isLoading = remember { mutableStateOf(false) }
 
-    fun showProgressBar(){
-        isLoading.value = true
-    }
+    val screenState = userViewModel.screenState.value
+    val scaffoldState = rememberScaffoldState()
 
-    fun hideProgressBar(){
-        isLoading.value = false
-    }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        content = { innerPadding ->
 
-    Column {
-        if (isLoading.value) {
-            AlertDialog(
-                onDismissRequest = {
-                    // Dismiss the dialog when the user clicks outside the dialog or on the back
-                    // button. If you want to disable that functionality, simply use an empty
-                    // onCloseRequest.
-                    isLoading.value = false
-                },
-                title = {
+            Column {
+                if (screenState.isLoad) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            // Dismiss the dialog when the user clicks outside the dialog or on the back
+                            // button. If you want to disable that functionality, simply use an empty
+                        },
+                        title = {
 
-                },
-                text = {
-                    Column( modifier = Modifier
-                        .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Row() {
-                            CircularProgressIndicator()
-                            Row(Modifier.padding(10.dp)) {
-                                Text(text = "Connexion en cours...")
+                        },
+                        text = {
+                            Column( modifier = Modifier
+                                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                                Row {
+                                    CircularProgressIndicator()
+                                    Row(Modifier.padding(10.dp)) {
+                                        Text(text = "Connexion en cours...")
+                                    }
+                                }
+
                             }
+                        },
+                        confirmButton = {
+
+                        },
+                        dismissButton = {
+
+                        }
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+
+                Text(
+                    text = stringResource(R.string.app_name),
+                    modifier = Modifier
+                        .padding(top = 50.dp),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 40.sp
+                )
+
+                OutlinedTextField(
+                    value = email,
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    ),
+                    onValueChange = {
+                        email = it
+                        userViewModel.onEvent(
+                            AuthEvent.EmailValueEntered(it)
+                        )
+                    },
+                    label = { Text(stringResource(id = R.string.your_email)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    placeholder = { Text("") },
+                    leadingIcon = {
+                        IconButton(onClick = { }) {
+                            Icon(
+                                imageVector = Icons.Filled.Email,
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 30.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                OutlinedTextField(
+                    value = password,
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    ),
+                    onValueChange = {
+                        password = it
+                        userViewModel.onEvent(
+                            AuthEvent.PasswordValueEntered(it)
+                        )
+                    },
+                    label = { Text(stringResource(id = R.string.your_password)) },
+                    visualTransformation =
+                    if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    leadingIcon = {
+                        IconButton(onClick = { }) {
+                            Icon(
+                                imageVector = Icons.Filled.Lock,
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { passwordHidden = !passwordHidden }) {
+                            val visibilityIcon =
+                                if (passwordHidden) painterResource(id = R.drawable.baseline_visibility_24)
+                                else painterResource(id = R.drawable.baseline_visibility_off_24)
+                            val description = if (passwordHidden) "Show password" else "Hide password"
+                            Icon(painter = visibilityIcon, contentDescription = description)
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                ClickableText(
+                    buildAnnotatedString {
+                        pushStringAnnotation(
+                            tag = "",
+                            annotation = ""
+                        )
+                        withStyle(
+                            style = SpanStyle(
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
+                                fontSize = 15.sp
+                            )
+                        ) {
+                            append(stringResource(R.string.password_forget))
                         }
 
-                    }
-                },
-                confirmButton = {
+                        pop()
+                    },
+                    onClick = {
 
-                },
-                dismissButton = {
+                    }, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp)
+                )
 
-                }
-            )
-        }
-    }
-
-    fun getUser(userViewModel: UserViewModel, userName: String, token: String, context: Any) {
-        userViewModel.getUser(userName, token)
-        userViewModel.user.observe(context as LifecycleOwner) { user->
-            when (user) {
-                is Resource.Success -> {
-                    val user = user.data?.Users?.get(0) as User
-                    //we save the user Token
-                    userViewModel.saveToken(
-                        TokenRoom(
-                            1,
-                            //we split the bear characters
-                            token.split(" ")[1])
-                    )
-
-                    //We save the user
-                    userViewModel.saveUser(
-                        UserRoom(
-                            user.id,
-                            user.firstName,
-                            user.lastName,
-                            user.roles[0],
-                            user.phone,
-                            user.nationality,
-                            user.sex,
-                            user.state,
-                            token.split(" ")[1],
-                            user.email,
-                            user.username,
-                            user.pushNotifications?.get(0)?.keyPush,
-                            (if (user.images.isNotEmpty())  user.images[0].imageName else  "")
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+                    border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+                    onClick = {
+                        //we init our fields
+                        userViewModel.onEvent(
+                            AuthEvent.IsInitField(email,password)
+                        )
+                        //viewModelLogin(userViewModel, email,password, context)
+                        //we test if fields is Empties
+                        userViewModel.onEvent(
+                            AuthEvent.IsEmptyField
                         )
 
+                        //We initialize the connection parameters
+                        userViewModel.onEvent(
+                            AuthEvent.ConnectionAction
+                        )
 
+                        //We get our token
+                        userViewModel.onEvent(
+                            AuthEvent.GetToken(
+                                userName = email,
+                                password = password
+                            )
+                        )
+                    }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Login,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    hideProgressBar()
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(stringResource(R.string.connexion))
+                }
+
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
+                    border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+                    onClick = {
+
+                    }) {
+                    Icon(
+                        imageVector = Icons.Outlined.ManageAccounts,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(stringResource(R.string.open_account))
+                }
+            }
+
+            if (screenState.isNetworkError) {
+                userViewModel.onEvent(AuthEvent.IsNetworkError)
+            } else if (!screenState.isNetworkConnected) {
+                userViewModel.onEvent(AuthEvent.IsNetworkConnected)
+            }
+
+            LaunchedEffect(key1 = true) {
+                userViewModel.uiEventFlow.collectLatest {event->
+                    when(event) {
+                        is UIEvent.ShowMessage-> {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = event.message
+                            )
+                        }
+                    }
+                }
+            }
+
+            LaunchedEffect(key1 = screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
+                if (screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
                     navController.navigate(Route.homeView)
                 }
-
-                is Resource.Error -> {
-                    hideProgressBar()
-                    user.message?.let {
-                        Toast.makeText(context as Context, "An error occurred : $it", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
             }
-        }
-    }
-
-    fun viewModelLogin(userViewModel: UserViewModel, userName: String, password: String, context: Any) {
-        userViewModel.getToken(userName, password)
-        userViewModel.token.observe(context as LifecycleOwner) {token->
-            when (token) {
-                is Resource.Success -> {
-                    token.data?.token?.let {
-                        getUser(userViewModel, userName,
-                            "Bearer $it",context as LifecycleOwner)
-                    }
-                }
-
-                is Resource.Error -> {
-                    hideProgressBar()
-                    token.message?.let {
-                        Toast.makeText(context as Context, "An error occurred : $it", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-
-        Text(
-            text = stringResource(R.string.app_name),
-            modifier = Modifier
-                .padding(top = 50.dp),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 40.sp
-        )
-
-        OutlinedTextField(
-            value = email,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-            ),
-            onValueChange = { email = it },
-            label = { Text(stringResource(id = R.string.your_email)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            placeholder = { Text("") },
-            leadingIcon = {
-                IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Filled.Email,
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
-            shape = RoundedCornerShape(12.dp)
-        )
-
-        OutlinedTextField(
-            value = password,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-            ),
-            onValueChange = { password = it },
-            label = { Text(stringResource(id = R.string.your_password)) },
-            visualTransformation =
-            if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            leadingIcon = {
-                IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Filled.Lock,
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            trailingIcon = {
-                IconButton(onClick = { passwordHidden = !passwordHidden }) {
-                    val visibilityIcon =
-                        if (passwordHidden) painterResource(id = R.drawable.baseline_visibility_24)
-                        else painterResource(id = R.drawable.baseline_visibility_off_24)
-                    val description = if (passwordHidden) "Show password" else "Hide password"
-                    Icon(painter = visibilityIcon, contentDescription = description)
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
-            shape = RoundedCornerShape(12.dp)
-        )
-
-        ClickableText(
-            buildAnnotatedString {
-                pushStringAnnotation(
-                    tag = "",
-                    annotation = ""
-                )
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
-                        fontSize = 15.sp
-                    )
-                ) {
-                    append(stringResource(R.string.password_forget))
-                }
-
-                pop()
-            },
-            onClick = {
-
-            }, modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp)
-        )
-
-        OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
-            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
-            onClick = {
-                viewModelLogin(userViewModel, email,password, context)
-            }) {
-            Icon(
-                imageVector = Icons.Outlined.Login,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.connexion))
-        }
-
-        OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, bottom = 0.dp, start = 30.dp, end = 30.dp),
-            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
-            onClick = {
-
-            }) {
-            Icon(
-                imageVector = Icons.Outlined.ManageAccounts,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.open_account))
-        }
-    }
+        })
 
 }

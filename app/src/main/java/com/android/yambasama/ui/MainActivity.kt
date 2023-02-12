@@ -23,6 +23,8 @@ import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
@@ -87,8 +89,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController, context: Any) {
-        val drawerState = rememberDrawerState(DrawerValue.Closed)
-        val scope = rememberCoroutineScope()
         val activity = (LocalContext.current as? Activity)
         //We call our init view model method
         this.initViewModel()
@@ -117,7 +117,11 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             ) { backStackEntry ->
-                HomeApp(navController, scope, drawerState, context,dropViewModel,userViewModel)
+                if (userViewModel.screenState.value.userRoom.isEmpty()
+                    && userViewModel.screenState.value.tokenRoom.isEmpty()) {
+                    addressViewModel.onEvent(AddressEvent.InitAddressState)
+                }
+                HomeApp(navController,dropViewModel,userViewModel)
             }
 
             composable(route = Route.searchLocalizeView) {
