@@ -126,19 +126,16 @@ class AddressViewModel @Inject constructor(
                 }
             }
             is AddressEvent.AddressInit -> {
-                if (
-                    event.value.isEmpty()
-                    && screenState.value.currentPage == 1
-                    && screenState.value.addressList.isEmpty()
-                ) {
-                    _screenState.value = _screenState.value.copy(
-                        isLoad = true,
-                        searchInputValue = ""
-                    )
-                    getAddress(
-                        token = event.token
-                    )
-                }
+                _screenState.value = _screenState.value.copy(
+                    isLoad = true,
+                    searchInputValue = "",
+                    currentPage = 1,
+                    addressList = mutableListOf(),
+                    addressListTemp = mutableListOf()
+                )
+                getAddress(
+                    token = event.token
+                )
             }
             is AddressEvent.ItemClicked -> {
 

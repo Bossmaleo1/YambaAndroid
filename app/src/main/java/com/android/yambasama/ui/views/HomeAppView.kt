@@ -56,7 +56,8 @@ import kotlinx.coroutines.delay
 fun HomeApp(
     navController: NavHostController,
     dropViewModel: DropViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    addressData: String = ""
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val screenState = userViewModel.screenState.value
