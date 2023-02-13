@@ -144,7 +144,7 @@ fun SearchAddress(
             },
             content = { innerPadding ->
 
-                LaunchedEffect(screenState.initCall == 1) {
+                LaunchedEffect(key1 = true) {
                     if (screenStateUser.tokenRoom.isNotEmpty()) {
                         addressViewModel.onEvent(
                             AddressEvent.AddressInit(

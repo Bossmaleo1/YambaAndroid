@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
                         if (token === null) {
                             navController.navigate(Route.loginView)
                         } else {
-                            navController.navigate(Route.homeView)
+                            navController.navigate(Route.homeView+"/NOT_FOUND")
                         }
                     }
                 }
@@ -109,19 +110,23 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(
-                route = Route.homeView+"?userAddress={userAddress}",
+                route = Route.homeView+"/{userAddress}",
                 arguments = listOf(
                     navArgument("userAddress") {
-                            //type = NavType.StringType
-                        defaultValue = ""
+                            type = NavType.StringType
                     }
                 )
-            ) { backStackEntry ->
+            ) {
                 if (userViewModel.screenState.value.userRoom.isEmpty()
                     && userViewModel.screenState.value.tokenRoom.isEmpty()) {
                     addressViewModel.onEvent(AddressEvent.InitAddressState)
                 }
-                HomeApp(navController,dropViewModel,userViewModel)
+                HomeApp(
+                    navController = navController,
+                    dropViewModel = dropViewModel,
+                    userViewModel = userViewModel,
+                    addressData =  it.arguments?.getString("inputName").toString()
+                )
             }
 
             composable(route = Route.searchLocalizeView) {
