@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                         if (token === null) {
                             navController.navigate(Route.loginView)
                         } else {
-                            navController.navigate(Route.homeView+"/NOT_FOUND")
+                            navController.navigate(Route.homeView+"/${Route.homeNavParamDefault}")
                         }
                     }
                 }

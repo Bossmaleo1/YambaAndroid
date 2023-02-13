@@ -32,7 +32,7 @@ import java.util.*
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchView(navController: NavHostController) {
+fun SearchView(paramNav: String, navController: NavHostController) {
     var departure by rememberSaveable { mutableStateOf("") }
     var destination by rememberSaveable { mutableStateOf("") }
     var travelDate by rememberSaveable { mutableStateOf("") }
@@ -68,13 +68,7 @@ fun SearchView(navController: NavHostController) {
     )
     val listCountries = Locale.getISOCountries()
 
-    listCountries.forEach { country ->
-        //Log.d("Country", " Name : ${country.displayCountry}")
-        //Log.d("Country", " IsoCode : ${country.isO3Country}")
-        //Log.d(" ${country.language}", " IsoCode : ${country.country}")
-        val locale = Locale(Locale.getDefault().isO3Language, country)
-        //Log.d("${name}", "isoCode : ${iso} code : ${code} Name : ${name} ")
-    }
+    listCountries.forEach { country -> val locale = Locale(Locale.getDefault().isO3Language, country) }
 
     AnimatedVisibility(
         visible = visibleForm,

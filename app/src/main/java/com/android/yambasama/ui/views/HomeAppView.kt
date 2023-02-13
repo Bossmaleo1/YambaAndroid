@@ -70,7 +70,7 @@ fun HomeApp(
             Route.historyTabView
         ),
         BottomNavigationItem(
-           Icons.Outlined.Add,
+            Icons.Outlined.Add,
             stringResource(R.string.add_an_ad),
             Route.homeTabView
         )
@@ -87,209 +87,221 @@ fun HomeApp(
 
     Scaffold(
         topBar = {
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
+            Scaffold(
+                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
 
-                    },
-                    actions = {
+                        },
+                        actions = {
 
-                        var expanded by remember { mutableStateOf(false) }
-                        IconButton(onClick = { /* doSomething() */ }) {
-                            BadgedBox(badge = { Badge { Text("8") } }) {
+                            var expanded by remember { mutableStateOf(false) }
+                            IconButton(onClick = { /* doSomething() */ }) {
+                                BadgedBox(badge = { Badge { Text("8") } }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Notifications,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            }
+
+                            IconButton(onClick = {
+                                expanded = true
+                            }) {
                                 Icon(
-                                    imageVector = Icons.Filled.Notifications,
+                                    imageVector = Icons.Filled.MoreVert,
                                     contentDescription = "Localized description"
                                 )
                             }
-                        }
 
-                        IconButton(onClick = {
-                            expanded = true
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.MoreVert,
-                                contentDescription = "Localized description"
-                            )
-                        }
-
-                        //we create our Dropdown Menu Item
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = stringResource(id = R.string.account),
-                                        maxLines = 1
-                                    )
-                                },
-                                onClick = { /* Handle edit! */ },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.AccountCircle,
-                                        contentDescription = null
-                                    )
-                                })
-
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = stringResource(id = R.string.settings),
-                                        maxLines = 1
-                                    )
-                                },
-                                onClick = { /* Handle edit! */ },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.Settings,
-                                        contentDescription = null
-                                    )
-                                })
-
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = stringResource(id = R.string.contact_us),
-                                        maxLines = 1
-                                    )
-                                },
-                                onClick = { /* Handle edit! */ },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.ContactPage,
-                                        contentDescription = null
-                                    )
-                                }
-                            )
-
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = stringResource(id = R.string.guest_friend),
-                                        maxLines = 1
-                                    )
-                                },
-                                onClick = { /* Handle edit! */ },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.PeopleOutline,
-                                        contentDescription = null
-                                    )
-                                })
-
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = stringResource(id = R.string.about),
-                                        maxLines = 1
-                                    )
-                                },
-                                onClick = { /* Handle edit! */ },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.HelpOutline,
-                                        contentDescription = null
-                                    )
-                                })
-
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        stringResource(id = R.string.logout)
-                                    )
-                                },
-                                onClick = {
-                                    /* Handle settings! */
-                                    dropViewModel.deleteAll()
-                                    userViewModel.onEvent(AuthEvent.InitUserState)
-                                    navController.navigate(Route.loginView)
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Outlined.Logout,
-                                        contentDescription = null
-                                    )
-                                })
-                        }
-                    },
-                    scrollBehavior = scrollBehavior,
-                    title = {
-                        if (screenState.userRoom.isNotEmpty() && screenState.userRoom[0] !== null) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                AnimatedVisibility(
-                                    visible = visibleSearch,
-                                    enter = slideInHorizontally(animationSpec = tween(durationMillis = 200)) { fullWidth ->
-                                        // Offsets the content by 1/3 of its width to the left, and slide towards right
-                                        // Overwrites the default animation with tween for this slide animation.
-                                        -fullWidth / 3
-                                    } + fadeIn(
-                                        // Overwrites the default animation with tween
-                                        animationSpec = tween(durationMillis = 200)
-                                    ),
-                                    exit = slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                                        // Overwrites the ending position of the slide-out to 200 (pixels) to the right
-                                        200
-                                    } + fadeOut()
-                                ) {
-
-                                    if (screenState.userRoom[0].imageUrl?.length == 0) {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.ic_profile_colorier),
-                                            modifier = Modifier.size(40.dp),
-                                            contentScale = ContentScale.Crop,
-                                            contentDescription = "Profile picture description"
+                            //we create our Dropdown Menu Item
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(id = R.string.account),
+                                            maxLines = 1
                                         )
-                                    } else {
-                                        Image(
-                                            painter = rememberAsyncImagePainter(
-                                                model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom[0].imageUrl}",
-                                                placeholder = painterResource(id = R.drawable.ic_profile_colorier),
-                                                error = painterResource(id = R.drawable.ic_profile_colorier),
-                                            ),
-                                            modifier = Modifier
-                                                .height(40.dp)
-                                                .width(40.dp)
-                                                .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
-                                            contentDescription = "Profile picture description",
-                                            contentScale = ContentScale.Crop,
+                                    },
+                                    onClick = { /* Handle edit! */ },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.AccountCircle,
+                                            contentDescription = null
+                                        )
+                                    })
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(id = R.string.settings),
+                                            maxLines = 1
+                                        )
+                                    },
+                                    onClick = { /* Handle edit! */ },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.Settings,
+                                            contentDescription = null
+                                        )
+                                    })
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(id = R.string.contact_us),
+                                            maxLines = 1
+                                        )
+                                    },
+                                    onClick = { /* Handle edit! */ },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.ContactPage,
+                                            contentDescription = null
+                                        )
+                                    }
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(id = R.string.guest_friend),
+                                            maxLines = 1
+                                        )
+                                    },
+                                    onClick = { /* Handle edit! */ },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.PeopleOutline,
+                                            contentDescription = null
+                                        )
+                                    })
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(id = R.string.about),
+                                            maxLines = 1
+                                        )
+                                    },
+                                    onClick = { /* Handle edit! */ },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.HelpOutline,
+                                            contentDescription = null
+                                        )
+                                    })
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            stringResource(id = R.string.logout)
+                                        )
+                                    },
+                                    onClick = {
+                                        /* Handle settings! */
+                                        dropViewModel.deleteAll()
+                                        userViewModel.onEvent(AuthEvent.InitUserState)
+                                        navController.navigate(Route.loginView)
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Outlined.Logout,
+                                            contentDescription = null
+                                        )
+                                    })
+                            }
+                        },
+                        scrollBehavior = scrollBehavior,
+                        title = {
+                            if (screenState.userRoom.isNotEmpty() && screenState.userRoom[0] !== null) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    AnimatedVisibility(
+                                        visible = visibleSearch,
+                                        enter = slideInHorizontally(
+                                            animationSpec = tween(
+                                                durationMillis = 200
+                                            )
+                                        ) { fullWidth ->
+                                            // Offsets the content by 1/3 of its width to the left, and slide towards right
+                                            // Overwrites the default animation with tween for this slide animation.
+                                            -fullWidth / 3
+                                        } + fadeIn(
+                                            // Overwrites the default animation with tween
+                                            animationSpec = tween(durationMillis = 200)
+                                        ),
+                                        exit = slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
+                                            // Overwrites the ending position of the slide-out to 200 (pixels) to the right
+                                            200
+                                        } + fadeOut()
+                                    ) {
+
+                                        if (screenState.userRoom[0].imageUrl?.length == 0) {
+                                            Image(
+                                                painter = painterResource(id = R.drawable.ic_profile_colorier),
+                                                modifier = Modifier.size(40.dp),
+                                                contentScale = ContentScale.Crop,
+                                                contentDescription = "Profile picture description"
+                                            )
+                                        } else {
+                                            Image(
+                                                painter = rememberAsyncImagePainter(
+                                                    model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom[0].imageUrl}",
+                                                    placeholder = painterResource(id = R.drawable.ic_profile_colorier),
+                                                    error = painterResource(id = R.drawable.ic_profile_colorier),
+                                                ),
+                                                modifier = Modifier
+                                                    .height(40.dp)
+                                                    .width(40.dp)
+                                                    .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
+                                                contentDescription = "Profile picture description",
+                                                contentScale = ContentScale.Crop,
+                                            )
+                                        }
+                                    }
+
+                                    Column(
+                                        verticalArrangement = Arrangement.Center,
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.padding(start = 10.dp),
+                                            text = stringResource(R.string.app_name)
+                                        )
+
+                                        Text(
+                                            modifier = Modifier.padding(start = 10.dp),
+                                            fontSize = 15.sp,
+                                            text = "${screenState.userRoom[0].firstName} ${screenState.userRoom[0].lastName}",
+                                            fontWeight = FontWeight.Normal
                                         )
                                     }
                                 }
-
-                                Column(
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    Text(
-                                        modifier = Modifier.padding(start = 10.dp),
-                                        text = stringResource(R.string.app_name)
-                                    )
-
-                                    Text(
-                                        modifier = Modifier.padding(start = 10.dp),
-                                        fontSize = 15.sp,
-                                        text = "${screenState.userRoom[0].firstName} ${screenState.userRoom[0].lastName}",
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                }
                             }
                         }
-                    }
-                )
-            }) { innerPadding ->
-            if (switch) {
-                Column(Modifier.padding(top = 100.dp, bottom = 0.dp, start = 0.dp, end = 0.dp)) {
-                    SearchView(navController)
-                }
-            } else {
-                AddAdView()
-            }
+                    )
+                }) { innerPadding ->
 
-        }
-    },
+                if (switch) {
+                    Column(
+                        Modifier.padding(
+                            top = 100.dp,
+                            bottom = 0.dp,
+                            start = 0.dp,
+                            end = 0.dp
+                        )
+                    ) {
+                        SearchView(addressData,navController)
+                    }
+                } else {
+                    AddAdView()
+                }
+
+            }
+        },
         bottomBar = {
             NavigationBar {
                 items.forEachIndexed { index, item ->
@@ -300,8 +312,10 @@ fun HomeApp(
                                 contentDescription = null
                             )
                         },
-                        label = { Text(
-                            remember {item.title}) },
+                        label = {
+                            Text(
+                                remember { item.title })
+                        },
                         selected = selectedItem == index,
                         onClick = {
                             selectedItem = index
