@@ -17,18 +17,16 @@ import java.util.*
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchTownItem(address: Address) {
+fun SearchTownItem(onNavigateToHomeScreen: (String)->Unit, address: Address) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
         onClick = {
-            Log.d("MALEOMALEO9393","${address.id} -------- ${address.townName}")
-            // Je dois faire passer les messages de l'addresse avec
-            // des séparateurs de - ou , ou ; ou |
-            // Puis je lirai ça avec un split pour reconstituer une Address
-            // Plutôt de refaire un truc avec du SQLite
+            onNavigateToHomeScreen(
+                "${address.id};${address.isoCode};${address.code};${address.airportName};${address.airportCode};${address.townName}"
+            )
         }
     ) {
         Column {

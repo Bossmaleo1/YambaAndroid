@@ -34,6 +34,7 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
+import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.delay
@@ -164,7 +165,14 @@ fun SearchAddress(
                     state = listState
                 ) {
                     items(screenState.addressList) { address ->
-                        SearchTownItem(address)
+                        SearchTownItem(
+                            onNavigateToHomeScreen = {
+                                navController.navigate(
+                                    route = "${Route.homeView}/$it"
+                                )
+                            },
+                            address = address
+                        )
                     }
 
                     if (screenState.isLoad) {
