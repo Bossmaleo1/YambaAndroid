@@ -8,24 +8,22 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
-import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
@@ -49,9 +47,13 @@ class MainActivity : ComponentActivity() {
     lateinit var dropFactory: DropViewModelFactory
     @Inject
     lateinit var addressFactory: AddressViewModelFactory
+    @Inject
+    lateinit var searchFormFactory: SearchFormViewModelFactory
+
     private lateinit var userViewModel: UserViewModel
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var dropViewModel: DropViewModel
+    private lateinit var searchFormViewModel: SearchFormViewModel
     var token: String? = null
 
     @SuppressLint("CoroutineCreationDuringComposition")
@@ -85,6 +87,7 @@ class MainActivity : ComponentActivity() {
         userViewModel = ViewModelProvider(this, userFactory)[UserViewModel::class.java]
         dropViewModel = ViewModelProvider(this, dropFactory)[DropViewModel::class.java]
         addressViewModel = ViewModelProvider(this,addressFactory)[AddressViewModel::class.java]
+        searchFormViewModel = ViewModelProvider(this,searchFormFactory)[SearchFormViewModel::class.java]
     }
 
     @Composable
@@ -110,12 +113,12 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(
-                route = Route.homeView+"/{userAddress}",
-                arguments = listOf(
+                route = Route.homeView
+                /*arguments = listOf(
                     navArgument("userAddress") {
                             type = NavType.StringType
                     }
-                )
+                )*/
             ) {
                 if (userViewModel.screenState.value.userRoom.isEmpty()
                     && userViewModel.screenState.value.tokenRoom.isEmpty()) {
@@ -125,12 +128,26 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     dropViewModel = dropViewModel,
                     userViewModel = userViewModel,
-                    addressData =  it.arguments?.getString("inputName").toString()
+                    searchFormViewModel = searchFormViewModel
+                    //addressData =  it.arguments?.getString("inputName").toString()
                 )
             }
 
-            composable(route = Route.searchLocalizeView) {
-                SearchAddress(navController, addressViewModel, userViewModel)
+            composable(
+                route = Route.searchLocalizeView
+                /*arguments = listOf(
+                    navArgument("pointTravel") {
+                        type = NavType.StringType
+                    }
+                )*/
+            ) {
+                SearchAddress(
+                    navController = navController,
+                    addressViewModel = addressViewModel,
+                    userViewModel = userViewModel,
+                    searchFormViewModel = searchFormViewModel
+                    //addressParam = it.arguments?.getString("pointTravel").toString()
+                )
             }
         }
     }

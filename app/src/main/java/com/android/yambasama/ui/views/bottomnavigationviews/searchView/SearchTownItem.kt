@@ -12,21 +12,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import com.android.yambasama.data.model.dataRemote.Address
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
+import com.android.yambasama.ui.views.model.Route
 import java.util.*
 
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchTownItem(onNavigateToHomeScreen: (String)->Unit, address: Address) {
+fun SearchTownItem(
+    //onNavigateToHomeScreen: (String)->Unit,
+    address: Address,
+    searchFormViewModel: SearchFormViewModel
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
         onClick = {
-            onNavigateToHomeScreen(
-                "${address.id};${address.isoCode};${address.code};${address.airportName};${address.airportCode};${address.townName}"
-            )
+            /*onNavigateToHomeScreen(
+                "${address.id};${address.isoCode};${address.code};${address.airportName};${address.airportCode};${address.townName};${origin}"
+            )*/
+            if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                searchFormViewModel.onEvent(
+                    SearchFormEvent.SearchFormInitAddressDeparture(
+                        addressDeparture = address
+                    )
+                )
+            } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
+                searchFormViewModel.onEvent(
+                    SearchFormEvent.SearchFormInitAddressDestination(
+                        addressDestination = address
+                    )
+                )
+            }
         }
     ) {
         Column {

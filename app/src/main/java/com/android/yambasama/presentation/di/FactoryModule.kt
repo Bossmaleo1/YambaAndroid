@@ -5,6 +5,7 @@ import com.android.yambasama.domain.usecase.address.GetAddressUseCase
 import com.android.yambasama.domain.usecase.user.*
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -62,5 +63,13 @@ class FactoryModule {
             deleteTableUserUseCase,
             deleteTableTokenUseCase
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchFormViewModelFactory(
+        application: Application
+    ): SearchFormViewModelFactory {
+        return SearchFormViewModelFactory(application)
     }
 }
