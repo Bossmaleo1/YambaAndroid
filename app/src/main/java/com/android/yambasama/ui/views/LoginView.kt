@@ -282,7 +282,7 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
 
             LaunchedEffect(key1 = screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
                 if (screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
-                    navController.navigate(Route.homeView)
+                    navController.navigate(Route.homeView+"/${Route.homeNavParamDefault}")
                 }
             }
         })

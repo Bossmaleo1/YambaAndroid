@@ -1,6 +1,5 @@
 package com.android.yambasama.ui.views
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.*
 import androidx.compose.animation.slideInHorizontally
@@ -8,47 +7,37 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.android.yambasama.BuildConfig
 import com.android.yambasama.R
-import com.android.yambasama.data.model.dataLocal.UserRoom
-import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
-import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
 import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
 import com.android.yambasama.ui.views.model.Route
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
 @Composable
@@ -57,8 +46,9 @@ fun HomeApp(
     navController: NavHostController,
     dropViewModel: DropViewModel,
     userViewModel: UserViewModel,
-    addressData: String = ""
+    searchFormViewModel: SearchFormViewModel
 ) {
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val screenState = userViewModel.screenState.value
     var switch by rememberSaveable { mutableStateOf(true) }
@@ -294,7 +284,10 @@ fun HomeApp(
                             end = 0.dp
                         )
                     ) {
-                        SearchView(addressData,navController)
+                        SearchView(
+                            navController = navController,
+                            searchFormViewModel = searchFormViewModel
+                        )
                     }
                 } else {
                     AddAdView()

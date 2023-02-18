@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchView
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
@@ -46,7 +48,8 @@ import kotlinx.coroutines.flow.collectLatest
 fun SearchAddress(
     navController: NavHostController,
     addressViewModel: AddressViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    searchFormViewModel: SearchFormViewModel
 ) {
     var visibleSearch by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -110,7 +113,7 @@ fun SearchAddress(
                                     addressViewModel.onEvent(
                                         AddressEvent.SearchValueEntered(
                                             value = it,
-                                            token = screenStateUser.tokenRoom[0].token/*token?.token!!*/
+                                            token = screenStateUser.tokenRoom[0].token
                                         )
                                     )
                                 }
@@ -166,12 +169,14 @@ fun SearchAddress(
                 ) {
                     items(screenState.addressList) { address ->
                         SearchTownItem(
-                            onNavigateToHomeScreen = {
+                            /*onNavigateToHomeScreen = {
                                 navController.navigate(
                                     route = "${Route.homeView}/$it"
                                 )
-                            },
-                            address = address
+                            },*/
+                            address = address,
+                            searchFormViewModel = searchFormViewModel,
+                            //origin = addressParam
                         )
                     }
 
@@ -213,6 +218,7 @@ fun SearchAddress(
                                     message = event.message
                                 )
                             }
+                            else -> {}
                         }
                     }
                 }

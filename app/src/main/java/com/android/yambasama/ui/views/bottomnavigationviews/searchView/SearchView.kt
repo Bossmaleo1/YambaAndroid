@@ -24,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.data.model.dataRemote.Address
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -32,11 +34,10 @@ import java.util.*
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchView(paramNav: String, navController: NavHostController) {
-    var departure by rememberSaveable { mutableStateOf("") }
-    var destination by rememberSaveable { mutableStateOf("") }
-    var travelDate by rememberSaveable { mutableStateOf("") }
-    var enabled by remember { mutableStateOf(false) }
+fun SearchView(
+    navController: NavHostController,
+    searchFormViewModel: SearchFormViewModel
+) {
     // Fetching the Local Context
     val mContext = LocalContext.current
     // Declaring integer values
@@ -100,7 +101,8 @@ fun SearchView(paramNav: String, navController: NavHostController) {
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
                 onClick = {
-                    navController.navigate(Route.searchLocalizeView)
+                    searchFormViewModel.screenState.value.departureOrDestination = 1
+                    navController.navigate(Route.searchLocalizeView+"/${Route.homeNavParamDeparture}")
                 }) {
                 Column(
                     modifier = Modifier
@@ -117,7 +119,11 @@ fun SearchView(paramNav: String, navController: NavHostController) {
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
-                            text = if(departure.length > 3) { departure } else {stringResource(R.string.departure)},
+                            text = if (searchFormViewModel.screenState.value.addressDeparture !== null) {
+                                "${searchFormViewModel.screenState.value.addressDeparture?.townName}"
+                            } else {
+                                stringResource(R.string.departure)
+                            },
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -134,7 +140,8 @@ fun SearchView(paramNav: String, navController: NavHostController) {
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
                 onClick = {
-                    navController.navigate(Route.searchLocalizeView)
+                    searchFormViewModel.screenState.value.departureOrDestination = 2
+                    navController.navigate(Route.searchLocalizeView+"/${Route.homeNavParamDestination}")
                 }) {
                 Column(
                     modifier = Modifier
@@ -151,7 +158,11 @@ fun SearchView(paramNav: String, navController: NavHostController) {
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
-                            text = if(departure.length > 3) { departure } else {stringResource(R.string.destination)},
+                            text = if (searchFormViewModel.screenState.value.addressDestination !== null) {
+                                "${searchFormViewModel.screenState.value.addressDestination?.townName}"
+                            } else {
+                                stringResource(R.string.destination)
+                            },
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
