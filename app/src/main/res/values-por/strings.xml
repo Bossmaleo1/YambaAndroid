@@ -34,4 +34,8 @@
     <string name="is_login_empty_email_field">Seu campo de e-mail está vazio, por favor preencha-o</string>
     <string name="is_login_empty_password_field">Seu campo de senha está vazio, por favor preencha-os</string>
     <string name="is_login_empty_2_field">Seus campos de senha e e-mail estão vazios, preencha-os</string>
+    <string name="form_destination_error">Você já escolheu este local como seu destino</string>
+    <string name="form_departure_error">Você já escolheu este local como local de partida</string>
+    <string name="search_departure">Encontre o ponto de partida</string>
+    <string name="search_destination">Destino de pesquisa</string>
 </resources>

@@ -169,14 +169,9 @@ fun SearchAddress(
                 ) {
                     items(screenState.addressList) { address ->
                         SearchTownItem(
-                            /*onNavigateToHomeScreen = {
-                                navController.navigate(
-                                    route = "${Route.homeView}/$it"
-                                )
-                            },*/
+                            navController = navController,
                             address = address,
-                            searchFormViewModel = searchFormViewModel,
-                            //origin = addressParam
+                            searchFormViewModel = searchFormViewModel
                         )
                     }
 

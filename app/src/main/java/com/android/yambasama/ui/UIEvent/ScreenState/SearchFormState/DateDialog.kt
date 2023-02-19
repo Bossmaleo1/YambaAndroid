@@ -4,5 +4,5 @@ data class DateDialog(
     var mYear : Int,
     var mMonth : Int,
     var mDay : Int,
-    var mDate : Int
+    var mDayOfMonth : Int
 )
