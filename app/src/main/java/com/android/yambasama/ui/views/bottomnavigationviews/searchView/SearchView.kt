@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.DateDialog
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -65,8 +66,23 @@ fun SearchView(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             mDate.value = formatter.format(Date(mYear,mMonth,mDayOfMonth))
+            searchFormViewModel.screenState.value.dateDialog = DateDialog(
+                mYear = mYear,
+                mMonth = mMonth,
+                mDay = mDay,
+                mDayOfMonth = mDayOfMonth
+            )
         }, mYear, mMonth, mDay
     )
+
+    if (searchFormViewModel.screenState.value.dateDialog !== null) {
+        mDate.value = formatter.format(Date(
+            searchFormViewModel.screenState.value.dateDialog!!.mYear,
+            searchFormViewModel.screenState.value.dateDialog!!.mMonth,
+            searchFormViewModel.screenState.value.dateDialog!!.mDayOfMonth)
+        )
+    }
+
     val listCountries = Locale.getISOCountries()
 
     listCountries.forEach { country -> val locale = Locale(Locale.getDefault().isO3Language, country) }
@@ -102,7 +118,7 @@ fun SearchView(
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
                 onClick = {
                     searchFormViewModel.screenState.value.departureOrDestination = 1
-                    navController.navigate(Route.searchLocalizeView+"/${Route.homeNavParamDeparture}")
+                    navController.navigate(Route.searchLocalizeView)
                 }) {
                 Column(
                     modifier = Modifier
@@ -120,7 +136,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDeparture !== null) {
-                                "${searchFormViewModel.screenState.value.addressDeparture?.townName}"
+                                "${searchFormViewModel.screenState.value.addressDeparture?.airportName} ( ${searchFormViewModel.screenState.value.addressDeparture?.townName} )"
                             } else {
                                 stringResource(R.string.departure)
                             },
@@ -141,7 +157,7 @@ fun SearchView(
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
                 onClick = {
                     searchFormViewModel.screenState.value.departureOrDestination = 2
-                    navController.navigate(Route.searchLocalizeView+"/${Route.homeNavParamDestination}")
+                    navController.navigate(Route.searchLocalizeView)
                 }) {
                 Column(
                     modifier = Modifier
@@ -159,7 +175,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDestination !== null) {
-                                "${searchFormViewModel.screenState.value.addressDestination?.townName}"
+                                "${searchFormViewModel.screenState.value.addressDestination?.airportName} ( ${searchFormViewModel.screenState.value.addressDestination?.townName} )"
                             } else {
                                 stringResource(R.string.destination)
                             },

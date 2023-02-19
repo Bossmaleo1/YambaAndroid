@@ -5,5 +5,6 @@ import com.android.yambasama.data.model.dataRemote.Address
 data class SearchFormState (
     var addressDeparture: Address? = null,
     var addressDestination: Address? = null,
-    var departureOrDestination: Int = 0
+    var departureOrDestination: Int = 0,
+    var dateDialog: DateDialog? = null
  )
