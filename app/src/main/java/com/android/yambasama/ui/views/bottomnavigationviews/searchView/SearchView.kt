@@ -136,7 +136,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDeparture !== null) {
-                                "${searchFormViewModel.screenState.value.addressDeparture?.airportName} ( ${searchFormViewModel.screenState.value.addressDeparture?.townName} )"
+                                "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName} )"
                             } else {
                                 stringResource(R.string.departure)
                             },

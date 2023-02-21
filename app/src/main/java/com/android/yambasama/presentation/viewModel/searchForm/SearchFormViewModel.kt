@@ -5,12 +5,16 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.android.yambasama.R
+import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.SearchFormState
 import com.android.yambasama.ui.UIEvent.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +33,6 @@ class SearchFormViewModel @Inject constructor(
     val uiEventFlow = _uiEventFlow.asSharedFlow()
 
     fun onEvent(event: SearchFormEvent) {
-        Log.d("MALEODEPARTURE1993", "Test Test")
         when (event) {
            is SearchFormEvent.SearchFormInit -> {
                _screenState.value = _screenState.value.copy(
@@ -47,6 +50,26 @@ class SearchFormViewModel @Inject constructor(
                    addressDestination = event.addressDestination
                )
            }
+
+            is SearchFormEvent.ErrorDestination -> {
+                Log.d("TestMALEO", "Error destination 1")
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = app.getString(R.string.form_destination_error)
+                        )
+                    )
+                }
+            }
+            is SearchFormEvent.ErrorDeparture -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = app.getString(R.string.form_departure_error),
+                        )
+                    )
+                }
+            }
         }
     }
 }
