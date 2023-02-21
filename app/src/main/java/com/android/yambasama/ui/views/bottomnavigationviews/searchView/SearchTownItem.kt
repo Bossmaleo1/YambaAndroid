@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,8 @@ import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.views.model.Route
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @ExperimentalMaterial3Api
@@ -26,36 +29,8 @@ fun SearchTownItem(
     address: Address,
     searchFormViewModel: SearchFormViewModel
 ) {
-    /*var myCardModifer = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight().background(Color.White)*//*if (searchFormViewModel.screenState.value.departureOrDestination === 1) {
-        return Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()
-        .background(Color.White)
-    } else {
 
-    }*/
-    /*var myColumnModifier = Modifier.fillMaxWidth()
-        .wrapContentHeight().background(Color.White)
-    var myRowModifier = Modifier
-        .fillMaxSize()
-        .wrapContentHeight()
-        .padding(18.dp).background(Color.White)*/
-
-    /*myCardModifer.then(Modifier.background(Color.Red))
-    myColumnModifier.then(Modifier.background(Color.Red))
-    myRowModifier.then(Modifier.background(Color.Red))
-
-    if (searchFormViewModel.screenState.value.departureOrDestination == 1 && searchFormViewModel.screenState.value.addressDestination === address) {
-        myCardModifer.then(Modifier.background(Color.White))
-        myColumnModifier.then(Modifier.background(Color.White))
-        myRowModifier.then(Modifier.background(Color.White))
-    } else if (searchFormViewModel.screenState.value.departureOrDestination == 2 && searchFormViewModel.screenState.value.addressDeparture === address){
-        myCardModifer.then(Modifier.background(Color.White))
-    }*/
-
-
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     Card(
         modifier = Modifier
@@ -78,20 +53,34 @@ fun SearchTownItem(
             },
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
         onClick = {
-            if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
-                searchFormViewModel.onEvent(
-                    SearchFormEvent.SearchFormInitAddressDeparture(
-                        addressDeparture = address
-                    )
-                )
-            } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
-                searchFormViewModel.onEvent(
-                    SearchFormEvent.SearchFormInitAddressDestination(
-                        addressDestination = address
-                    )
-                )
-            }
-            navController.navigate(Route.homeView)
+
+            if (
+                searchFormViewModel.screenState.value.departureOrDestination == 1
+                && searchFormViewModel.screenState.value.addressDestination?.id == address.id
+            ) {
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestination)
+            } else
+                if (
+                    searchFormViewModel.screenState.value.departureOrDestination == 2
+                    && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
+                ) {
+                    searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture)
+                } else {
+                    if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.SearchFormInitAddressDeparture(
+                                addressDeparture = address
+                            )
+                        )
+                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.SearchFormInitAddressDestination(
+                                addressDestination = address
+                            )
+                        )
+                    }
+                    navController.navigate(Route.homeView)
+                }
         }
     ) {
         Column(
@@ -136,7 +125,7 @@ fun SearchTownItem(
                 )
 
                 Text(
-                    text = "${address.airportName} ( ${address.townName} )",
+                    text = "${address.townName} (${address.airportName})",
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleSmall
                 )

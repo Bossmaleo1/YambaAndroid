@@ -122,8 +122,11 @@ fun SearchAddress(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             placeholder = {
                                 Text(
-                                    text = stringResource(id = R.string.search),
-                                    fontSize = 12.sp
+                                    text = if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                                        stringResource(id = R.string.search_departure)
+                                    } else {
+                                        stringResource(id = R.string.search_destination)
+                                    }, fontSize = 12.sp
                                 )
                             },
                             leadingIcon = {
@@ -206,9 +209,10 @@ fun SearchAddress(
                 }
 
                 LaunchedEffect(key1 = true) {
-                    addressViewModel.uiEventFlow.collectLatest {event->
-                        when(event) {
-                            is UIEvent.ShowMessage-> {
+
+                    addressViewModel.uiEventFlow.collectLatest { event ->
+                        when (event) {
+                            is UIEvent.ShowMessage -> {
                                 scaffoldState.snackbarHostState.showSnackbar(
                                     message = event.message
                                 )
@@ -218,6 +222,19 @@ fun SearchAddress(
                     }
                 }
             })
+
+        LaunchedEffect(key1 = true) {
+            searchFormViewModel.uiEventFlow.collectLatest { event ->
+                when (event) {
+                    is UIEvent.ShowMessage -> {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = event.message
+                        )
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 
     LaunchedEffect(true) {

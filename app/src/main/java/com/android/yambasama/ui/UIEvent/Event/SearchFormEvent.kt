@@ -16,4 +16,8 @@ sealed class SearchFormEvent {
         val addressDestination: Address
     ): SearchFormEvent()
 
+    object ErrorDestination: SearchFormEvent()
+
+    object ErrorDeparture: SearchFormEvent()
+
 }
