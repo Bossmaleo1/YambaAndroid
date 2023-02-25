@@ -2,6 +2,7 @@ package com.android.yambasama.presentation.di
 
 import com.android.yambasama.BuildConfig
 import com.android.yambasama.data.api.service.AddressAPIService
+import com.android.yambasama.data.api.service.AnnouncementAPIService
 import com.android.yambasama.data.api.service.UserAPIService
 import dagger.Module
 import dagger.Provides
@@ -47,5 +48,11 @@ class NetModule {
     @Provides
     fun provideAddressAPIService(retrofit: Retrofit): AddressAPIService {
         return retrofit.create(AddressAPIService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnnouncementAPIService(retrofit: Retrofit): AnnouncementAPIService {
+        return retrofit.create(AnnouncementAPIService::class.java)
     }
 }

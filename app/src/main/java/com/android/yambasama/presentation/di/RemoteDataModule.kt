@@ -1,10 +1,13 @@
 package com.android.yambasama.presentation.di
 
 import com.android.yambasama.data.api.service.AddressAPIService
+import com.android.yambasama.data.api.service.AnnouncementAPIService
 import com.android.yambasama.data.api.service.UserAPIService
 import com.android.yambasama.data.repository.dataSource.address.AddressRemoteDataSource
+import com.android.yambasama.data.repository.dataSource.annoucement.AnnouncementRemoteDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserRemoteDataSource
 import com.android.yambasama.data.repository.dataSourceImpl.address.AddressRemoteDataSourceImpl
+import com.android.yambasama.data.repository.dataSourceImpl.annoucement.AnnouncementRemoteDataSourceImpl
 import com.android.yambasama.data.repository.dataSourceImpl.user.UserRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
@@ -29,5 +32,13 @@ class RemoteDataModule {
         addressAPIService: AddressAPIService
     ): AddressRemoteDataSource {
         return AddressRemoteDataSourceImpl(addressAPIService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnnouncemetRemoteDataSource(
+        announcementAPIService: AnnouncementAPIService
+    ): AnnouncementRemoteDataSource {
+        return AnnouncementRemoteDataSourceImpl(announcementAPIService)
     }
 }
