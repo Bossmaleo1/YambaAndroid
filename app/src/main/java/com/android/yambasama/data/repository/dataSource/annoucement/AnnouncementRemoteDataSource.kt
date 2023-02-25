@@ -1,9 +1,11 @@
-package com.android.yambasama.domain.repository
+package com.android.yambasama.data.repository.dataSource.annoucement
 
 import com.android.yambasama.data.model.api.ApiAnnouncementResponse
 import com.android.yambasama.data.util.Resource
+import retrofit2.Response
 
-interface AnnouncementRepository {
+interface AnnouncementRemoteDataSource {
+
     suspend fun getAnnouncements(
         page: Int,
         pagination: Boolean,
@@ -11,5 +13,6 @@ interface AnnouncementRepository {
         departureAddress: String,
         destinationAddress: String,
         token: String
-    ): Resource<ApiAnnouncementResponse>
+    ): Response<ApiAnnouncementResponse>
+
 }

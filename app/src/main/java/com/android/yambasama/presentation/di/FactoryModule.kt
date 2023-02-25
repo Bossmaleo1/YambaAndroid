@@ -2,7 +2,9 @@ package com.android.yambasama.presentation.di
 
 import android.app.Application
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
+import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementsUseCase
 import com.android.yambasama.domain.usecase.user.*
+import com.android.yambasama.presentation.viewModel.Announcement.AnnouncementViewModelFactory
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
@@ -71,5 +73,17 @@ class FactoryModule {
         application: Application
     ): SearchFormViewModelFactory {
         return SearchFormViewModelFactory(application)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnnouncementViewModelFactory(
+        application: Application,
+        getAnnouncementUseCase: GetAnnouncementsUseCase
+    ): AnnouncementViewModelFactory {
+        return AnnouncementViewModelFactory(
+            application,
+            getAnnouncementUseCase
+        )
     }
 }
