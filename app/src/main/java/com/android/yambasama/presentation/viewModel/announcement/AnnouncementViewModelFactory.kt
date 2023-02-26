@@ -1,4 +1,4 @@
-package com.android.yambasama.presentation.viewModel.Announcement
+package com.android.yambasama.presentation.viewModel.announcement
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

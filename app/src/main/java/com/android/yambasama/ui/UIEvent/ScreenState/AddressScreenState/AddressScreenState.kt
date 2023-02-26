@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.UIEvent.ScreenState
+package com.android.yambasama.ui.UIEvent.ScreenState.AddressScreenState
 
 import com.android.yambasama.data.model.dataRemote.Address
 

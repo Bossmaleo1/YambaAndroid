@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.UIEvent.ScreenState
+package com.android.yambasama.ui.UIEvent.ScreenState.AuthScreenState
 
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom

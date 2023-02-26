@@ -20,4 +20,10 @@ sealed class SearchFormEvent {
 
     object ErrorDeparture: SearchFormEvent()
 
+    data class IsTravelDateUpdated(
+        val isTravelDate: Boolean,
+        val isDeparture: Boolean,
+        val isDestination: Boolean
+        ): SearchFormEvent()
+
 }

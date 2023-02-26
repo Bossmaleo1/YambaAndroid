@@ -6,5 +6,8 @@ data class SearchFormState (
     var addressDeparture: Address? = null,
     var addressDestination: Address? = null,
     var departureOrDestination: Int = 0,
-    var dateDialog: DateDialog? = null
+    var dateDialog: DateDialog? = null,
+    var isDepartureError: Boolean = false,
+    var isDestinationError: Boolean = false,
+    var isDepartureTimeError: Boolean = false
  )

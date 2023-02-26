@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
@@ -27,8 +29,9 @@ import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
+import com.android.yambasama.ui.views.bottomnavigationviews.announcementlist.AnnouncementView
 import com.android.yambasama.ui.views.login
-import com.android.yambasama.ui.views.bottomnavigationviews.searchView.SearchAddress
+import com.android.yambasama.ui.views.bottomnavigationviews.searchview.SearchAddress
 import com.android.yambasama.ui.views.model.Route
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -49,11 +52,14 @@ class MainActivity : ComponentActivity() {
     lateinit var addressFactory: AddressViewModelFactory
     @Inject
     lateinit var searchFormFactory: SearchFormViewModelFactory
+    @Inject
+    lateinit var announcementFactory: AnnouncementViewModelFactory
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var dropViewModel: DropViewModel
     private lateinit var searchFormViewModel: SearchFormViewModel
+    private lateinit var announcementViewModel: AnnouncementViewModel
     var token: String? = null
 
     @SuppressLint("CoroutineCreationDuringComposition")
@@ -88,6 +94,7 @@ class MainActivity : ComponentActivity() {
         dropViewModel = ViewModelProvider(this, dropFactory)[DropViewModel::class.java]
         addressViewModel = ViewModelProvider(this,addressFactory)[AddressViewModel::class.java]
         searchFormViewModel = ViewModelProvider(this,searchFormFactory)[SearchFormViewModel::class.java]
+        announcementViewModel = ViewModelProvider(this,announcementFactory)[AnnouncementViewModel::class.java]
     }
 
     @Composable
@@ -147,6 +154,17 @@ class MainActivity : ComponentActivity() {
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel
                     //addressParam = it.arguments?.getString("pointTravel").toString()
+                )
+            }
+
+            composable(
+                route = Route.announcementList
+            ) {
+                AnnouncementView(
+                    navController = navController,
+                    userViewModel = userViewModel,
+                    searchFormViewModel = searchFormViewModel,
+                    announcementViewModel = announcementViewModel
                 )
             }
         }

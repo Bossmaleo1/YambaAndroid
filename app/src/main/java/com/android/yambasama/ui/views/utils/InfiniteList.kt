@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
-import com.android.yambasama.ui.views.bottomnavigationviews.searchView.SearchTownItem
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 
 @RequiresApi(Build.VERSION_CODES.O)

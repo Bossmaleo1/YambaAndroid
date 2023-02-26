@@ -18,14 +18,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.DateDialog
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
@@ -65,7 +68,7 @@ fun SearchView(
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = formatter.format(Date(mYear,mMonth,mDayOfMonth))
+            mDate.value = formatter.format(Date(mYear, mMonth, mDayOfMonth))
             searchFormViewModel.screenState.value.dateDialog = DateDialog(
                 mYear = mYear,
                 mMonth = mMonth,
@@ -76,16 +79,20 @@ fun SearchView(
     )
 
     if (searchFormViewModel.screenState.value.dateDialog !== null) {
-        mDate.value = formatter.format(Date(
-            searchFormViewModel.screenState.value.dateDialog!!.mYear,
-            searchFormViewModel.screenState.value.dateDialog!!.mMonth,
-            searchFormViewModel.screenState.value.dateDialog!!.mDayOfMonth)
+        mDate.value = formatter.format(
+            Date(
+                searchFormViewModel.screenState.value.dateDialog!!.mYear,
+                searchFormViewModel.screenState.value.dateDialog!!.mMonth,
+                searchFormViewModel.screenState.value.dateDialog!!.mDayOfMonth
+            )
         )
     }
 
     val listCountries = Locale.getISOCountries()
 
-    listCountries.forEach { country -> val locale = Locale(Locale.getDefault().isO3Language, country) }
+    listCountries.forEach { country ->
+        val locale = Locale(Locale.getDefault().isO3Language, country)
+    }
 
     AnimatedVisibility(
         visible = visibleForm,
@@ -113,9 +120,17 @@ fun SearchView(
                 modifier = Modifier
                     .width(280.dp)
                     .height(55.dp),
-                border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+                border = if (searchFormViewModel.screenState.value.isDepartureError) {
+                    BorderStroke(1.dp, color = Color.Red)
+                } else {
+                    BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                },
                 shape = RoundedCornerShape(30),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.2f
+                    )
+                ),
                 onClick = {
                     searchFormViewModel.screenState.value.departureOrDestination = 1
                     navController.navigate(Route.searchLocalizeView)
@@ -146,15 +161,31 @@ fun SearchView(
                 }
             }
 
+            if (searchFormViewModel.screenState.value.isDepartureError) {
+                Text(
+                    color = Color.Red,
+                    text = stringResource(R.string.departureDateError)
+                )
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedButton(
                 modifier = Modifier
                     .width(280.dp)
                     .height(55.dp),
-                border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+                border =
+                if (searchFormViewModel.screenState.value.isDestinationError) {
+                    BorderStroke(1.dp, color = Color.Red)
+                } else {
+                    BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                },
                 shape = RoundedCornerShape(30),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.2f
+                    )
+                ),
                 onClick = {
                     searchFormViewModel.screenState.value.departureOrDestination = 2
                     navController.navigate(Route.searchLocalizeView)
@@ -175,7 +206,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDestination !== null) {
-                                "${searchFormViewModel.screenState.value.addressDestination?.airportName} ( ${searchFormViewModel.screenState.value.addressDestination?.townName} )"
+                                "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName} )"
                             } else {
                                 stringResource(R.string.destination)
                             },
@@ -185,15 +216,30 @@ fun SearchView(
                 }
             }
 
+            if (searchFormViewModel.screenState.value.isDestinationError) {
+                Text(
+                    color = Color.Red,
+                    text = stringResource(R.string.destinationDateError)
+                )
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedButton(
                 modifier = Modifier
                     .width(280.dp)
                     .height(55.dp),
-                border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+                border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    BorderStroke(1.dp, color = Color.Red)
+                } else {
+                    BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                },
                 shape = RoundedCornerShape(30),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)) ,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.2f
+                    )
+                ),
                 onClick = {
                     mDatePickerDialog.show()
                 }) {
@@ -212,11 +258,21 @@ fun SearchView(
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
-                            text = if(mDate.value.length > 3) { mDate.value } else {stringResource(R.string.travel_date)},
+                            text = if (mDate.value.length > 3) {
+                                mDate.value
+                            } else {
+                                stringResource(R.string.travel_date)
+                            },
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
+            }
+            if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                Text(
+                    color = Color.Red,
+                    text = stringResource(R.string.datetravelError)
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -226,7 +282,21 @@ fun SearchView(
                     .width(280.dp),
                 border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
                 onClick = {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.IsTravelDateUpdated(
+                            isTravelDate = searchFormViewModel.screenState.value.dateDialog === null,
+                            isDeparture = searchFormViewModel.screenState.value.addressDeparture === null,
+                            isDestination = searchFormViewModel.screenState.value.addressDestination === null
+                        )
+                    )
 
+                    if (
+                        searchFormViewModel.screenState.value.dateDialog !== null
+                        && searchFormViewModel.screenState.value.addressDestination !== null
+                        && searchFormViewModel.screenState.value.addressDeparture !== null
+                    ) {
+                        navController.navigate(Route.announcementList)
+                    }
                 }) {
                 Icon(
                     imageVector = Icons.Outlined.Search,
@@ -238,7 +308,6 @@ fun SearchView(
             }
         }
     }
-
     LaunchedEffect(true) {
         delay(3)
         visibleForm = true

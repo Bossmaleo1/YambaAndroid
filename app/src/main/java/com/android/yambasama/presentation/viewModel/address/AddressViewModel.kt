@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
-import com.android.yambasama.ui.UIEvent.ScreenState.AddressScreenState
+import com.android.yambasama.ui.UIEvent.ScreenState.AddressScreenState.AddressScreenState
 import com.android.yambasama.ui.UIEvent.UIEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -60,8 +60,6 @@ class AddressViewModel @Inject constructor(
                     initCall = screenState.value.initCall++
                 )
                 // Clef 401
-                Log.d("MALEO9393TEST", "${apiResult.message.equals("Unauthorized")}")
-
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
                     isNetworkError = true,
@@ -99,7 +97,6 @@ class AddressViewModel @Inject constructor(
             @Suppress("DEPRECATION")
             return networkInfo.isConnected
         }
-
     }
 
     fun initAddress() {
