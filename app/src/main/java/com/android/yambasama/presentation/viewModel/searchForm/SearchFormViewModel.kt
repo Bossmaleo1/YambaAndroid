@@ -40,6 +40,14 @@ class SearchFormViewModel @Inject constructor(
                    addressDestination = event.addressDestination
                )
            }
+
+            is SearchFormEvent.IsTravelDateUpdated -> {
+                _screenState.value = _screenState.value.copy(
+                    isDepartureTimeError = event.isTravelDate,
+                    isDepartureError =  event.isDeparture,
+                    isDestinationError = event.isDestination
+                )
+            }
            is SearchFormEvent.SearchFormInitAddressDeparture -> {
                _screenState.value = _screenState.value.copy(
                    addressDeparture = event.addressDeparture

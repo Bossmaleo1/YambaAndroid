@@ -1,6 +1,5 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.searchView
+package com.android.yambasama.ui.views.bottomnavigationviews.searchview
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -19,7 +18,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +34,6 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
-import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.delay

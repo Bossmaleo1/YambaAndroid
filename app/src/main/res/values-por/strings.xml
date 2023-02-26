@@ -38,4 +38,8 @@
     <string name="form_departure_error">Você já escolheu este local como local de partida</string>
     <string name="search_departure">Encontre o ponto de partida</string>
     <string name="search_destination">Destino de pesquisa</string>
+    <string name="datetravelError">A data da viagem é obrigatória</string>
+    <string name="departureDateError">A data de partida é obrigatória</string>
+    <string name="destinationDateError">A data de destino é obrigatória</string>
+    <string name="announcements">Anúncios</string>
 </resources>

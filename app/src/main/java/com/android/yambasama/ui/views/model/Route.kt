@@ -11,5 +11,6 @@ class Route {
         const val homeNavParamDefault = "NOT_FOUND"
         const val homeNavParamDeparture = "home_nav_departure"
         const val homeNavParamDestination = "home_nav_destination"
+        const val announcementList = "annoucement_list"
     }
 }

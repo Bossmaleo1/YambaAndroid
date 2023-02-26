@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.searchView
+package com.android.yambasama.ui.views.bottomnavigationviews.searchview
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -19,7 +19,6 @@ import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewMod
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 
 @ExperimentalMaterial3Api
@@ -29,9 +28,6 @@ fun SearchTownItem(
     address: Address,
     searchFormViewModel: SearchFormViewModel
 ) {
-
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +49,6 @@ fun SearchTownItem(
             },
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
         onClick = {
-
             if (
                 searchFormViewModel.screenState.value.departureOrDestination == 1
                 && searchFormViewModel.screenState.value.addressDestination?.id == address.id
@@ -79,6 +74,26 @@ fun SearchTownItem(
                             )
                         )
                     }
+                    //We initialize our error display
+                    if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.IsTravelDateUpdated(
+                                isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
+                                isDeparture = searchFormViewModel.screenState.value.addressDeparture === null,
+                                isDestination = searchFormViewModel.screenState.value.isDestinationError
+                            )
+                        )
+                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 2){
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.IsTravelDateUpdated(
+                                isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
+                                isDeparture = searchFormViewModel.screenState.value.isDepartureError,
+                                isDestination = searchFormViewModel.screenState.value.addressDestination === null
+                            )
+                        )
+                    }
+
+
                     navController.navigate(Route.homeView)
                 }
         }

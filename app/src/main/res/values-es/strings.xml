@@ -37,4 +37,8 @@
     <string name="form_departure_error">Ya ha elegido este lugar como su lugar de salida</string>
     <string name="search_departure">Encuentra el punto de partida</string>
     <string name="search_destination">Buscar destino</string>
+    <string name="datetravelError">Se requiere fecha de viaje</string>
+    <string name="departureDateError">La fecha de salida es obligatoria</string>
+    <string name="destinationDateError">La fecha de destino es obligatoria</string>
+    <string name="announcements">Anuncios</string>
 </resources>

@@ -37,4 +37,8 @@
     <string name="form_departure_error">Вы уже выбрали это место в качестве места отправления.</string>
     <string name="search_departure">Найдите отправную точку</string>
     <string name="search_destination">Место поиска</string>
+    <string name="datetravelError">Укажите дату поездки</string>
+    <string name="departureDateError">Укажите дату отъезда</string>
+    <string name="destinationDateError">Укажите дату назначения</string>
+    <string name="announcements">Объявления</string>
 </resources>
