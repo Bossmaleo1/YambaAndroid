@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -52,6 +53,7 @@ class AnnouncementViewModel @Inject constructor(
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
+                    Log.d("MALEO9393", "${apiAnnouncementResponse.annoucement.size}")
                     screenState.value.announcementList.addAll(apiAnnouncementResponse.annoucement)
                 }
 

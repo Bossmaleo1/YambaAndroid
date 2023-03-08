@@ -304,7 +304,7 @@ fun SearchView(
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(stringResource(R.string.re_search))
+                Text(text = stringResource(R.string.re_search))
             }
         }
     }
