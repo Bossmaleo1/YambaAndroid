@@ -65,11 +65,32 @@ fun AnnouncementView(
                 },
                 scrollBehavior = scrollBehavior,
                 title = {
-                    Text(text = stringResource(R.string.announcements))
+                    Text(
+                        text = stringResource(R.string.announcements),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             )
         },
         content = { innerPadding ->
+
+            LaunchedEffect(key1 = true) {
+                val departureTime = "${searchFormViewModel.screenState.value.dateDialog?.mYear}-${searchFormViewModel.screenState.value.dateDialog?.mMonth}-${searchFormViewModel.screenState.value.dateDialog?.mDay}T${searchFormViewModel.screenState.value.dateDialog?.mMonth}"
+                searchFormViewModel.screenState.value.addressDeparture?.id?.let {
+                    searchFormViewModel.screenState.value.addressDestination?.id?.let { it1 ->
+                        AnnouncementEvent.AnnouncementInt(
+                            token = screenStateUser.tokenRoom[0].token,
+                            destinationAddressId = it1,
+                            departureAddressId = it,
+                            departureTime = departureTime
+                        )
+                    }
+                }?.let {
+                    announcementViewModel.onEvent(
+                        it
+                    )
+                }
+            }
 
             LazyColumn(
                 contentPadding = PaddingValues(

@@ -259,7 +259,8 @@ fun HomeApp(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(start = 10.dp),
-                                            text = stringResource(R.string.app_name)
+                                            text = stringResource(R.string.app_name),
+                                            color = MaterialTheme.colorScheme.primary
                                         )
 
                                         Text(
