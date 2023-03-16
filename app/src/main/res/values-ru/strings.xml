@@ -41,4 +41,5 @@
     <string name="departureDateError">Укажите дату отъезда</string>
     <string name="destinationDateError">Укажите дату назначения</string>
     <string name="announcements">Объявления</string>
+    <string name="wait">Пожалуйста  ...</string>
 </resources>

@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = Route.loginView) {
-                login(navController,userViewModel, context)
+                login(navController,userViewModel)
                 BackHandler {
                     activity?.finish()
                 }

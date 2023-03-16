@@ -41,4 +41,5 @@
     <string name="departureDateError">La fecha de salida es obligatoria</string>
     <string name="destinationDateError">La fecha de destino es obligatoria</string>
     <string name="announcements">Anuncios</string>
+    <string name="wait">Espere por favor...</string>
 </resources>
