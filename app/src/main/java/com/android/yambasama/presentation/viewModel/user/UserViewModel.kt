@@ -33,7 +33,6 @@ class UserViewModel @Inject constructor(
     private val getSavedTokenUseCase: GetSavedTokenUseCase
 ) : AndroidViewModel(app) {
 
-    private val tokenMutable: MutableLiveData<TokenRoom> = MutableLiveData()
     private val _screenState = mutableStateOf(
         AuthScreenState(
             emailInputValue = "",
@@ -144,7 +143,6 @@ class UserViewModel @Inject constructor(
     fun getSavedToken() = liveData {
         getSavedTokenUseCase.execute().collect {
             emit(it)
-            tokenMutable.value = it
         }
     }
 

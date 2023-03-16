@@ -52,7 +52,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalMaterial3Api
-fun login(navController: NavHostController, userViewModel: UserViewModel, context: Any) {
+fun login(navController: NavHostController, userViewModel: UserViewModel) {
     var email by rememberSaveable { mutableStateOf("sidneymaleoregis@gmail.com") }
     var password by rememberSaveable { mutableStateOf("Nfkol3324012020@!") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
@@ -80,7 +80,7 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
                                 Row {
                                     CircularProgressIndicator()
                                     Row(Modifier.padding(10.dp)) {
-                                        Text(text = "Connexion en cours...")
+                                        Text(text = stringResource(id = R.string.wait))
                                     }
                                 }
 
@@ -99,7 +99,7 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp),
+                    .padding(innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
@@ -155,7 +155,7 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
                     },
                     label = { Text(stringResource(id = R.string.your_password)) },
                     visualTransformation =
-                    if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+                    if (passwordHidden) { PasswordVisualTransformation() } else { VisualTransformation.None},
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     leadingIcon = {
                         IconButton(onClick = { }) {
@@ -216,7 +216,6 @@ fun login(navController: NavHostController, userViewModel: UserViewModel, contex
                         userViewModel.onEvent(
                             AuthEvent.IsInitField(email,password)
                         )
-                        //viewModelLogin(userViewModel, email,password, context)
                         //we test if fields is Empties
                         userViewModel.onEvent(
                             AuthEvent.IsEmptyField

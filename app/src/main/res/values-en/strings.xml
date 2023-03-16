@@ -40,5 +40,6 @@
     <string name="datetravelError">Travel date is required</string>
     <string name="departureDateError">Departure date is required</string>
     <string name="destinationDateError">The destination date is required</string>
+    <string name="wait">Please Wait ...</string>
     <string name="announcements">Announcements</string>
 </resources>

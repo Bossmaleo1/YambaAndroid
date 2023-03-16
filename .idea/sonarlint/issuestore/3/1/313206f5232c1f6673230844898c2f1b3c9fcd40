@@ -1,0 +1,9 @@
+
+Ckotlin:S1481^"+Remove this unused "locale" local variable.(Èàªí
+7kotlin:S1128"Remove this unused import.(£íþ¹þÿÿÿÿ
+7kotlin:S1128"Remove this unused import.(ÊÒÅ­ùÿÿÿÿ
+7kotlin:S1128"Remove this unused import.(ïö°Ìøÿÿÿÿ
+7kotlin:S1128"Remove this unused import.(çŠÀ§úÿÿÿÿ
+;kotlin:S1874G"#Deprecated code should not be used.(¥¤˜¯
+@kotlin:S1874S"#Deprecated code should not be used.(Öí¼°ÿÿÿÿÿ
+jkotlin:S3776)"RRefactor this method to reduce its Cognitive Complexity from 48 to the 15 allowed.(†‹å‰
