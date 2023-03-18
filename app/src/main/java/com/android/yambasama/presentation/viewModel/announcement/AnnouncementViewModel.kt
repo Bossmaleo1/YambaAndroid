@@ -102,7 +102,9 @@ class AnnouncementViewModel @Inject constructor(
 
             }
             is AnnouncementEvent.ItemClicked -> {
-
+                _screenState.value = _screenState.value.copy(
+                    announcementList = mutableListOf(event.announcement)
+                )
             }
             is AnnouncementEvent.IsNetworkConnected -> {
                 viewModelScope.launch {

@@ -1,10 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews
 
-import android.R.attr
-import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.util.Log
-import android.widget.DatePicker
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -16,89 +13,41 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
-import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
-import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.DateDialog
+import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterial3Api
 @Composable
 fun SearchView(
     navController: NavHostController,
-    searchFormViewModel: SearchFormViewModel
+    searchFormViewModel: SearchFormViewModel,
+    util: Util
 ) {
-    // Fetching the Local Context
-    val mContext = LocalContext.current
-    // Declaring integer values
-    // for year, month and day
-    val mYear: Int
-    val mMonth: Int
-    val mDay: Int
-    // Initializing a Calendar
-    val mCalendar = Calendar.getInstance()
     var visibleForm by remember { mutableStateOf(false) }
     // Declaring a string value to
     // store date in string format
     val mDate = remember { mutableStateOf("") }
     val formatter: SimpleDateFormat = SimpleDateFormat("EEE d MMM yy", Locale.getDefault())
-
-    // Fetching current year, month and day
-    mYear = mCalendar.get(Calendar.YEAR)
-    mMonth = mCalendar.get(Calendar.MONTH)
-    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-
-    val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
-    SnackbarHost(hostState = snackState, Modifier)
     val openDialog = remember { mutableStateOf(false) }
 
-    mCalendar.time = Date()
-    // Declaring DatePickerDialog and setting
-    // initial values as current values (present year, month and day)
-    val mDatePickerDialog = DatePickerDialog(
-        mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = formatter.format(Date(mYear, mMonth, mDayOfMonth))
-            searchFormViewModel.screenState.value.dateDialog = DateDialog(
-                mYear = mYear,
-                mMonth = mMonth,
-                mDay = mDay,
-                mDayOfMonth = mDayOfMonth
-            )
-        }, mYear, mMonth, mDay
-    )
 
     if (searchFormViewModel.screenState.value.dateDialog !== null) {
-        mDate.value = formatter.format(
-            Date(
-                searchFormViewModel.screenState.value.dateDialog!!.mYear,
-                searchFormViewModel.screenState.value.dateDialog!!.mMonth,
-                searchFormViewModel.screenState.value.dateDialog!!.mDayOfMonth
-            )
-        )
-    }
-
-    val listCountries = Locale.getISOCountries()
-
-    listCountries.forEach { country ->
-        val locale = Locale(Locale.getDefault().isO3Language, country)
+        mDate.value = formatter.format(searchFormViewModel.screenState.value.dateDialog!!)
     }
 
     AnimatedVisibility(
@@ -158,7 +107,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDeparture !== null) {
-                                "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName} )"
+                                "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDeparture!!.code)} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))"
                             } else {
                                 stringResource(R.string.departure)
                             },
@@ -213,7 +162,7 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDestination !== null) {
-                                "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName} )"
+                                "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDestination!!.code)} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))"
                             } else {
                                 stringResource(R.string.destination)
                             },
@@ -329,11 +278,9 @@ fun SearchView(
                     TextButton(
                         onClick = {
                             openDialog.value = false
-                            snackScope.launch {
-                                snackState.showSnackbar(
-                                    "Selected date timestamp: ${datePickerState.selectedDateMillis}"
-                                )
-                            }
+                            val date = datePickerState.selectedDateMillis?.let { Date(it) }
+                            mDate.value = date?.let { util.getDateFormatter(it) }.toString()
+                            searchFormViewModel.screenState.value.dateDialog = date
                         },
                         enabled = confirmEnabled.value
                     ) {

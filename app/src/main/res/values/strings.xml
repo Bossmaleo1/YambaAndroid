@@ -36,7 +36,7 @@
     <string name="form_destination_error">You have already chosen this location as your destination</string>
     <string name="form_departure_error">You have already chosen this location as your departure location</string>
     <string name="search_departure">Find the starting point</string>
-    <string name="search_destination">Search destination</string>
+    <string name="search_destination">Find the destination point</string>
     <string name="datetravelError">Travel date is required</string>
     <string name="departureDateError">Departure date is required</string>
     <string name="destinationDateError">The destination date is required</string>

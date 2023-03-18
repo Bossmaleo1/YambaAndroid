@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -37,6 +36,7 @@ import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
+import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
 import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
@@ -56,6 +56,7 @@ fun HomeApp(
     val screenState = userViewModel.screenState.value
     var switch by rememberSaveable { mutableStateOf(true) }
     var selectedItem by remember { mutableStateOf(0) }
+    val country = Util()
     val items = listOf(
         BottomNavigationItem(
             Icons.Outlined.Search,
@@ -299,7 +300,8 @@ fun HomeApp(
                     ) {
                         SearchView(
                             navController = navController,
-                            searchFormViewModel = searchFormViewModel
+                            searchFormViewModel = searchFormViewModel,
+                            util = country
                         )
                     }
                 } else {

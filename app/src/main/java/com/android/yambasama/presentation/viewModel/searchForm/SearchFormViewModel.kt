@@ -60,7 +60,6 @@ class SearchFormViewModel @Inject constructor(
            }
 
             is SearchFormEvent.ErrorDestination -> {
-                Log.d("TestMALEO", "Error destination 1")
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(

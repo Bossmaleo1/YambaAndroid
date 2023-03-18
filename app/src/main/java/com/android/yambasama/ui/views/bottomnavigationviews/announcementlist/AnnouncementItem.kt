@@ -1,6 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.announcementlist
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -15,9 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
@@ -33,11 +33,13 @@ import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
 import com.android.yambasama.BuildConfig
 import com.android.yambasama.R
-import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.data.model.dataRemote.Announcement
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
+import com.android.yambasama.ui.util.Util
+import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -55,21 +57,27 @@ fun getOurUserImage(announcement: Announcement): Painter {
 fun AnnouncementItem(
     navController: NavHostController,
     announcement: Announcement,
-    searchFormViewModel: SearchFormViewModel
+    searchFormViewModel: SearchFormViewModel,
+    annoucementViewModel: AnnouncementViewModel,
+    util: Util
 ) {
 
-    val formatter: SimpleDateFormat = SimpleDateFormat("EEE d MMM yy", Locale.getDefault())
-    val published = formatter.format(announcement.published)
     var visibleImage by remember { mutableStateOf(false) }
     val userName by rememberSaveable { mutableStateOf("${announcement.user.firstName} ${announcement.user.lastName}") }
     val isDark = isSystemInDarkTheme()
-    val postTime by rememberSaveable { mutableStateOf(published) }
+    val destinationDate by rememberSaveable { mutableStateOf(util.getDateTimeFormatter(announcement.arrivingTime)) }
+    val postDateTime by rememberSaveable { mutableStateOf(util.getDateFormatter(announcement.published)) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(2.5.dp),
+            .padding(2.5.dp).clickable {
+                annoucementViewModel.onEvent(
+                    AnnouncementEvent.ItemClicked(announcement = announcement)
+                )
+                navController.navigate(Route.detailsView)
+            },
         shape = RoundedCornerShape(corner = CornerSize(10.dp))
     ) {
 
@@ -131,7 +139,7 @@ fun AnnouncementItem(
                     )
 
                     Text(
-                        text = postTime,
+                        text = postDateTime,
                         modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                         style = MaterialTheme.typography.titleSmall,
                         color = if (!isDark) {
@@ -173,7 +181,7 @@ fun AnnouncementItem(
             )
 
             Text(
-                text = "Sidney MALEO",
+                text = "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDeparture!!.code)} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.titleSmall,
                 color = if (!isDark) {
@@ -204,7 +212,7 @@ fun AnnouncementItem(
             )
 
             Text(
-                text = "Sidney MALEO",
+                text = "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDestination!!.code)} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.titleSmall,
                 color = if (!isDark) {
@@ -222,7 +230,7 @@ fun AnnouncementItem(
             horizontalArrangement = Arrangement.Center
         ) {
             Image(
-                imageVector = Icons.Outlined.AccessTime,
+                imageVector = Icons.Outlined.EventNote,
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
@@ -235,7 +243,7 @@ fun AnnouncementItem(
             )
 
             Text(
-                text = postTime,
+                text = destinationDate,
                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
@@ -267,7 +275,7 @@ fun AnnouncementItem(
             )
 
             Text(
-                text = postTime,
+                text = "${announcement.price} €/Kg",
                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
@@ -278,16 +286,6 @@ fun AnnouncementItem(
                 }
             )
         }
-        /*Row(
-            modifier = Modifier
-                .padding(5.dp)
-                .fillMaxSize(),
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Text(text = "Hello world 1")
-            Text(text = "Hello world 2")
-        }*/
-
     }
 
     LaunchedEffect(true) {
