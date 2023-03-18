@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,7 @@ import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
+import com.android.yambasama.ui.views.bottomnavigationviews.announcementDetails.AnnouncementDetails
 import com.android.yambasama.ui.views.bottomnavigationviews.announcementlist.AnnouncementView
 import com.android.yambasama.ui.views.login
 import com.android.yambasama.ui.views.bottomnavigationviews.searchview.SearchAddress
@@ -100,6 +102,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController, context: Any) {
+        val listState = rememberLazyListState()
         val activity = (LocalContext.current as? Activity)
         //We call our init view model method
         this.initViewModel()
@@ -158,13 +161,23 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(
+                route = Route.detailsView
+            ) {
+                AnnouncementDetails(
+                    navController = navController,
+                    announcementViewModel = announcementViewModel
+                )
+            }
+
+            composable(
                 route = Route.announcementList
             ) {
                 AnnouncementView(
                     navController = navController,
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
-                    announcementViewModel = announcementViewModel
+                    announcementViewModel = announcementViewModel,
+                    listState = listState
                 )
             }
         }

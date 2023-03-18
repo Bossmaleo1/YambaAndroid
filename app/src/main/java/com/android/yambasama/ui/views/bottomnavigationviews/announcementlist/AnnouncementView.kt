@@ -2,9 +2,9 @@ package com.android.yambasama.ui.views.bottomnavigationviews.announcementlist
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
@@ -14,8 +14,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -23,11 +21,9 @@ import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
-import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
-import com.android.yambasama.ui.views.bottomnavigationviews.searchview.SearchTownItem
-import com.android.yambasama.ui.views.shimmer.AddressShimmer
+import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.shimmer.AnnouncementShimmer
 import com.android.yambasama.ui.views.utils.OnBottomReached
 import com.android.yambasama.ui.views.viewsError.networkError
@@ -40,14 +36,14 @@ fun AnnouncementView(
     navController: NavHostController,
     userViewModel: UserViewModel,
     searchFormViewModel: SearchFormViewModel,
-    announcementViewModel: AnnouncementViewModel
+    announcementViewModel: AnnouncementViewModel,
+    listState: LazyListState,
 ) {
     val scaffoldState = rememberScaffoldState()
-    val listState = rememberLazyListState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val screenState = announcementViewModel.screenState.value
     val screenStateUser = userViewModel.screenState.value
-    val screenStateSearchForm = searchFormViewModel.screenState.value
+    val country = Util()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -79,15 +75,13 @@ fun AnnouncementView(
         content = { innerPadding ->
 
             LaunchedEffect(key1 = true) {
-                val departureTime =
-                    "${searchFormViewModel.screenState.value.dateDialog?.mYear}-${searchFormViewModel.screenState.value.dateDialog?.mMonth}-${searchFormViewModel.screenState.value.dateDialog?.mDay}T${searchFormViewModel.screenState.value.dateDialog?.mMonth}"
                 searchFormViewModel.screenState.value.addressDeparture?.id?.let {
                     searchFormViewModel.screenState.value.addressDestination?.id?.let { it1 ->
                         AnnouncementEvent.AnnouncementInt(
                             token = screenStateUser.tokenRoom[0].token,
                             destinationAddressId = it1,
                             departureAddressId = it,
-                            departureTime = departureTime
+                            departureTime = ""
                         )
                     }
                 }?.let {
@@ -109,7 +103,9 @@ fun AnnouncementView(
                     AnnouncementItem(
                         navController = navController,
                         announcement = announcement,
-                        searchFormViewModel = searchFormViewModel
+                        searchFormViewModel = searchFormViewModel,
+                        annoucementViewModel = announcementViewModel,
+                        util = country
                     )
                 }
 
@@ -155,7 +151,7 @@ fun AnnouncementView(
                 }
             }
 
-            /*listState.OnBottomReached(buffer = 2) {
+            listState.OnBottomReached(buffer = 2) {
                 screenState.isLoad = true
                 searchFormViewModel.screenState.value.addressDestination?.id?.let {
                     searchFormViewModel.screenState.value.addressDeparture?.id?.let { it1 ->
@@ -171,7 +167,7 @@ fun AnnouncementView(
                         it
                     )
                 }
-            }*/
+            }
 
         })
 }
