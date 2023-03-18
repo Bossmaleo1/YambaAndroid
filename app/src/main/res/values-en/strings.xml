@@ -44,4 +44,5 @@
     <string name="announcements">Announcements</string>
     <string name="validate">VALIDATE</string>
     <string name="cancel">CANCEL</string>
+    <string name="announcement_details">Listing Details</string>
 </resources>

@@ -9,6 +9,7 @@ data class AnnouncementScreenState(
     var isLoad: Boolean = false,
     var isNetworkError: Boolean = false,
     var currentPage: Int = 1,
+    var announcement: List<Announcement> = listOf(),
     var announcementList: MutableList<Announcement> = mutableListOf(),
     var announcementListTemp: MutableList<Announcement> = mutableListOf(),
     var initCall: Int = 0,

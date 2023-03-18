@@ -64,7 +64,6 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
 
     Row(
         modifier = Modifier
-            .fillMaxSize()
             .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp), verticalAlignment = Alignment.Top
     ) {
         Spacer(

@@ -45,4 +45,5 @@
     <string name="wait">Por favor, espere ...</string>
     <string name="validate">VALIDAR</string>
     <string name="cancel">CANCELAR</string>
+    <string name="announcement_details">Detalhes da listagem</string>
 </resources>
