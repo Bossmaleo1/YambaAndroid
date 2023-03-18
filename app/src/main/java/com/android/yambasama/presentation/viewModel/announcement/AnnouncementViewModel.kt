@@ -47,9 +47,9 @@ class AnnouncementViewModel @Inject constructor(
                     getAnnoucementsUseCase.execute(
                         page = screenState.value.currentPage,
                         pagination = true,
-                        departureTime = departureTime,
-                        departureAddress = "/api/addresses/${departureAddressId}",
-                        destinationAddress = "/api/addresses/${destinationAddressId}",
+                        departureTime = "",
+                        departureAddress = "",
+                        destinationAddress = "",
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
