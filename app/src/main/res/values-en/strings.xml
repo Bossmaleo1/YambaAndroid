@@ -42,4 +42,6 @@
     <string name="destinationDateError">The destination date is required</string>
     <string name="wait">Please Wait ...</string>
     <string name="announcements">Announcements</string>
+    <string name="validate">VALIDATE</string>
+    <string name="cancel">CANCEL</string>
 </resources>

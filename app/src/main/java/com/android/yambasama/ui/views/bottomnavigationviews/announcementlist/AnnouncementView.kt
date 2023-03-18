@@ -1,5 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.announcementlist
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,9 +29,11 @@ import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.bottomnavigationviews.searchview.SearchTownItem
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.shimmer.AnnouncementShimmer
+import com.android.yambasama.ui.views.utils.OnBottomReached
 import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.flow.collectLatest
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterial3Api
 @Composable
 fun AnnouncementView(
@@ -61,7 +65,7 @@ fun AnnouncementView(
                     }
                 },
                 actions = {
-                    
+
                 },
                 scrollBehavior = scrollBehavior,
                 title = {
@@ -75,7 +79,8 @@ fun AnnouncementView(
         content = { innerPadding ->
 
             LaunchedEffect(key1 = true) {
-                val departureTime = "${searchFormViewModel.screenState.value.dateDialog?.mYear}-${searchFormViewModel.screenState.value.dateDialog?.mMonth}-${searchFormViewModel.screenState.value.dateDialog?.mDay}T${searchFormViewModel.screenState.value.dateDialog?.mMonth}"
+                val departureTime =
+                    "${searchFormViewModel.screenState.value.dateDialog?.mYear}-${searchFormViewModel.screenState.value.dateDialog?.mMonth}-${searchFormViewModel.screenState.value.dateDialog?.mDay}T${searchFormViewModel.screenState.value.dateDialog?.mMonth}"
                 searchFormViewModel.screenState.value.addressDeparture?.id?.let {
                     searchFormViewModel.screenState.value.addressDestination?.id?.let { it1 ->
                         AnnouncementEvent.AnnouncementInt(
@@ -149,6 +154,24 @@ fun AnnouncementView(
                     }
                 }
             }
+
+            /*listState.OnBottomReached(buffer = 2) {
+                screenState.isLoad = true
+                searchFormViewModel.screenState.value.addressDestination?.id?.let {
+                    searchFormViewModel.screenState.value.addressDeparture?.id?.let { it1 ->
+                        AnnouncementEvent.AnnouncementInt(
+                            token = screenStateUser.tokenRoom[0].token,
+                            destinationAddressId = it,
+                            departureAddressId = it1,
+                            departureTime = ""
+                        )
+                    }
+                }?.let {
+                    announcementViewModel.onEvent(
+                        it
+                    )
+                }
+            }*/
 
         })
 }

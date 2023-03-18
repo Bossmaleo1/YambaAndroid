@@ -1,6 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews
 
 import android.R.attr
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.util.Log
 import android.widget.DatePicker
@@ -32,6 +33,7 @@ import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.DateDialog
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,6 +63,11 @@ fun SearchView(
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+
+    val snackState = remember { SnackbarHostState() }
+    val snackScope = rememberCoroutineScope()
+    SnackbarHost(hostState = snackState, Modifier)
+    val openDialog = remember { mutableStateOf(false) }
 
     mCalendar.time = Date()
     // Declaring DatePickerDialog and setting
@@ -241,7 +248,7 @@ fun SearchView(
                     )
                 ),
                 onClick = {
-                    mDatePickerDialog.show()
+                    openDialog.value = true
                 }) {
                 Column(
                     modifier = Modifier
@@ -307,6 +314,46 @@ fun SearchView(
                 Text(text = stringResource(R.string.re_search))
             }
         }
+
+        if (openDialog.value) {
+            val datePickerState = rememberDatePickerState()
+            val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
+            DatePickerDialog(
+                onDismissRequest = {
+                    // Dismiss the dialog when the user clicks outside the dialog or on the back
+                    // button. If you want to disable that functionality, simply use an empty
+                    // onDismissRequest.
+                    openDialog.value = false
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            openDialog.value = false
+                            snackScope.launch {
+                                snackState.showSnackbar(
+                                    "Selected date timestamp: ${datePickerState.selectedDateMillis}"
+                                )
+                            }
+                        },
+                        enabled = confirmEnabled.value
+                    ) {
+                        Text(text=stringResource(R.string.validate))
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            openDialog.value = false
+                        }
+                    ) {
+                        Text(text=stringResource(R.string.cancel))
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
+            }
+        }
+
     }
     LaunchedEffect(true) {
         delay(3)

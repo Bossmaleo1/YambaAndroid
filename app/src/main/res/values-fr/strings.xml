@@ -42,4 +42,6 @@
     <string name="destinationDateError">La date de destination est obligatoire</string>
     <string name="announcements">Annonces</string>
     <string name="wait">Connexion en cours ...</string>
+    <string name="validate">VALIDER</string>
+    <string name="cancel">ANNULER</string>
 </resources>

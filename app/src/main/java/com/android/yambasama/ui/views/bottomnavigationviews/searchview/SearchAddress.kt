@@ -15,6 +15,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -91,7 +93,7 @@ fun SearchAddress(
                             navController.navigateUp()
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.Outlined.ArrowBack,
                                 contentDescription = "",
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -129,7 +131,7 @@ fun SearchAddress(
                             leadingIcon = {
                                 IconButton(onClick = { }) {
                                     Icon(
-                                        imageVector = Icons.Filled.Search,
+                                        imageVector = Icons.Outlined.Search,
                                         contentDescription = "",
                                         tint = MaterialTheme.colorScheme.primary
                                     )
