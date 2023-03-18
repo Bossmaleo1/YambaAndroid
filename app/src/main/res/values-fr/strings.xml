@@ -44,4 +44,5 @@
     <string name="wait">Connexion en cours ...</string>
     <string name="validate">VALIDER</string>
     <string name="cancel">ANNULER</string>
+    <string name="announcement_details">Détails Annonce</string>
 </resources>

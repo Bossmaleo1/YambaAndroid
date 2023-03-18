@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.util.Util
@@ -36,6 +37,7 @@ import java.util.*
 fun SearchView(
     navController: NavHostController,
     searchFormViewModel: SearchFormViewModel,
+    announcementViewModel: AnnouncementViewModel,
     util: Util
 ) {
     var visibleForm by remember { mutableStateOf(false) }
@@ -245,6 +247,11 @@ fun SearchView(
                             isDestination = searchFormViewModel.screenState.value.addressDestination === null
                         )
                     )
+
+                    //we initialize some params
+                    announcementViewModel.screenState.value.currentPage = 1
+                    announcementViewModel.screenState.value.announcementList = mutableListOf()
+                    announcementViewModel.screenState.value.announcement = mutableListOf()
 
                     if (
                         searchFormViewModel.screenState.value.dateDialog !== null

@@ -44,4 +44,5 @@
     <string name="wait">Пожалуйста  ...</string>
     <string name="validate">Подтвердить</string>
     <string name="cancel">Отмена</string>
+    <string name="announcement_details">Детали листинга</string>
 </resources>

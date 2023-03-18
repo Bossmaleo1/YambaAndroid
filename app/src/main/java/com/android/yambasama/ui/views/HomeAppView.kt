@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.android.yambasama.BuildConfig
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
@@ -49,7 +50,8 @@ fun HomeApp(
     navController: NavHostController,
     dropViewModel: DropViewModel,
     userViewModel: UserViewModel,
-    searchFormViewModel: SearchFormViewModel
+    searchFormViewModel: SearchFormViewModel,
+    announcementViewModel: AnnouncementViewModel
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -301,7 +303,8 @@ fun HomeApp(
                         SearchView(
                             navController = navController,
                             searchFormViewModel = searchFormViewModel,
-                            util = country
+                            util = country,
+                            announcementViewModel = announcementViewModel
                         )
                     }
                 } else {

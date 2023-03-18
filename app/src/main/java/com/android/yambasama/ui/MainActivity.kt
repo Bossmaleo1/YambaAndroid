@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -73,7 +74,7 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
 
-                    MainView(navController, this)
+                    MainView(navController)
                     userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
                         this.token = token?.token
                     }
@@ -101,8 +102,8 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     @ExperimentalMaterial3Api
-    fun MainView(navController: NavHostController, context: Any) {
-        val listState = rememberLazyListState()
+    fun MainView(navController: NavHostController) {
+
         val activity = (LocalContext.current as? Activity)
         //We call our init view model method
         this.initViewModel()
@@ -138,7 +139,8 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     dropViewModel = dropViewModel,
                     userViewModel = userViewModel,
-                    searchFormViewModel = searchFormViewModel
+                    searchFormViewModel = searchFormViewModel,
+                    announcementViewModel = announcementViewModel
                     //addressData =  it.arguments?.getString("inputName").toString()
                 )
             }
@@ -165,7 +167,8 @@ class MainActivity : ComponentActivity() {
             ) {
                 AnnouncementDetails(
                     navController = navController,
-                    announcementViewModel = announcementViewModel
+                    announcementViewModel = announcementViewModel,
+                    searchFormViewModel = searchFormViewModel
                 )
             }
 
@@ -176,8 +179,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
-                    announcementViewModel = announcementViewModel,
-                    listState = listState
+                    announcementViewModel = announcementViewModel
                 )
             }
         }
