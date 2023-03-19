@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.announcementlist
+package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist
 
 import android.os.Build
 import android.util.Log
@@ -102,12 +102,15 @@ fun AnnouncementItem(
                 Image(
                     painter = getOurUserImage(announcement),
                     contentDescription = "Profile picture description",
-                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .padding(4.dp)
                         .height(50.dp)
                         .width(50.dp)
                         .clip(RoundedCornerShape(corner = CornerSize(25.dp)))
+                        .clickable {
+                            navController.navigate(Route.accountDetailView)
+                        },
+                    contentScale = ContentScale.Crop,
                 )
             }
 
