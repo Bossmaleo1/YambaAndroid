@@ -153,8 +153,8 @@ fun AnnouncementView(
                         )
                     }
 
-                    if (screenState.isLoad) {
-                        items(count = 1) {
+                    item {
+                        if (screenState.isLoad) {
                             AnnouncementShimmer()
                         }
                     }

@@ -31,8 +31,10 @@ import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
+import com.android.yambasama.ui.views.bottomnavigationviews.accountView.AccountView
 import com.android.yambasama.ui.views.bottomnavigationviews.announcementDetails.AnnouncementDetails
 import com.android.yambasama.ui.views.bottomnavigationviews.announcementlist.AnnouncementView
+import com.android.yambasama.ui.views.bottomnavigationviews.paymentView.PaymentView
 import com.android.yambasama.ui.views.login
 import com.android.yambasama.ui.views.bottomnavigationviews.searchview.SearchAddress
 import com.android.yambasama.ui.views.model.Route
@@ -180,6 +182,22 @@ class MainActivity : ComponentActivity() {
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
                     announcementViewModel = announcementViewModel
+                )
+            }
+
+            composable(
+                route = Route.accountView
+            ) {
+                AccountView(
+                    navController = navController
+                )
+            }
+
+            composable(
+                route = Route.paymentView
+            ) {
+                PaymentView(
+                    navController = navController
                 )
             }
         }

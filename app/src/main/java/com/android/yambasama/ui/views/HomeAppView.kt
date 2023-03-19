@@ -132,7 +132,9 @@ fun HomeApp(
                                             maxLines = 1
                                         )
                                     },
-                                    onClick = { /* Handle edit! */ },
+                                    onClick = {
+                                        navController.navigate(Route.accountView)
+                                    },
                                     leadingIcon = {
                                         Icon(
                                             Icons.Outlined.AccountCircle,
