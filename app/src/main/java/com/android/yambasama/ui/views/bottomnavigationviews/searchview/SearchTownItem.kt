@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
+import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.CoroutineScope
 
@@ -26,7 +27,8 @@ import kotlinx.coroutines.CoroutineScope
 fun SearchTownItem(
     navController: NavHostController,
     address: Address,
-    searchFormViewModel: SearchFormViewModel
+    searchFormViewModel: SearchFormViewModel,
+    util: Util
 ) {
     Card(
         modifier = Modifier
@@ -140,7 +142,7 @@ fun SearchTownItem(
                 )
 
                 Text(
-                    text = "${address.townName} (${address.airportName})",
+                    text = "${address.townName} (${util.getCountry(address.code)} (${address.airportName}, ${address.airportCode}))",
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleSmall
                 )

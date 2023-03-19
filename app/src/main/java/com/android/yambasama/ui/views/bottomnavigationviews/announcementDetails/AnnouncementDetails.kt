@@ -77,7 +77,9 @@ fun AnnouncementDetails(
                         actions = {
                             IconButton(
                                 modifier = Modifier,
-                                onClick = { }
+                                onClick = {
+                                    navController.navigate(Route.paymentView)
+                                }
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Done,

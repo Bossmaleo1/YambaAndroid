@@ -19,12 +19,6 @@ aapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/SearchFormState/
 `app/src/main/java/com/android/yambasama/presentation/viewModel/searchForm/SearchFormViewModel.kt,a/1/a102088c78d00cd9211e833b19cbb2bdd1a9a824
 }
 Mapp/src/main/java/com/android/yambasama/data/model/dataRemote/Announcement.kt,f/f/ffd2538a10f96198910f4ca343a36f0a1836037f
-g
-7app/src/main/java/com/android/yambasama/ui/util/Util.kt,c/f/cfe5324df6b5f21720de1c9ec619d506b93c809e
-o
-?app/src/main/java/com/android/yambasama/ui/views/model/Route.kt,d/c/dc1de80d7a94f67b598186a73b5ca666c38fd741
-’
-bapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchview/SearchAddress.kt,b/9/b9654322bc11d64f83e7b53f431a8f47924aaf00
 ›
 kapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AnnouncementState/AnnouncementScreenState.kt,1/4/1472104b9a4f2ed48aad7efb70165dfc7f713e5c
 }

@@ -9,6 +9,8 @@ class Route {
         const val homeTabView = "home_tab_view"
         const val historyTabView = "history_tab_view"
         const val searchLocalizeView = "search_localize_view"
+        const val accountView = "account_view"
+        const val paymentView = "payment_view"
         const val homeNavParamDefault = "NOT_FOUND"
         const val homeNavParamDeparture = "home_nav_departure"
         const val homeNavParamDestination = "home_nav_destination"
