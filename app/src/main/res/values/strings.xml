@@ -45,4 +45,9 @@
     <string name="validate">VALIDATE</string>
     <string name="cancel">CANCEL</string>
     <string name="announcement_details">Listing Details</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="payment">Payment</string>
 </resources>

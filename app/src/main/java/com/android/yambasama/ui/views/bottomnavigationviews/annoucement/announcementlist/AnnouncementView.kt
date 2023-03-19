@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.announcementlist
+package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist
 
 import android.os.Build
 import androidx.annotation.RequiresApi

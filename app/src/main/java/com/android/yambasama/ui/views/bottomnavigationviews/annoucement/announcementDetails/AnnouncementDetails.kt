@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.announcementDetails
+package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -6,13 +6,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MonitorWeight
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
@@ -35,7 +35,7 @@ import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.util.Util
-import com.android.yambasama.ui.views.bottomnavigationviews.announcementlist.getOurUserImage
+import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist.getOurUserImage
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 
@@ -114,7 +114,7 @@ fun AnnouncementDetails(
                             .padding(innerPadding)
                     ) {
                         Row(
-                            modifier = Modifier,
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Start
                         ) {
                             AnimatedVisibility(
@@ -132,12 +132,14 @@ fun AnnouncementDetails(
                                 Image(
                                     painter = getOurUserImage(screenState.announcement[0]),
                                     contentDescription = "Profile picture description",
-                                    contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .padding(4.dp)
-                                        .height(50.dp)
-                                        .width(50.dp)
+                                        .size(50.dp)
                                         .clip(RoundedCornerShape(corner = CornerSize(25.dp)))
+                                        .clickable {
+                                            navController.navigate(Route.accountDetailView)
+                                        },
+                                    contentScale = ContentScale.Crop
                                 )
                             }
 

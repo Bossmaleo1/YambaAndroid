@@ -46,4 +46,9 @@
     <string name="validate">VALIDAR</string>
     <string name="cancel">CANCELAR</string>
     <string name="announcement_details">Detalhes da listagem</string>
+    <string name="profile">Perfil</string>
+    <string name="notifications">Notificações</string>
+    <string name="profile_details">Detalhes de perfil</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="payment">Pagamento</string>
 </resources>

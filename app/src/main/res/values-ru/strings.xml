@@ -45,4 +45,9 @@
     <string name="validate">Подтвердить</string>
     <string name="cancel">Отмена</string>
     <string name="announcement_details">Детали листинга</string>
+    <string name="profile">Профиль</string>
+    <string name="notifications">Уведомления</string>
+    <string name="profile_details">Детали профиля</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="payment">Оплата</string>
 </resources>

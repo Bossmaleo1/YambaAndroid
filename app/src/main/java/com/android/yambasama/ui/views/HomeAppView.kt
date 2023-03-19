@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -105,9 +106,13 @@ fun HomeApp(
                                     )
                                 }
                             }) {
+
                                 Icon(
                                     imageVector = Icons.Outlined.Notifications,
-                                    contentDescription = "Localized description"
+                                    contentDescription = "Localized description",
+                                    modifier = Modifier.clickable {
+                                        navController.navigate(Route.notificationListView)
+                                    }
                                 )
                             }
 
@@ -250,7 +255,9 @@ fun HomeApp(
                                         if (screenState.userRoom[0].imageUrl?.length == 0) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.ic_profile_colorier),
-                                                modifier = Modifier.size(40.dp),
+                                                modifier = Modifier.size(40.dp).clip(RoundedCornerShape(corner = CornerSize(20.dp))).clickable {
+                                                        navController.navigate(Route.accountView)
+                                                },
                                                 contentScale = ContentScale.Crop,
                                                 contentDescription = "Profile picture description"
                                             )
@@ -264,6 +271,9 @@ fun HomeApp(
                                                 modifier = Modifier
                                                     .height(40.dp)
                                                     .width(40.dp)
+                                                    .clickable {
+                                                        navController.navigate(Route.accountView)
+                                                    }
                                                     .clip(RoundedCornerShape(corner = CornerSize(20.dp))),
                                                 contentDescription = "Profile picture description",
                                                 contentScale = ContentScale.Crop,

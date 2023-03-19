@@ -1,4 +1,4 @@
-package com.android.yambasama.ui.views.bottomnavigationviews.paymentView
+package com.android.yambasama.ui.views.bottomnavigationviews.accountView
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -18,10 +18,9 @@ import com.android.yambasama.R
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
-fun PaymentView(
+fun AccountDetailView(
     navController: NavHostController
 ) {
-
     val isDark = isSystemInDarkTheme()
     val scaffoldState = rememberScaffoldState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -51,7 +50,7 @@ fun PaymentView(
                 scrollBehavior = scrollBehavior,
                 title = {
                     Text(
-                        text = stringResource(R.string.payment),
+                        text = stringResource(R.string.profile_details),
                         color = if (!isDark) {
                             colorResource(R.color.black40)
                         } else {
