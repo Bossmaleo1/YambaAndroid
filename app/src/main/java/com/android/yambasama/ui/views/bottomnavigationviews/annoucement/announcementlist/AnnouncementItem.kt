@@ -1,7 +1,6 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -23,11 +22,9 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
@@ -45,8 +42,13 @@ import java.util.*
 
 @Composable
 fun getOurUserImage(announcement: Announcement): Painter {
+    val isDark = isSystemInDarkTheme()
     if (announcement.user.images.isEmpty()) {
-        return painterResource(id = R.drawable.ic_profile)
+         //if (isDark) {
+        return   painterResource(id = R.drawable.ic_profile_colorier)
+       /* } else {
+            painterResource(id = R.drawable.ic_profile)
+        }*/
     }
     return rememberAsyncImagePainter("${BuildConfig.BASE_URL_DEV}/images/${announcement.user.images[announcement.user.images.size - 1].imageName}")
 }
@@ -72,7 +74,8 @@ fun AnnouncementItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(2.5.dp).clickable {
+            .padding(2.5.dp)
+            .clickable {
                 annoucementViewModel.onEvent(
                     AnnouncementEvent.ItemClicked(announcement = announcement)
                 )
@@ -118,11 +121,7 @@ fun AnnouncementItem(
                 Text(
                     text = userName,
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (!isDark) {
-                        colorResource(R.color.black40)
-                    } else {
-                        Color.White
-                    }
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Row {
                     Image(
@@ -133,11 +132,7 @@ fun AnnouncementItem(
                             .height(18.dp)
                             .width(18.dp),
                         colorFilter = ColorFilter.tint(
-                            color = if (!isDark) {
-                                colorResource(R.color.black40)
-                            } else {
-                                Color.White
-                            }
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
 
@@ -145,11 +140,7 @@ fun AnnouncementItem(
                         text = postDateTime,
                         modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                         style = MaterialTheme.typography.titleSmall,
-                        color = if (!isDark) {
-                            colorResource(R.color.black40)
-                        } else {
-                            Color.White
-                        }
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -158,7 +149,7 @@ fun AnnouncementItem(
 
         Row {
             Divider(
-                color = if(!isDark) { Color.White } else { Color.Black},
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier.padding(bottom = 10.dp, top = 0.dp)
             )
         }
@@ -175,23 +166,19 @@ fun AnnouncementItem(
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
-                    color = if (!isDark) {
-                        colorResource(R.color.black40)
-                    } else {
-                        Color.White
-                    }
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
 
             Text(
-                text = "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDeparture!!.code)} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
+                text = "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${
+                    util.getCountry(
+                        searchFormViewModel.screenState.value.addressDeparture!!.code
+                    )
+                } ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.titleSmall,
-                color = if (!isDark) {
-                    colorResource(R.color.black40)
-                } else {
-                    Color.White
-                }
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -206,23 +193,19 @@ fun AnnouncementItem(
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
-                    color = if (!isDark) {
-                        colorResource(R.color.black40)
-                    } else {
-                        Color.White
-                    }
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
 
             Text(
-                text = "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDestination!!.code)} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
+                text = "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${
+                    util.getCountry(
+                        searchFormViewModel.screenState.value.addressDestination!!.code
+                    )
+                } ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.titleSmall,
-                color = if (!isDark) {
-                    colorResource(R.color.black40)
-                } else {
-                    Color.White
-                }
+                color = MaterialTheme.colorScheme.primary,
             )
         }
 
@@ -237,11 +220,7 @@ fun AnnouncementItem(
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
-                    color = if (!isDark) {
-                        colorResource(R.color.black40)
-                    } else {
-                        Color.White
-                    }
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
 
@@ -250,11 +229,7 @@ fun AnnouncementItem(
                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
-                color = if (!isDark) {
-                    colorResource(R.color.black40)
-                } else {
-                    Color.White
-                }
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -269,11 +244,7 @@ fun AnnouncementItem(
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.tint(
-                    color = if (!isDark) {
-                        colorResource(R.color.black40)
-                    } else {
-                        Color.White
-                    }
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
 
@@ -282,11 +253,7 @@ fun AnnouncementItem(
                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
-                color = if (!isDark) {
-                    colorResource(R.color.black40)
-                } else {
-                    Color.White
-                }
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

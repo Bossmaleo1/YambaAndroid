@@ -19,6 +19,8 @@
     <color name="primary_gray">#E0E0E0</color>
     <color name="primary_gray_dark">#9E9E9E</color>
     <color name="black40">#616161</color>
+    <color name="GrayLight">#424242</color>
+    <color name="GrayDark">#E0E0E0</color>
 
     <!-- Light -->
     <color name="blue500">#188dc8</color>

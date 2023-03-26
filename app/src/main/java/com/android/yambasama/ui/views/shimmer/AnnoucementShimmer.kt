@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,8 +19,15 @@ import androidx.compose.ui.unit.dp
 
 @ExperimentalMaterial3Api
 @Composable
-fun AnnouncementShimmer() {
+fun AnnouncementShimmer(iterator: Int) {
+    for(i in 1..iterator) {
+        ShimmerGridItemAnnouncement(brush = getBrush())
+    }
+}
 
+@ExperimentalMaterial3Api
+@Composable
+fun getBrush(): Brush {
     //These colors will be used on the brush. The lightest color should be in the middle
 
     val gradient = listOf(
@@ -40,7 +48,7 @@ fun AnnouncementShimmer() {
             )
         )
     )
-    val brush = Brush.linearGradient(
+    return Brush.linearGradient(
         colors = gradient,
         start = Offset(200f, 200f),
         end = Offset(
@@ -48,14 +56,6 @@ fun AnnouncementShimmer() {
             y = translateAnimation.value
         )
     )
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
-    ShimmerGridItemAnnouncement(brush = brush)
 }
 
 @ExperimentalMaterial3Api
@@ -78,6 +78,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
@@ -110,6 +111,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp), verticalAlignment = Alignment.Top
     ) {
         Spacer(
@@ -124,6 +126,36 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(
+            modifier =
+                        Modifier.background(MaterialTheme.colorScheme.background),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
@@ -148,6 +180,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
@@ -158,7 +191,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
                 .background(brush)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Column(verticalArrangement = Arrangement.Center) {
+        Column(verticalArrangement = Arrangement.Center, modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             Spacer(
                 modifier = Modifier
                     .height(20.dp)
@@ -172,6 +205,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
@@ -182,31 +216,7 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
                 .background(brush)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Column(verticalArrangement = Arrangement.Center) {
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(5.dp))
-                    .fillMaxWidth(fraction = 0.9f)
-                    .background(brush)
-            )
-        }
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(all = 10.dp), verticalAlignment = Alignment.Top
-    ) {
-
-        Spacer(
-            modifier = Modifier
-                .size(20.dp)
-                .clip(RoundedCornerShape(5.dp))
-                .background(brush)
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column(verticalArrangement = Arrangement.Center) {
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
             Spacer(
                 modifier = Modifier
                     .height(20.dp)

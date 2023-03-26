@@ -62,6 +62,8 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
 
     Scaffold(
         scaffoldState = scaffoldState,
+        topBar = { },
+        backgroundColor = MaterialTheme.colorScheme.background,
         content = { innerPadding ->
 
             Column {

@@ -1,6 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,7 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.util.Util
+import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementlist.InfiniteAnnouncementList
 import com.android.yambasama.ui.views.shimmer.AnnouncementShimmer
 import com.android.yambasama.ui.views.utils.OnBottomReached
 import com.android.yambasama.ui.views.viewsError.networkError
@@ -43,7 +45,8 @@ fun AnnouncementView(
     navController: NavHostController,
     userViewModel: UserViewModel,
     searchFormViewModel: SearchFormViewModel,
-    announcementViewModel: AnnouncementViewModel
+    announcementViewModel: AnnouncementViewModel,
+    listState: LazyListState
 ) {
     val scaffoldState = rememberScaffoldState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -52,11 +55,11 @@ fun AnnouncementView(
     val country = Util()
     var isRefreshing by remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing)
-    val listState = rememberLazyListState()
     val isDark = isSystemInDarkTheme()
 
     Scaffold(
         scaffoldState = scaffoldState,
+        backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 navigationIcon = {
@@ -109,6 +112,7 @@ fun AnnouncementView(
                             it
                         )
                     }
+
                 }
 
             }
@@ -135,46 +139,19 @@ fun AnnouncementView(
                     )
                 }
             ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(
+                InfiniteAnnouncementList(
+                    navController = navController,
+                    userViewModel = userViewModel,
+                    searchFormViewModel = searchFormViewModel,
+                    announcementViewModel = announcementViewModel,
+                    paddingValues = PaddingValues(
                         top = 0.dp,
                         bottom = innerPadding.calculateBottomPadding() + 100.dp
                     ),
-                    state = listState
-                ) {
-
-                    items(screenState.announcementList) { announcement ->
-                        AnnouncementItem(
-                            navController = navController,
-                            announcement = announcement,
-                            searchFormViewModel = searchFormViewModel,
-                            annoucementViewModel = announcementViewModel,
-                            util = country
-                        )
-                    }
-
-                    item {
-                        if (screenState.isLoad) {
-                            AnnouncementShimmer()
-                        }
-                    }
-
-                    if (!screenState.isNetworkConnected) {
-                        items(count = 1) {
-                            networkError(
-                                title = stringResource(R.string.network_error),
-                                iconValue = 0
-                            )
-                        }
-                    } else if (screenState.isNetworkError) {
-                        items(count = 1) {
-                            networkError(
-                                title = stringResource(R.string.is_connect_error),
-                                iconValue = 1
-                            )
-                        }
-                    }
-                }
+                    country = country,
+                    listState = listState,
+                    listItems = remember { screenState.announcementList }
+                )
             }
 
             // cette instruction permet de réactivé le reflesh
@@ -201,24 +178,6 @@ fun AnnouncementView(
                         }
                         else -> {}
                     }
-                }
-            }
-
-            listState.OnBottomReached(buffer = 2) {
-                screenState.isLoad = true
-                searchFormViewModel.screenState.value.addressDestination?.id?.let {
-                    searchFormViewModel.screenState.value.addressDeparture?.id?.let { it1 ->
-                        AnnouncementEvent.AnnouncementInt(
-                            token = screenStateUser.tokenRoom[0].token,
-                            destinationAddressId = it,
-                            departureAddressId = it1,
-                            departureTime = ""
-                        )
-                    }
-                }?.let {
-                    announcementViewModel.onEvent(
-                        it
-                    )
                 }
             }
 

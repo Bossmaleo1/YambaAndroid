@@ -2,10 +2,12 @@ package com.android.yambasama.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
@@ -29,6 +31,7 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
+import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
 import com.android.yambasama.ui.views.bottomnavigationviews.accountView.AccountDetailView
@@ -70,6 +73,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var announcementViewModel: AnnouncementViewModel
     var token: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +109,7 @@ class MainActivity : ComponentActivity() {
         announcementViewModel = ViewModelProvider(this,announcementFactory)[AnnouncementViewModel::class.java]
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController) {
@@ -184,7 +189,8 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
-                    announcementViewModel = announcementViewModel
+                    announcementViewModel = announcementViewModel,
+                    listState = rememberLazyListState()
                 )
             }
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,6 +67,7 @@ fun ShimmerGridItem(brush: Brush) {
     Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(all = 10.dp), verticalAlignment = Alignment.Top
     ) {
 
@@ -77,7 +79,7 @@ fun ShimmerGridItem(brush: Brush) {
                 .background(brush)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Column(verticalArrangement = Arrangement.Center) {
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background),verticalArrangement = Arrangement.Center) {
             Spacer(
                 modifier = Modifier
                     .height(30.dp)

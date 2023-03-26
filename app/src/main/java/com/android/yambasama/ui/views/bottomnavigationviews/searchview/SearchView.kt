@@ -250,7 +250,7 @@ fun SearchView(
 
                     //we initialize some params
                     announcementViewModel.screenState.value.currentPage = 1
-                    announcementViewModel.screenState.value.announcementList = mutableListOf()
+                    announcementViewModel.screenState.value.announcementList = mutableStateListOf()
                     announcementViewModel.screenState.value.announcement = mutableListOf()
 
                     if (
