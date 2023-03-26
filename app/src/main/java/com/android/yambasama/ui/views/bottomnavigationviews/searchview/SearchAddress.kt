@@ -5,6 +5,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,8 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.rememberScaffoldState
@@ -23,6 +22,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -58,6 +59,7 @@ fun SearchAddress(
     val screenStateUser = userViewModel.screenState.value
     val scaffoldState = rememberScaffoldState()
     val util = Util()
+    val isDark = isSystemInDarkTheme()
 
     userViewModel.onEvent(AuthEvent.GetSavedToken)
     if (screenStateUser.tokenRoom.isNotEmpty()) {
@@ -80,11 +82,13 @@ fun SearchAddress(
         } + fadeOut()
     ) {
 
-        Scaffold(scaffoldState = scaffoldState,
+        Scaffold(
+            scaffoldState = scaffoldState,
+            backgroundColor = MaterialTheme.colorScheme.background,
             topBar = {
                 Column(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surface),
+                        .background(MaterialTheme.colorScheme.background),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -97,7 +101,11 @@ fun SearchAddress(
                             Icon(
                                 imageVector = Icons.Outlined.ArrowBack,
                                 contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = if (!isDark) {
+                                    colorResource(R.color.black40)
+                                } else {
+                                    Color.White
+                                }
                             )
                         }
 
@@ -106,7 +114,7 @@ fun SearchAddress(
                             singleLine = true,
                             textStyle = TextStyle(fontSize = 12.sp),
                             colors = TextFieldDefaults.textFieldColors(
-                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                             ),
                             onValueChange = {
                                 searchAddress = it
@@ -151,7 +159,6 @@ fun SearchAddress(
 
             },
             content = { innerPadding ->
-
                 LaunchedEffect(key1 = true) {
                     if (screenStateUser.tokenRoom.isNotEmpty()) {
                         addressViewModel.onEvent(

@@ -6,7 +6,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,12 +30,13 @@ class AnnouncementViewModel @Inject constructor(
 
     private val _screenState = mutableStateOf(
         AnnouncementScreenState(
-            announcementList = mutableListOf()
+            announcementList = mutableStateListOf()
         )
     )
     val screenState: State<AnnouncementScreenState> = _screenState
     private val _uiEventFlow = MutableSharedFlow<UIEvent>()
     val uiEventFlow = _uiEventFlow.asSharedFlow()
+    val currentPage : MutableState<Int> = mutableStateOf(1)
 
     fun getAnnouncement(
         token: String,
@@ -43,6 +46,13 @@ class AnnouncementViewModel @Inject constructor(
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(app)) {
             try {
+                _screenState.value = _screenState.value.copy(
+                    isNetworkConnected = true,
+                    isLoad = true,
+                    isNetworkError = false,
+                    initCall = screenState.value.initCall++,
+                    // currentPage = screenState.value.currentPage++
+                )
                 val apiResult =
                     getAnnoucementsUseCase.execute(
                         page = screenState.value.currentPage,
@@ -54,14 +64,18 @@ class AnnouncementViewModel @Inject constructor(
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
                     screenState.value.announcementList.addAll(apiAnnouncementResponse.annoucement)
+                    if(apiAnnouncementResponse.annoucement.size < 10) {
+                        _screenState.value = _screenState.value.copy(
+                            isNetworkConnected = true,
+                            isLoad = false,
+                            isNetworkError = false,
+                            initCall = screenState.value.initCall++,
+                            // currentPage = screenState.value.currentPage++
+                        )
+                    }
                 }
 
-                _screenState.value = _screenState.value.copy(
-                    isNetworkConnected = true,
-                    isLoad = false,
-                    isNetworkError = false,
-                    initCall = screenState.value.initCall++
-                )
+
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
                     isNetworkError = true,
@@ -87,9 +101,9 @@ class AnnouncementViewModel @Inject constructor(
             is AnnouncementEvent.AnnouncementInt -> {
                 _screenState.value = _screenState.value.copy(
                     isLoad = true,
-                    currentPage = 1,
-                    announcementList = mutableListOf(),
-                    initCall = 0,
+                    /*currentPage = 1,
+                    announcementList = mutableStateListOf(),
+                    initCall = 0,*/
                 )
                 getAnnouncement(
                     token = event.token,

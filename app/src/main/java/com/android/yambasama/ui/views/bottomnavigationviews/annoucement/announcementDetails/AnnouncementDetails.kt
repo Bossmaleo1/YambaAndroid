@@ -102,7 +102,6 @@ fun AnnouncementDetails(
                                     Color.White
                                 },
                                 fontWeight = FontWeight.Normal
-                                //color = MaterialTheme.colorScheme.primary
                             )
                         }
                     )
@@ -147,11 +146,7 @@ fun AnnouncementDetails(
                                 Text(
                                     text = userName,
                                     style = MaterialTheme.typography.titleMedium,
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                                 Row {
                                     Image(
@@ -162,11 +157,7 @@ fun AnnouncementDetails(
                                             .height(18.dp)
                                             .width(18.dp),
                                         colorFilter = ColorFilter.tint(
-                                            color = if (!isDark) {
-                                                colorResource(R.color.black40)
-                                            } else {
-                                                Color.White
-                                            }
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     )
 
@@ -174,11 +165,7 @@ fun AnnouncementDetails(
                                         text = postDateTime,
                                         modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                         style = MaterialTheme.typography.titleSmall,
-                                        color = if (!isDark) {
-                                            colorResource(R.color.black40)
-                                        } else {
-                                            Color.White
-                                        }
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             }
@@ -188,11 +175,7 @@ fun AnnouncementDetails(
 
                         Row {
                             Divider(
-                                color = if (!isDark) {
-                                    Color.White
-                                } else {
-                                    Color.Black
-                                },
+                                color = MaterialTheme.colorScheme.background,
                                 modifier = Modifier.padding(bottom = 10.dp, top = 5.dp)
                             )
                         }
@@ -208,11 +191,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -224,11 +203,7 @@ fun AnnouncementDetails(
                                 } ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
                                 modifier = Modifier.padding(4.dp),
                                 style = MaterialTheme.typography.titleSmall,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -243,11 +218,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -259,11 +230,7 @@ fun AnnouncementDetails(
                                 } ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
                                 modifier = Modifier.padding(4.dp),
                                 style = MaterialTheme.typography.titleSmall,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -278,11 +245,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -291,11 +254,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -310,11 +269,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -323,11 +278,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -342,11 +293,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -355,11 +302,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -374,11 +317,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -387,11 +326,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -406,11 +341,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -419,11 +350,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -441,11 +368,7 @@ fun AnnouncementDetails(
                                                 .width(24.dp),
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -454,11 +377,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -473,11 +392,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -486,11 +401,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -505,11 +416,7 @@ fun AnnouncementDetails(
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop,
                                 colorFilter = ColorFilter.tint(
-                                    color = if (!isDark) {
-                                        colorResource(R.color.black40)
-                                    } else {
-                                        Color.White
-                                    }
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
 
@@ -518,11 +425,7 @@ fun AnnouncementDetails(
                                 modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
                                 style = MaterialTheme.typography.titleSmall,
                                 textAlign = TextAlign.Center,
-                                color = if (!isDark) {
-                                    colorResource(R.color.black40)
-                                } else {
-                                    Color.White
-                                }
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

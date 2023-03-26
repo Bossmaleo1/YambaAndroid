@@ -44,6 +44,7 @@ import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
+import androidx.compose.material.Scaffold
 
 @Composable
 @ExperimentalMaterial3Api
@@ -83,9 +84,11 @@ fun HomeApp(
     var visibleSearch by remember { mutableStateOf(false) }
 
     Scaffold(
+        backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                backgroundColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     TopAppBar(
                         navigationIcon = {

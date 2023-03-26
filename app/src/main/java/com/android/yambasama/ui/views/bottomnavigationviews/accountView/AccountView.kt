@@ -100,8 +100,6 @@ fun AccountView(
         content = {
             // Creating a Column Layout
             Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-
-                val items = (1..100).map { "Item $it" }
                 val lazyListState = rememberLazyListState()
                 var scrolledY = 0f
                 var prevousOffset = 0

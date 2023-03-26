@@ -1,7 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchview
 
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,19 +9,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.android.yambasama.R
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
-import kotlinx.coroutines.CoroutineScope
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun SearchTownItem(
@@ -30,6 +33,8 @@ fun SearchTownItem(
     searchFormViewModel: SearchFormViewModel,
     util: Util
 ) {
+    val isDark = isSystemInDarkTheme()
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,17 +44,26 @@ fun SearchTownItem(
                     searchFormViewModel.screenState.value.departureOrDestination == 1
                     && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                 ) {
-                    this.background(Color.Gray)
+                    if(isDark) {
+                        this.background(colorResource(R.color.GrayLight))
+                    } else {
+                        this.background(colorResource(R.color.GrayDark))
+                    }
                 } else if (
                     searchFormViewModel.screenState.value.departureOrDestination == 2
                     && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                 ) {
-                    this.background(Color.Gray)
+                    if(isDark) {
+                        this.background(colorResource(R.color.GrayLight))
+                    } else {
+                        this.background(colorResource(R.color.GrayDark))
+                    }
                 } else {
-                    this.background(Color.White)
+                    this.background(MaterialTheme.colorScheme.background)
                 }
             },
         shape = RoundedCornerShape(corner = CornerSize(0.dp)),
+        backgroundColor = MaterialTheme.colorScheme.background,
         onClick = {
             if (
                 searchFormViewModel.screenState.value.departureOrDestination == 1
@@ -102,35 +116,51 @@ fun SearchTownItem(
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
-                .wrapContentHeight().run {
+                .fillMaxWidth().run {
                     if (searchFormViewModel.screenState.value.departureOrDestination == 1
                         && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                     ) {
-                        this.background(Color.Gray)
+                        if(isDark) {
+                            this.background(colorResource(R.color.GrayLight))
+                        } else {
+                            this.background(colorResource(R.color.GrayDark))
+                        }
                     } else if (searchFormViewModel.screenState.value.departureOrDestination == 2
                         && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                     ) {
-                        this.background(Color.Gray)
+                        if(isDark) {
+                            this.background(colorResource(R.color.GrayLight))
+                        } else {
+                            this.background(colorResource(R.color.GrayDark))
+                        }
                     } else {
-                        this.background(Color.White)
+                        this.background(MaterialTheme.colorScheme.background)
                     }
                 }
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .wrapContentHeight()
+                    .fillMaxWidth()
                     .padding(18.dp).run {
                         if (searchFormViewModel.screenState.value.departureOrDestination == 1
                             && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                         ) {
-                            this.background(Color.Gray)
+                            if(isDark) {
+                                this.background(colorResource(R.color.GrayLight))
+                            } else {
+                                this.background(colorResource(R.color.GrayDark))
+                            }
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 2
                             && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                         ) {
-                            this.background(Color.Gray)
+                            if(isDark) {
+                                this.background(colorResource(R.color.GrayLight))
+                            } else {
+                                this.background(colorResource(R.color.GrayDark))
+                            }
                         } else {
-                            this.background(Color.White)
+                            this.background(Color.Transparent)
                         }
                     },
                 horizontalArrangement = Arrangement.Start
@@ -144,7 +174,8 @@ fun SearchTownItem(
                 Text(
                     text = "${address.townName} (${util.getCountry(address.code)} (${address.airportName}, ${address.airportCode}))",
                     modifier = Modifier.padding(4.dp),
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
