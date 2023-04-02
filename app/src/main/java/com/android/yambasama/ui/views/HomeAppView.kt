@@ -1,5 +1,8 @@
 package com.android.yambasama.ui.views
 
+import android.app.NotificationManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.*
 import androidx.compose.animation.slideInHorizontally
@@ -46,6 +49,7 @@ import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import androidx.compose.material.Scaffold
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @ExperimentalMaterial3Api
 fun HomeApp(

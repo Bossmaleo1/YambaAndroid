@@ -2,8 +2,15 @@ package com.android.yambasama.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.graphics.*
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -12,7 +19,10 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
@@ -50,6 +60,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.android.yambasama.R
+import com.android.yambasama.ui.views.bottomnavigationviews.notice.AddNoticeView
+import com.android.yambasama.ui.views.bottomnavigationviews.notice.NoticeView
+import com.android.yambasama.ui.views.bottomnavigationviews.request.TransportePackageRequestView
+import com.android.yambasama.ui.views.bottomnavigationviews.tracking.TrackerPackageView
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
@@ -73,6 +91,11 @@ class MainActivity : ComponentActivity() {
     private lateinit var announcementViewModel: AnnouncementViewModel
     var token: String? = null
 
+    private val channelID = "com.android.yambasama.ui.views.channel1"
+    private var notificationManager: NotificationManager? = null
+    private val KEY_REPLY = "key_reply"
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,11 +105,14 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
-
                     MainView(navController)
+                    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
                     userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
                         this.token = token?.token
                     }
+
+                    receiveInput()
 
                     CoroutineScope(Dispatchers.Main).launch {
                         delay(200)
@@ -101,6 +127,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+
     private fun initViewModel() {
         userViewModel = ViewModelProvider(this, userFactory)[UserViewModel::class.java]
         dropViewModel = ViewModelProvider(this, dropFactory)[DropViewModel::class.java]
@@ -109,11 +137,176 @@ class MainActivity : ComponentActivity() {
         announcementViewModel = ViewModelProvider(this,announcementFactory)[AnnouncementViewModel::class.java]
     }
 
+    private fun displayNotification() {
+        /*val notificationId = 45
+        val tapResult = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK //Intent.FLAG_ACTIVITY_FORWARD_RESULT
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResult,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val notification = NotificationCompat.Builder(this@MainActivity,channelID)
+            .setContentTitle("Demo title")
+            .setContentText("This is a demo notification")
+            .setSmallIcon(R.drawable.notification_logo)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo2))
+            .setContentIntent(pendingIntent)
+            .build()
+
+        notificationManager?.notify(notificationId,notification)*/
+
+
+        // action Button 1
+        /*val notificationId = 45
+
+        val tapResult = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK //Intent.FLAG_ACTIVITY_FORWARD_RESULT
+        }
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResult,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val action: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "Details", pendingIntent).build()
+
+
+        val notification = NotificationCompat.Builder(this@MainActivity,channelID)
+            .setContentTitle("Demo title")
+            .setContentText("This is a demo notification")
+            .setSmallIcon(R.drawable.notification_logo)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo2))
+            .setContentIntent(pendingIntent)
+            .addAction(action)
+            .build()*/
+
+        // action Button 2
+
+        val notificationId = 45
+
+        val tapResult = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK //Intent.FLAG_ACTIVITY_FORWARD_RESULT
+        }
+
+        tapResult.putExtra("","")
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResult,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+
+        val action: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "ACCEPTER", pendingIntent).build()
+
+        val action1: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "REFUSER", pendingIntent).build()
+
+
+        val notification = NotificationCompat.Builder(this@MainActivity,channelID)
+            .setContentTitle("Sidney MALEO")
+            .setContentText("Voulez-vous transporter ce colis ??")
+            .setSmallIcon(R.drawable.notification_logo)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLargeIcon(getCircleBitmap(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.photo)))
+            .setContentIntent(pendingIntent)
+            .addAction(action)
+            .addAction(action1)
+            .build()
+
+        /*val notificationId = 45
+
+        val tapResult = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK //Intent.FLAG_ACTIVITY_FORWARD_RESULT
+        }
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResult,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        // reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY).run {
+            setLabel("Insert your name")
+            build()
+        }
+
+        val replyAction : NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "REPLY",
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
+
+        val action: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "VALIDER", pendingIntent).build()
+
+        val action1: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "ANNULER", pendingIntent).build()
+
+
+        val notification = NotificationCompat.Builder(this@MainActivity,channelID)
+            .setContentTitle("Demo title")
+            .setContentText("This is a demo notification")
+            .setSmallIcon(R.drawable.notification_logo)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo2))
+            .addAction(action)
+            .addAction(action1)
+            .addAction(replyAction)
+            .build()*/
+
+        notificationManager?.notify(notificationId,notification)
+    }
+
+    private fun receiveInput() {
+        val intent = this.intent
+        val remoteInput = RemoteInput.getResultsFromIntent(intent)
+        if (remoteInput!=null) {
+            val inputString = remoteInput.getCharSequence(KEY_REPLY).toString()
+            Log.d("MALEOMALEO9393", inputString)
+        }
+    }
+
+    private fun createNotificationChannel(
+        id: String,
+        name: String,
+        channelDescription: String
+    ) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(id,name,importance).apply {
+                description = channelDescription
+            }
+            notificationManager?.createNotificationChannel(channel)
+        }
+    }
+
+    @SuppressLint("PermissionLaunchedDuringComposition")
+    @OptIn(ExperimentalPermissionsApi::class)
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController) {
-
+        val notificationPermissionState = rememberPermissionState(
+            android.Manifest.permission.POST_NOTIFICATIONS
+        )
         val activity = (LocalContext.current as? Activity)
         //We call our init view model method
         this.initViewModel()
@@ -141,10 +334,26 @@ class MainActivity : ComponentActivity() {
                     }
                 )*/
             ) {
+
                 if (userViewModel.screenState.value.userRoom.isEmpty()
                     && userViewModel.screenState.value.tokenRoom.isEmpty()) {
                     addressViewModel.onEvent(AddressEvent.InitAddressState)
                 }
+
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
+                    //we launch the notification permission
+                    notificationPermissionState.launchPermissionRequest()
+                    //if the permission is Granted
+                    if (notificationPermissionState.status.isGranted) {
+                        createNotificationChannel(channelID,"DemoChannel", "this is maleo-sama !!")
+                        displayNotification()
+                    }
+                } else {
+                    createNotificationChannel(channelID,"DemoChannel", "this is maleo-sama !!")
+                    //displayNotification()
+                }
+
+
                 HomeApp(
                     navController = navController,
                     dropViewModel = dropViewModel,
@@ -235,7 +444,64 @@ class MainActivity : ComponentActivity() {
                     navController = navController
                 )
             }
+
+            composable(
+                route = Route.noticeView
+            ) {
+                NoticeView(
+                    navController = navController
+                )
+            }
+
+            composable(
+                route = Route.trackerPackageView
+            ) {
+                TrackerPackageView(
+                    navController = navController
+                )
+            }
+
+            composable(
+                route = Route.addNoticeView
+            ) {
+                AddNoticeView(
+                    navController = navController
+                )
+            }
+
+            composable(
+                route = Route.transportePackageRequestView
+            ) {
+                TransportePackageRequestView(
+                    navController = navController
+                )
+            }
+
+            //TransportePackageRequestView
         }
+    }
+
+    fun getCircleBitmap(bitmap: Bitmap): Bitmap {
+        val output: Bitmap = Bitmap.createBitmap(
+            bitmap.width,
+            bitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas: Canvas = Canvas(output)
+        val color = Color.Red
+        val paint: Paint = Paint()
+        val rect: Rect = Rect(0,0, bitmap.width, bitmap.height)
+        val rectF: RectF = RectF(rect)
+
+        paint.isAntiAlias = true
+        canvas.drawARGB(0,0,0,0)
+        //paint.color = color
+        canvas.drawOval(rectF, paint)
+
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+
+        bitmap.recycle()
+
+        return output
     }
 }
 
