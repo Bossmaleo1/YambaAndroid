@@ -1,6 +1,9 @@
 package com.android.yambasama.ui.views.bottomnavigationviews
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
@@ -17,16 +20,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.util.LocationData
+import com.android.yambasama.presentation.util.LocationLiveData
 import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,6 +59,8 @@ fun SearchView(
     val formatter: SimpleDateFormat = SimpleDateFormat("EEE d MMM yy", Locale.getDefault())
     val openDialog = remember { mutableStateOf(false) }
 
+    //We request the permission
+    RequestLocationPermission()
 
     if (searchFormViewModel.screenState.value.dateDialog !== null) {
         mDate.value = formatter.format(searchFormViewModel.screenState.value.dateDialog!!)
@@ -314,4 +328,59 @@ fun SearchView(
         visibleForm = true
     }
 
+}
+
+
+@SuppressLint("CoroutineCreationDuringComposition")
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun RequestLocationPermission() {
+    val locationPermissionsState = rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        )
+    )
+
+    if (locationPermissionsState.allPermissionsGranted) {
+        Log.d("MALEO939393", "The permission is allow")
+        LocationLiveData(LocalContext.current).observe(LocalContext.current as LifecycleOwner) {
+            handleLocationData(it!!)
+        }
+    } else {
+        CoroutineScope(Dispatchers.Main).launch {
+            locationPermissionsState.launchMultiplePermissionRequest()
+        }
+
+
+    }
+
+    if (locationPermissionsState.shouldShowRationale) {
+        Log.d("MALEO9393", " important. Please grant all of them for the app to function properly.")
+    } else {
+        Log.d("MALEO9393", "denied. The app cannot function without them.")
+    }
+}
+
+fun handleLocationData(locationData: LocationData) {
+    if(handleLocationException(locationData.exception)) {
+        return
+    }
+
+    Log.d("MALEO9393", "Last location ${locationData.addressLocation}")
+    //Log.d("MALEO93939393939393", "Latitude : ${locationData.location!!.latitude}")
+    //Log.d("MALEO93939393939393", "Longitude :  ${locationData.location!!.longitude}")
+    Log.d("MALEO9393", "Last location ${locationData.addressLocation!!.country}")
+    Log.d("MALEO9393", "Last location ${locationData.addressLocation!!.city}")
+}
+
+
+fun handleLocationException(exception: Exception?): Boolean {
+    exception ?: return false
+    when(exception) {
+        is SecurityException -> {
+            Log.d("MALEO9393", "Testing !!")
+        }
+    }
+    return true
 }
