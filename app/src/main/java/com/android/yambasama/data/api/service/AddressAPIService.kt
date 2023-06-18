@@ -11,6 +11,8 @@ interface AddressAPIService {
 
     @GET("/api/address/search")
     suspend fun getAddress(
+        @Query("locale")
+        locale: String,
         @Query("page")
         page: Int,
         @Query("q")

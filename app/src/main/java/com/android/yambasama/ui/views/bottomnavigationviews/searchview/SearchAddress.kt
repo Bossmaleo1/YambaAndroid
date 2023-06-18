@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchview
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -42,6 +43,7 @@ import com.android.yambasama.ui.views.shimmer.AddressShimmer
 import com.android.yambasama.ui.views.viewsError.networkError
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import java.util.Locale
 
 
 @ExperimentalMaterial3Api
@@ -122,7 +124,8 @@ fun SearchAddress(
                                     addressViewModel.onEvent(
                                         AddressEvent.SearchValueEntered(
                                             value = it,
-                                            token = screenStateUser.tokenRoom[0].token
+                                            token = screenStateUser.tokenRoom[0].token,
+                                            locale = "${Locale.getDefault().language}"
                                         )
                                     )
                                 }
@@ -164,7 +167,8 @@ fun SearchAddress(
                         addressViewModel.onEvent(
                             AddressEvent.AddressInit(
                                 value = screenState.searchInputValue,
-                                token = screenStateUser.tokenRoom[0].token
+                                token = screenStateUser.tokenRoom[0].token,
+                                locale = screenState.locale
                             )
                         )
                     }

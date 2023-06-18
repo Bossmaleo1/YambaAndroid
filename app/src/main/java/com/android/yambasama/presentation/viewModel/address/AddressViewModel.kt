@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import com.android.yambasama.R
+import java.util.Locale
 import javax.inject.Inject
 
 class AddressViewModel @Inject constructor(
@@ -29,7 +30,8 @@ class AddressViewModel @Inject constructor(
     private val _screenState = mutableStateOf(
         AddressScreenState(
             addressList = mutableListOf(),
-            searchInputValue = ""
+            searchInputValue = "",
+            locale = "${Locale.getDefault().language}"
         )
     )
     val screenState: State<AddressScreenState> = _screenState

@@ -6,6 +6,7 @@ import retrofit2.Response
 
 interface AddressRemoteDataSource {
     suspend fun getAddress(
+        locale: String,
         page: Int,
         query: String,
         token: String

@@ -1,6 +1,5 @@
 package com.android.yambasama.data.api.service
 
-import com.android.yambasama.data.model.api.ApiAnnouncementResponse
 import com.android.yambasama.data.model.dataRemote.Announcement
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,14 +14,16 @@ interface AnnouncementAPIService {
         page: Int,
         @Query("pagination")
         pagination: Boolean,
-        @Query("departureTime")
-        departureTime: String,
+        @Query("departureTime[strictlyafter]")
+        departureTimeAfter: String,
+        @Query("departureTime[before]")
+        departureTimeBefore: String,
         @Query("departureAddress")
         departureAddress: String,
         @Query("destinationAddress")
         destinationAddress: String,
         @Header("Authorization")
         token: String
-    ): Response<ApiAnnouncementResponse>
+    ): Response<List<Announcement>>
 
 }
