@@ -1,9 +1,9 @@
 package com.android.yambasama.data.repository
 
 import com.android.yambasama.data.model.api.ApiTokenResponse
-import com.android.yambasama.data.model.api.ApiUserResponse
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
+import com.android.yambasama.data.model.dataRemote.User
 import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserRemoteDataSource
 import com.android.yambasama.data.util.Resource
@@ -16,11 +16,11 @@ class UserRepositoryImpl(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
 
-    override suspend fun getUsers(userName: String, token: String): Resource<ApiUserResponse> {
+    override suspend fun getUsers(userName: String, token: String): Resource<List<User>> {
         return responseToResourceUser(userRemoteDataSource.getUser(userName, token))
     }
 
-    private fun responseToResourceUser(response: Response<ApiUserResponse>): Resource<ApiUserResponse> {
+    private fun responseToResourceUser(response: Response<List<User>>): Resource<List<User>> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
                 return Resource.Success(result)

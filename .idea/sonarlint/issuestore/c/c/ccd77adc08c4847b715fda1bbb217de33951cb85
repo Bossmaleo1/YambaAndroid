@@ -1,4 +1,10 @@
 
->kotlin:S1128	"Remove this unused import.(Σ—έρώÿÿÿÿ8λ΄Ύ°ο0
->kotlin:S1128
-"Remove this unused import.(νι‚ώÿÿÿÿ8®Μ½°ο0
+Okotlin:S1481ν"*Remove this unused "color" local variable.(α¦Ι¥ϋÿÿÿÿ8Πυά³ώ0
+9kotlin:S1128"Remove this unused import.(©¶Ωη8®’ά³ώ0
+8kotlin:S1128	"Remove this unused import.(ή‚½8®’ά³ώ0
+>kotlin:S1128"Remove this unused import.(Σ—έρώÿÿÿÿ8®’ά³ώ0
+9kotlin:S1128"Remove this unused import.(¦ώϋ8®’ά³ώ0
+Ckotlin:S125"Remove this commented out code.(†ΐηώÿÿÿÿ8°’ά³ώ0
+>kotlin:S125¥"Remove this commented out code.(†ΑΪτ8°’ά³ώ0
+Ckotlin:S125θ"Remove this commented out code.(†ΐηώÿÿÿÿ8²’ά³ώ0
+Ckotlin:S125—"Remove this commented out code.(½ª¥ιώÿÿÿÿ8ªϋέ³ώ0

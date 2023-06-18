@@ -1,17 +1,17 @@
 package com.android.yambasama.domain.usecase.address
 
 import com.android.yambasama.data.model.api.ApiAddressResponse
-import com.android.yambasama.data.model.api.ApiTokenResponse
+import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.data.util.Resource
 import com.android.yambasama.domain.repository.AddressRepository
 
 class GetAddressUseCase(private val addressRepository: AddressRepository) {
     suspend fun execute(
+        locale: String,
         page: Int,
-        pagination: Boolean,
-        townName: String,
+        query: String,
         token: String
-    ): Resource<ApiAddressResponse> {
-        return addressRepository.getAddress(page,pagination,townName,token)
+    ): Resource<List<Address>> {
+        return addressRepository.getAddress(locale,page,query,token)
     }
 }

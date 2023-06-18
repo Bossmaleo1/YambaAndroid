@@ -2,7 +2,7 @@ package com.android.yambasama.data.api.service
 
 import com.android.yambasama.data.model.api.ApiLogin
 import com.android.yambasama.data.model.api.ApiTokenResponse
-import com.android.yambasama.data.model.api.ApiUserResponse
+import com.android.yambasama.data.model.dataRemote.User
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -18,5 +18,5 @@ interface UserAPIService {
         userName: String,
         @Header("Authorization")
         token: String
-    ): Response<ApiUserResponse>
+    ): Response<List<User>>
 }

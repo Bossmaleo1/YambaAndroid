@@ -1,16 +1,16 @@
 package com.android.yambasama.domain.repository
 
-import com.android.yambasama.data.model.api.ApiAddressResponse
-import com.android.yambasama.data.model.api.ApiUserResponse
+
+import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.data.util.Resource
 
 interface AddressRepository {
 
     suspend fun getAddress(
+        locale: String,
         page: Int,
-        pagination: Boolean,
-        townName: String,
+        query: String,
         token: String
-    ): Resource<ApiAddressResponse>
+    ): Resource<List<Address>>
 
 }
