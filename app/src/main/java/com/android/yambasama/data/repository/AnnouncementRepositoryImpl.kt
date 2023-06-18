@@ -1,6 +1,7 @@
 package com.android.yambasama.data.repository
 
 import com.android.yambasama.data.model.api.ApiAnnouncementResponse
+import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.repository.dataSource.annoucement.AnnouncementRemoteDataSource
 import com.android.yambasama.data.util.Resource
 import com.android.yambasama.domain.repository.AnnouncementRepository
@@ -10,7 +11,7 @@ class AnnouncementRepositoryImpl(
     private val annoucementRemoteDataSource: AnnouncementRemoteDataSource
 ): AnnouncementRepository {
 
-    private fun responseToRessourceAnnouncement(response: Response<ApiAnnouncementResponse>): Resource<ApiAnnouncementResponse> {
+    private fun responseToRessourceAnnouncement(response: Response<List<Announcement>>): Resource<List<Announcement>> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
                 return Resource.Success(result)
@@ -22,16 +23,18 @@ class AnnouncementRepositoryImpl(
     override suspend fun getAnnouncements(
         page: Int,
         pagination: Boolean,
-        departureTime: String,
+        departureTimeAfter: String,
+        departureTimeBefore: String,
         departureAddress: String,
         destinationAddress: String,
         token: String
-    ): Resource<ApiAnnouncementResponse> {
+    ): Resource<List<Announcement>> {
         return responseToRessourceAnnouncement(
             annoucementRemoteDataSource.getAnnouncements(
                 page = page,
                 pagination = pagination,
-                departureTime = departureTime,
+                departureTimeAfter = departureTimeAfter,
+                departureTimeBefore = departureTimeBefore,
                 departureAddress = departureAddress,
                 destinationAddress = destinationAddress,
                 token = token

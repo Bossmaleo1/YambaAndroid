@@ -63,8 +63,8 @@ class AnnouncementViewModel @Inject constructor(
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
-                    screenState.value.announcementList.addAll(apiAnnouncementResponse.annoucement)
-                    if(apiAnnouncementResponse.annoucement.size < 10) {
+                    screenState.value.announcementList.addAll(apiAnnouncementResponse)
+                    if(apiAnnouncementResponse.size < 10) {
                         _screenState.value = _screenState.value.copy(
                             isNetworkConnected = true,
                             isLoad = false,

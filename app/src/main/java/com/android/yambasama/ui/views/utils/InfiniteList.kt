@@ -12,6 +12,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.presentation.viewModel.address.AddressViewModel
 import com.android.yambasama.ui.views.shimmer.AddressShimmer
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,10 +46,8 @@ fun InfiniteListAddressRemote(
 
     listState.OnBottomReached(buffer = 2) {
         addressViewModel.getAddress(
+            "${Locale.getDefault().language}",
             townName,
-            /*page = addressViewModel.currentPage.value+1,
-            pagination = true,
-            token*/
         )
     }
 
