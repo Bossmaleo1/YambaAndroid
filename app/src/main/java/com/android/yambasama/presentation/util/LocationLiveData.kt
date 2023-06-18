@@ -35,7 +35,7 @@ class LocationLiveData(context: Context): LiveData<LocationData>() {
                 Log.d("MALEO9393", "Testing !! Testing !! ${location}")
                 if (location !== null) {
                     Log.d("MALEO9393", "Testing !! Testing !!")
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         geoCoder.getFromLocation(
                             location!!.latitude,
                             location!!.longitude,
@@ -51,7 +51,7 @@ class LocationLiveData(context: Context): LiveData<LocationData>() {
                                     )
                                 )
                             })
-                    } else {
+                    } else {*/
                         value = LocationData(
                             addressLocation = AddressLocation(
                                 city = geoCoder.getFromLocation( location.latitude, location.longitude, 3)!!.get(0).locality,
@@ -63,7 +63,7 @@ class LocationLiveData(context: Context): LiveData<LocationData>() {
                         )
 
                     }
-                }
+                //}
 
             }
 

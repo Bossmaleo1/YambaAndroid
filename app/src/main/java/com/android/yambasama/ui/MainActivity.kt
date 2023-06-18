@@ -137,6 +137,7 @@ class MainActivity : ComponentActivity() {
         announcementViewModel = ViewModelProvider(this,announcementFactory)[AnnouncementViewModel::class.java]
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun displayNotification() {
         /*val notificationId = 45
         val tapResult = Intent(this, MainActivity::class.java).apply {
@@ -192,7 +193,8 @@ class MainActivity : ComponentActivity() {
 
         // action Button 2
 
-        val notificationId = 45
+        //Celui là marche très très bien
+        /*val notificationId = 45
 
         val tapResult = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK //Intent.FLAG_ACTIVITY_FORWARD_RESULT
@@ -204,7 +206,7 @@ class MainActivity : ComponentActivity() {
             this,
             0,
             tapResult,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
 
@@ -225,7 +227,7 @@ class MainActivity : ComponentActivity() {
             .setContentIntent(pendingIntent)
             .addAction(action)
             .addAction(action1)
-            .build()
+            .build()*/
 
         /*val notificationId = 45
 
@@ -272,7 +274,9 @@ class MainActivity : ComponentActivity() {
             .addAction(replyAction)
             .build()*/
 
-        notificationManager?.notify(notificationId,notification)
+
+
+       // notificationManager?.notify(notificationId,notification)
     }
 
     private fun receiveInput() {

@@ -1,15 +1,15 @@
 package com.android.yambasama.domain.repository
 
 import com.android.yambasama.data.model.api.ApiTokenResponse
-import com.android.yambasama.data.model.api.ApiUserResponse
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
+import com.android.yambasama.data.model.dataRemote.User
 import com.android.yambasama.data.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     //resource for retrofit requests
-    suspend fun getUsers(userName: String, token: String): Resource<ApiUserResponse>
+    suspend fun getUsers(userName: String, token: String): Resource<List<User>>
 
     suspend fun saveUser(user: UserRoom)
 

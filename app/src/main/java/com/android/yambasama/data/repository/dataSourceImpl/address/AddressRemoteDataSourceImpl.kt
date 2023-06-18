@@ -2,6 +2,7 @@ package com.android.yambasama.data.repository.dataSourceImpl.address
 
 import com.android.yambasama.data.api.service.AddressAPIService
 import com.android.yambasama.data.model.api.ApiAddressResponse
+import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.data.repository.dataSource.address.AddressRemoteDataSource
 import retrofit2.Response
 
@@ -11,14 +12,12 @@ class AddressRemoteDataSourceImpl(
 
     override suspend fun getAddress(
         page: Int,
-        pagination: Boolean,
-        townName: String,
+        query: String,
         token: String
-    ): Response<ApiAddressResponse> {
+    ): Response<List<Address>> {
         return addressAPIService.getAddress(
             page,
-            pagination,
-            townName,
+            query,
             token
         )
     }

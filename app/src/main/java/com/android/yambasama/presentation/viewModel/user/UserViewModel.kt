@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
@@ -90,8 +91,10 @@ class UserViewModel @Inject constructor(
         if (isNetworkAvailable(app)) {
             try {
                 val apiResult = getUserUseCase.execute(userName, "Bearer $token")
+
                 apiResult.data?.let { apiUserResponse ->
-                    screenState.value.user = apiUserResponse.Users
+                    screenState.value.user = apiUserResponse
+                    //Log.d("MALEO939393939393", "Testing ${apiUserResponse.users}")
                     viewModelScope.launch {
                         saveTokenUseCase.execute(
                             TokenRoom(

@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -38,19 +37,20 @@ class AddressViewModel @Inject constructor(
     val uiEventFlow = _uiEventFlow.asSharedFlow()
 
     fun getAddress(
+        locale: String,
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(app)) {
             try {
                 val apiResult =
                     getAddressUseCase.execute(
+                        locale = locale,
                         page = screenState.value.currentPage,
-                        pagination = true,
-                        townName = screenState.value.searchInputValue,
+                        query = screenState.value.searchInputValue,
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAddressResponse ->
-                    getAdressResult(apiAddressResponse.address)
+                    getAdressResult(apiAddressResponse)
                 }
 
                 _screenState.value = _screenState.value.copy(
@@ -115,7 +115,8 @@ class AddressViewModel @Inject constructor(
                     addressList = mutableListOf()
                 )
                 getAddress(
-                    token = event.token
+                    token = event.token,
+                    locale = event.locale
                 )
 
                 if (event.value.isEmpty()) {
@@ -134,7 +135,8 @@ class AddressViewModel @Inject constructor(
                     addressListTemp = mutableListOf()
                 )
                 getAddress(
-                    token = event.token
+                    token = event.token,
+                    locale = event.locale
                 )
             }
             is AddressEvent.ItemClicked -> {
