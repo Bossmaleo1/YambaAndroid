@@ -19,9 +19,9 @@ interface AnnouncementAPIService {
         @Query("departureTime[before]")
         departureTimeBefore: String,
         @Query("departureAddress")
-        departureAddress: String,
+        departureAddress: Int,
         @Query("destinationAddress")
-        destinationAddress: String,
+        destinationAddress: Int,
         @Header("Authorization")
         token: String
     ): Response<List<Announcement>>

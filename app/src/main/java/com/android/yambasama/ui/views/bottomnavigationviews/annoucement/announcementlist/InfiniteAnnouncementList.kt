@@ -87,7 +87,8 @@ fun InfiniteAnnouncementList(
         screenState.currentPage++
         announcementViewModel.getAnnouncement(
             token = screenStateUser.tokenRoom[0].token,
-            departureTime = "",
+            departureTimeAfter = "",
+            departureTimeBefore = "",
             destinationAddressId = 0,
             departureAddressId = 0
         )

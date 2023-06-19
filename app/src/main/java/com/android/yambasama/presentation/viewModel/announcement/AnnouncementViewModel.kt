@@ -42,7 +42,8 @@ class AnnouncementViewModel @Inject constructor(
         token: String,
         departureAddressId: Int,
         destinationAddressId: Int,
-        departureTime: String
+        departureTimeAfter: String,
+        departureTimeBefore: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(app)) {
             try {
@@ -57,9 +58,10 @@ class AnnouncementViewModel @Inject constructor(
                     getAnnoucementsUseCase.execute(
                         page = screenState.value.currentPage,
                         pagination = true,
-                        departureTime = "",
-                        departureAddress = "",
-                        destinationAddress = "",
+                        departureTimeAfter = departureTimeAfter,
+                        departureTimeBefore = departureTimeBefore,
+                        departureAddress = departureAddressId,
+                        destinationAddress = destinationAddressId,
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
@@ -107,7 +109,8 @@ class AnnouncementViewModel @Inject constructor(
                 )
                 getAnnouncement(
                     token = event.token,
-                    departureTime = event.departureTime,
+                    departureTimeAfter = event.departureTimeAfter,
+                    departureTimeBefore = event.departureTimeBefore,
                     destinationAddressId = event.destinationAddressId,
                     departureAddressId = event.departureAddressId
                 )
