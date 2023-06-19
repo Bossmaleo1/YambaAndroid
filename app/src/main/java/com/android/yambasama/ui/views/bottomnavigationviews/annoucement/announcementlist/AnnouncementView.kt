@@ -104,7 +104,8 @@ fun AnnouncementView(
                                 token = screenStateUser.tokenRoom[0].token,
                                 destinationAddressId = it1,
                                 departureAddressId = it,
-                                departureTime = ""
+                                departureTimeAfter = "2023-02-01T00:00:00",
+                                departureTimeBefore = "2023-02-01T23:59:00"
                             )
                         }
                     }?.let {

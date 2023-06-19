@@ -25,8 +25,8 @@ class AnnouncementRepositoryImpl(
         pagination: Boolean,
         departureTimeAfter: String,
         departureTimeBefore: String,
-        departureAddress: String,
-        destinationAddress: String,
+        departureAddress: Int,
+        destinationAddress: Int,
         token: String
     ): Resource<List<Announcement>> {
         return responseToRessourceAnnouncement(

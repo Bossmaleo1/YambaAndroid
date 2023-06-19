@@ -14,8 +14,8 @@ class AnnouncementRemoteDataSourceImpl(
         pagination: Boolean,
         departureTimeAfter: String,
         departureTimeBefore: String,
-        departureAddress: String,
-        destinationAddress: String,
+        departureAddress: Int,
+        destinationAddress: Int,
         token: String
     ): Response<List<Announcement>> {
         return announcementAPIService.getAnnouncements(

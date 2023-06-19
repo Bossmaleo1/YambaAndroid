@@ -7,7 +7,8 @@ sealed class AnnouncementEvent {
         val token: String,
         val departureAddressId: Int,
         val destinationAddressId: Int,
-        val departureTime: String
+        val departureTimeAfter: String,
+        val departureTimeBefore: String
     ): AnnouncementEvent()
     object IsNetworkConnected: AnnouncementEvent()
     object InitAnnouncementState:AnnouncementEvent()

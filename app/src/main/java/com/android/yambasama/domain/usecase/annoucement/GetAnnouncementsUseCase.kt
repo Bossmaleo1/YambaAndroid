@@ -9,16 +9,17 @@ class GetAnnouncementsUseCase(private val annoucementRepository: AnnouncementRep
     suspend fun execute(
         page: Int,
         pagination: Boolean,
-        departureTime: String,
-        departureAddress: String,
-        destinationAddress: String,
+        departureTimeAfter: String,
+        departureTimeBefore: String,
+        departureAddress: Int,
+        destinationAddress: Int,
         token: String
     ): Resource<List<Announcement>> {
         return annoucementRepository.getAnnouncements(
             page = page,
             pagination = pagination,
-            departureTimeAfter = departureTime,
-            departureTimeBefore = departureTime,
+            departureTimeAfter = departureTimeAfter,
+            departureTimeBefore = departureTimeBefore,
             departureAddress = departureAddress,
             destinationAddress = destinationAddress,
             token = token
