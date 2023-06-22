@@ -16,4 +16,6 @@ data class AnnouncementScreenState(
     var announcementList: SnapshotStateList<Announcement> = mutableStateListOf(),
     var announcementListTemp: SnapshotStateList<Announcement> = mutableStateListOf(),
     var initCall: Int = 0,
+    var refreshing: Boolean = false,
+    var isEmptyAnnouncement: Boolean = false
 )

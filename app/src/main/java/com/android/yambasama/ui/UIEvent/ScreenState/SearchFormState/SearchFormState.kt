@@ -8,6 +8,8 @@ data class SearchFormState (
     var addressDestination: Address? = null,
     var departureOrDestination: Int = 0,
     var dateDialog: Date? = null,
+    var arrivingTimeAfter: String? = null,
+    var arrivingTimeBefore: String? = null,
     var isDepartureError: Boolean = false,
     var isDestinationError: Boolean = false,
     var isDepartureTimeError: Boolean = false

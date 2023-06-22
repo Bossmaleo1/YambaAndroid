@@ -1,6 +1,5 @@
 package com.android.yambasama.domain.usecase.annoucement
 
-import com.android.yambasama.data.model.api.ApiAnnouncementResponse
 import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.util.Resource
 import com.android.yambasama.domain.repository.AnnouncementRepository
@@ -9,8 +8,8 @@ class GetAnnouncementsUseCase(private val annoucementRepository: AnnouncementRep
     suspend fun execute(
         page: Int,
         pagination: Boolean,
-        departureTimeAfter: String,
-        departureTimeBefore: String,
+        arrivingTimeAfter: String,
+        arrivingTimeBefore: String,
         departureAddress: Int,
         destinationAddress: Int,
         token: String
@@ -18,8 +17,8 @@ class GetAnnouncementsUseCase(private val annoucementRepository: AnnouncementRep
         return annoucementRepository.getAnnouncements(
             page = page,
             pagination = pagination,
-            departureTimeAfter = departureTimeAfter,
-            departureTimeBefore = departureTimeBefore,
+            arrivingTimeAfter = arrivingTimeAfter,
+            arrivingTimeBefore = arrivingTimeBefore,
             departureAddress = departureAddress,
             destinationAddress = destinationAddress,
             token = token

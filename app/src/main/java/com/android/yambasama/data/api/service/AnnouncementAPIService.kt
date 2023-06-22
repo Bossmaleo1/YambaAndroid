@@ -14,10 +14,10 @@ interface AnnouncementAPIService {
         page: Int,
         @Query("pagination")
         pagination: Boolean,
-        @Query("departureTime[strictlyafter]")
-        departureTimeAfter: String,
-        @Query("departureTime[before]")
-        departureTimeBefore: String,
+        @Query("arrivingTime[strictly_after]")
+        arrivingTimeAfter: String,
+        @Query("arrivingTime[before]")
+        arrivingTimeBefore: String,
         @Query("departureAddress")
         departureAddress: Int,
         @Query("destinationAddress")

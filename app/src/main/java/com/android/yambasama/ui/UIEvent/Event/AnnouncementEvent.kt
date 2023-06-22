@@ -7,12 +7,15 @@ sealed class AnnouncementEvent {
         val token: String,
         val departureAddressId: Int,
         val destinationAddressId: Int,
-        val departureTimeAfter: String,
-        val departureTimeBefore: String
+        val arrivingTimeAfter: String,
+        val arrivingTimeBefore: String,
+        val refreshing: Boolean
     ): AnnouncementEvent()
     object IsNetworkConnected: AnnouncementEvent()
     object InitAnnouncementState:AnnouncementEvent()
     object IsNetworkError:AnnouncementEvent()
+
+    object IsEmptyAnnouncement:AnnouncementEvent()
     data class ItemClicked(
         val announcement: Announcement
     ) : AnnouncementEvent()
