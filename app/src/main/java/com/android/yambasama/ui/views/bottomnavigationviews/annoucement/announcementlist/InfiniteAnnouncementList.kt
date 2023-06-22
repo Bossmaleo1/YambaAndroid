@@ -1,6 +1,7 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementlist
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,12 +16,14 @@ import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewMod
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist.AnnouncementItem
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.snapshots.SnapshotMutableState
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.android.yambasama.R
 import com.android.yambasama.data.model.dataRemote.Announcement
-import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.shimmer.AnnouncementShimmer
 import com.android.yambasama.ui.views.viewsError.networkError
+import com.android.yambasama.ui.views.viewsMessage.emptyMessage
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,33 +36,37 @@ fun InfiniteAnnouncementList(
     paddingValues: PaddingValues,
     country: Util,
     listState: LazyListState,
-    listItems: List<Announcement>,
+    listItems: SnapshotStateList<Announcement>,
+    refreshing: Boolean
 ) {
 
     val screenState = announcementViewModel.screenState.value
     val scaffoldState = rememberScaffoldState()
     val screenStateUser = userViewModel.screenState.value
 
+
     LazyColumn(
         contentPadding = paddingValues,
         state = listState
     ) {
-
-        items(listItems) { announcement ->
-            AnnouncementItem(
-                navController = navController,
-                announcement = announcement,
-                searchFormViewModel = searchFormViewModel,
-                annoucementViewModel = announcementViewModel,
-                util = country
-            )
+        if (!refreshing) {
+            items(listItems) { announcement ->
+                AnnouncementItem(
+                    navController = navController,
+                    announcement = announcement,
+                    searchFormViewModel = searchFormViewModel,
+                    annoucementViewModel = announcementViewModel,
+                    util = country
+                )
+            }
         }
 
-        //if (screenState.isLoad) {
+
+        if (screenState.isLoad) {
             items(count = 1) {
                 AnnouncementShimmer(7)
             }
-        //}
+        }
 
         if (!screenState.isNetworkConnected) {
             items(count = 1) {
@@ -68,11 +75,18 @@ fun InfiniteAnnouncementList(
                     iconValue = 0
                 )
             }
-        } else if (screenState.isNetworkError) {
+        } else if (screenState.isNetworkError && !screenState.isLoad) {
             items(count = 1) {
                 networkError(
                     title = stringResource(R.string.is_connect_error),
                     iconValue = 1
+                )
+            }
+        } else if(screenState.isEmptyAnnouncement && !screenState.isLoad) {
+            items(count = 1) {
+                emptyMessage(
+                    title = stringResource(R.string.empty_announcement),
+                    iconValue = 2
                 )
             }
         }
@@ -84,14 +98,22 @@ fun InfiniteAnnouncementList(
 
     listState.OnBottomReached(buffer = 2) {
         screenState.isLoad = true
-        screenState.currentPage++
-        announcementViewModel.getAnnouncement(
-            token = screenStateUser.tokenRoom[0].token,
-            departureTimeAfter = "",
-            departureTimeBefore = "",
-            destinationAddressId = 0,
-            departureAddressId = 0
-        )
+        announcementViewModel.screenState.value.currentPage++
+        searchFormViewModel.screenState.value.arrivingTimeAfter?.let {
+            searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it1 ->
+                searchFormViewModel.screenState.value.addressDestination?.id?.let { it2 ->
+                    searchFormViewModel.screenState.value.addressDeparture?.id?.let { it3 ->
+                        announcementViewModel.getAnnouncements(
+                            token = screenStateUser.tokenRoom[0].token,
+                            arrivingTimeAfter = it,
+                            arrivingTimeBefore = it1,
+                            destinationAddressId = it2,
+                            departureAddressId = it3
+                        )
+                    }
+                }
+            }
+        }
     }
 
 }

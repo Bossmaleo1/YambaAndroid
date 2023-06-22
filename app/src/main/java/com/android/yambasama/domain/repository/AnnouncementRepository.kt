@@ -7,8 +7,8 @@ interface AnnouncementRepository {
     suspend fun getAnnouncements(
         page: Int,
         pagination: Boolean,
-        departureTimeAfter: String,
-        departureTimeBefore: String,
+        arrivingTimeAfter: String,
+        arrivingTimeBefore: String,
         departureAddress: Int,
         destinationAddress: Int,
         token: String

@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
@@ -38,12 +36,12 @@ class AnnouncementViewModel @Inject constructor(
     val uiEventFlow = _uiEventFlow.asSharedFlow()
     val currentPage : MutableState<Int> = mutableStateOf(1)
 
-    fun getAnnouncement(
+    fun getAnnouncements(
         token: String,
         departureAddressId: Int,
         destinationAddressId: Int,
-        departureTimeAfter: String,
-        departureTimeBefore: String
+        arrivingTimeAfter: String,
+        arrivingTimeBefore: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(app)) {
             try {
@@ -58,20 +56,29 @@ class AnnouncementViewModel @Inject constructor(
                     getAnnoucementsUseCase.execute(
                         page = screenState.value.currentPage,
                         pagination = true,
-                        departureTimeAfter = departureTimeAfter,
-                        departureTimeBefore = departureTimeBefore,
+                        arrivingTimeAfter = arrivingTimeAfter,
+                        arrivingTimeBefore = arrivingTimeBefore,
                         departureAddress = departureAddressId,
                         destinationAddress = destinationAddressId,
                         token = "Bearer $token"
                     )
                 apiResult.data?.let { apiAnnouncementResponse ->
                     screenState.value.announcementList.addAll(apiAnnouncementResponse)
-                    if(apiAnnouncementResponse.size < 10) {
+                    screenState.value.refreshing = false
+                    if (apiAnnouncementResponse.isEmpty()) {
+                        _screenState.value = _screenState.value.copy(
+                            isEmptyAnnouncement = true,
+                            isLoad = false,
+                        )
+                    } else
+                      if(apiAnnouncementResponse.size < 10) {
                         _screenState.value = _screenState.value.copy(
                             isNetworkConnected = true,
                             isLoad = false,
                             isNetworkError = false,
                             initCall = screenState.value.initCall++,
+                            refreshing = false,
+                            isEmptyAnnouncement = false
                             // currentPage = screenState.value.currentPage++
                         )
                     }
@@ -107,10 +114,10 @@ class AnnouncementViewModel @Inject constructor(
                     announcementList = mutableStateListOf(),
                     initCall = 0,*/
                 )
-                getAnnouncement(
+                getAnnouncements(
                     token = event.token,
-                    departureTimeAfter = event.departureTimeAfter,
-                    departureTimeBefore = event.departureTimeBefore,
+                    arrivingTimeAfter = event.arrivingTimeAfter,
+                    arrivingTimeBefore = event.arrivingTimeBefore,
                     destinationAddressId = event.destinationAddressId,
                     departureAddressId = event.departureAddressId
                 )
@@ -141,6 +148,17 @@ class AnnouncementViewModel @Inject constructor(
                     )
                 }
             }
+
+            is AnnouncementEvent.IsEmptyAnnouncement -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = "Il y a aucune annonce pour cette date"
+                        )
+                    )
+                }
+            }
+
         }
     }
 

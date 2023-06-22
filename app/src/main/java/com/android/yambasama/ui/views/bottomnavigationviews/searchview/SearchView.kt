@@ -302,6 +302,18 @@ fun SearchView(
                             val date = datePickerState.selectedDateMillis?.let { Date(it) }
                             mDate.value = date?.let { util.getDateFormatter(it) }.toString()
                             searchFormViewModel.screenState.value.dateDialog = date
+                            val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                            cal.time = date
+                            val monthCount = (cal.get(Calendar.MONTH)+1)
+                            val monthDay: String = if (monthCount >= 10) {
+                                "${(cal.get(Calendar.MONTH)+1)}"
+                            } else {
+                                "0${(cal.get(Calendar.MONTH)+1)}"
+                            }
+                            val departureTimeAfter = "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T00:00:00"
+                            val departureTimeBefore = "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T23:59:00"
+                            searchFormViewModel.screenState.value.arrivingTimeAfter = departureTimeAfter
+                            searchFormViewModel.screenState.value.arrivingTimeBefore = departureTimeBefore
                         },
                         enabled = confirmEnabled.value
                     ) {

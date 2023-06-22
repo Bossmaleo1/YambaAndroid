@@ -5,16 +5,19 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -29,16 +32,14 @@ import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementlist.InfiniteAnnouncementList
-import com.android.yambasama.ui.views.shimmer.AnnouncementShimmer
-import com.android.yambasama.ui.views.utils.OnBottomReached
-import com.android.yambasama.ui.views.viewsError.networkError
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun AnnouncementView(
@@ -53,9 +54,43 @@ fun AnnouncementView(
     val screenState = announcementViewModel.screenState.value
     val screenStateUser = userViewModel.screenState.value
     val country = Util()
-    var isRefreshing by remember { mutableStateOf(false) }
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing)
     val isDark = isSystemInDarkTheme()
+
+    val refreshScope = rememberCoroutineScope()
+    var refreshing by remember { mutableStateOf(false) }
+
+    fun refresh() = refreshScope.launch {
+        refreshing = true
+        announcementViewModel.screenState.value.refreshing = true
+        announcementViewModel.screenState.value.currentPage = 1
+        announcementViewModel.initAnnouncement()
+        searchFormViewModel.screenState.value.addressDeparture?.id?.let {
+            searchFormViewModel.screenState.value.addressDestination?.id?.let { it1 ->
+                searchFormViewModel.screenState.value.arrivingTimeAfter?.let { it2 ->
+                    searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
+                        AnnouncementEvent.AnnouncementInt(
+                            token = screenStateUser.tokenRoom[0].token,
+                            destinationAddressId = it1,
+                            departureAddressId = it,
+                            arrivingTimeAfter = it2,
+                            arrivingTimeBefore = it3,
+                            refreshing = refreshing
+                        )
+                    }
+                }
+            }
+        }?.let {
+            announcementViewModel.onEvent(
+                it
+            )
+        }
+    }
+
+    if(!announcementViewModel.screenState.value.refreshing) {
+        refreshing = false
+    }
+
+    val state = rememberPullRefreshState(refreshing, ::refresh)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -97,16 +132,21 @@ fun AnnouncementView(
         content = { innerPadding ->
 
             LaunchedEffect(key1 = true) {
-                if (screenState.currentPage == 1 && !isRefreshing && screenState.announcementList.size == 0) {
+                if (screenState.currentPage == 1 && !refreshing && screenState.announcementList.size == 0) {
                     searchFormViewModel.screenState.value.addressDeparture?.id?.let {
                         searchFormViewModel.screenState.value.addressDestination?.id?.let { it1 ->
-                            AnnouncementEvent.AnnouncementInt(
-                                token = screenStateUser.tokenRoom[0].token,
-                                destinationAddressId = it1,
-                                departureAddressId = it,
-                                departureTimeAfter = "2023-02-01T00:00:00",
-                                departureTimeBefore = "2023-02-01T23:59:00"
-                            )
+                            searchFormViewModel.screenState.value.arrivingTimeAfter?.let { it2 ->
+                                searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
+                                    AnnouncementEvent.AnnouncementInt(
+                                        token = screenStateUser.tokenRoom[0].token,
+                                        destinationAddressId = it1,
+                                        departureAddressId = it,
+                                        arrivingTimeAfter = it2,
+                                        arrivingTimeBefore = it3,
+                                        refreshing = refreshing
+                                    )
+                                }
+                            }
                         }
                     }?.let {
                         announcementViewModel.onEvent(
@@ -118,28 +158,7 @@ fun AnnouncementView(
 
             }
 
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = {
-                    isRefreshing = true
-                    announcementViewModel.screenState.value.currentPage = 1
-                    announcementViewModel.initAnnouncement()
-                },
-                indicator = { state, trigger ->
-                    SwipeRefreshIndicator(
-                        // Pass the SwipeRefreshState + trigger through
-                        state = state,
-                        refreshTriggerDistance = trigger,
-                        // Enable the scale animation
-                        scale = true,
-                        // Change the color and shape
-                        backgroundColor = androidx.compose.material.MaterialTheme.colors.primary.copy(
-                            alpha = 0.08f
-                        ),
-                        shape = MaterialTheme.shapes.small,
-                    )
-                }
-            ) {
+            Box(Modifier.pullRefresh(state)) {
                 InfiniteAnnouncementList(
                     navController = navController,
                     userViewModel = userViewModel,
@@ -151,22 +170,19 @@ fun AnnouncementView(
                     ),
                     country = country,
                     listState = listState,
-                    listItems = remember { screenState.announcementList }
+                    listItems = screenState.announcementList,
+                    refreshing = refreshing
                 )
-            }
 
-            // cette instruction permet de réactivé le reflesh
-            LaunchedEffect(isRefreshing) {
-                if (isRefreshing) {
-                    delay(1000L)
-                    isRefreshing = false
-                }
+                PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
             }
 
             if (screenState.isNetworkError) {
                 announcementViewModel.onEvent(AnnouncementEvent.IsNetworkError)
             } else if (!screenState.isNetworkConnected) {
                 announcementViewModel.onEvent(AnnouncementEvent.IsNetworkConnected)
+            } else if(screenState.isEmptyAnnouncement && !screenState.isLoad) {
+                announcementViewModel.onEvent(AnnouncementEvent.IsEmptyAnnouncement)
             }
 
             LaunchedEffect(key1 = true) {

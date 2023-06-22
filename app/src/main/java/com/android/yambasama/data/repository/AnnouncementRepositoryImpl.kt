@@ -1,6 +1,5 @@
 package com.android.yambasama.data.repository
 
-import com.android.yambasama.data.model.api.ApiAnnouncementResponse
 import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.repository.dataSource.annoucement.AnnouncementRemoteDataSource
 import com.android.yambasama.data.util.Resource
@@ -23,8 +22,8 @@ class AnnouncementRepositoryImpl(
     override suspend fun getAnnouncements(
         page: Int,
         pagination: Boolean,
-        departureTimeAfter: String,
-        departureTimeBefore: String,
+        arrivingTimeAfter: String,
+        arrivingTimeBefore: String,
         departureAddress: Int,
         destinationAddress: Int,
         token: String
@@ -33,8 +32,8 @@ class AnnouncementRepositoryImpl(
             annoucementRemoteDataSource.getAnnouncements(
                 page = page,
                 pagination = pagination,
-                departureTimeAfter = departureTimeAfter,
-                departureTimeBefore = departureTimeBefore,
+                departureTimeAfter = arrivingTimeAfter,
+                departureTimeBefore = arrivingTimeBefore,
                 departureAddress = departureAddress,
                 destinationAddress = destinationAddress,
                 token = token

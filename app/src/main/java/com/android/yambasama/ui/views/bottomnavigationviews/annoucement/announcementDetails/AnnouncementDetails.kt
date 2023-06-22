@@ -38,6 +38,7 @@ import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist.getOurUserImage
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
+import androidx.compose.material.Card
 
 @ExperimentalMaterial3Api
 @Composable
@@ -110,327 +111,342 @@ fun AnnouncementDetails(
                     Card(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(innerPadding)
+                            .padding(innerPadding),
+                        backgroundColor = MaterialTheme.colorScheme.background,
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            AnimatedVisibility(
-                                visible = visibleImage,
-                                enter = fadeIn(
-                                    // Overwrites the initial value of alpha to 0.4f for fade in, 0 by default
-                                    initialAlpha = 0.4f
-                                ),
-                                exit = fadeOut(
-                                    // Overwrites the default animation with tween
-                                    animationSpec = tween(durationMillis = 250)
-                                )
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Start
                             ) {
-                                // Content that needs to appear/disappear goes here:
-                                Image(
-                                    painter = getOurUserImage(screenState.announcement[0]),
-                                    contentDescription = "Profile picture description",
-                                    modifier = Modifier
-                                        .padding(4.dp)
-                                        .size(50.dp)
-                                        .clip(RoundedCornerShape(corner = CornerSize(25.dp)))
-                                        .clickable {
-                                            navController.navigate(Route.accountDetailView)
-                                        },
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-
-                            Column(modifier = Modifier.padding(4.dp)) {
-                                Text(
-                                    text = userName,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                                Row {
-                                    Image(
-                                        imageVector = Icons.Outlined.AccessTime,
-                                        contentDescription = "",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .height(18.dp)
-                                            .width(18.dp),
-                                        colorFilter = ColorFilter.tint(
-                                            color = MaterialTheme.colorScheme.primary
-                                        )
+                                AnimatedVisibility(
+                                    visible = visibleImage,
+                                    enter = fadeIn(
+                                        // Overwrites the initial value of alpha to 0.4f for fade in, 0 by default
+                                        initialAlpha = 0.4f
+                                    ),
+                                    exit = fadeOut(
+                                        // Overwrites the default animation with tween
+                                        animationSpec = tween(durationMillis = 250)
                                     )
-
-                                    Text(
-                                        text = postDateTime,
-                                        modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                        style = MaterialTheme.typography.titleSmall,
-                                        color = MaterialTheme.colorScheme.primary
+                                ) {
+                                    // Content that needs to appear/disappear goes here:
+                                    Image(
+                                        painter = getOurUserImage(screenState.announcement[0]),
+                                        contentDescription = "Profile picture description",
+                                        modifier = Modifier
+                                            .padding(4.dp)
+                                            .size(50.dp)
+                                            .clip(RoundedCornerShape(corner = CornerSize(25.dp)))
+                                            .clickable {
+                                                navController.navigate(Route.accountDetailView)
+                                            },
+                                        contentScale = ContentScale.Crop
                                     )
                                 }
+
+                                Column(modifier = Modifier.padding(4.dp)) {
+                                    Text(
+                                        text = userName,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                    Row {
+                                        Image(
+                                            imageVector = Icons.Outlined.AccessTime,
+                                            contentDescription = "",
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .height(18.dp)
+                                                .width(18.dp),
+                                            colorFilter = ColorFilter.tint(
+                                                color = MaterialTheme.colorScheme.primary
+                                            )
+                                        )
+
+                                        Text(
+                                            text = postDateTime,
+                                            modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                            style = MaterialTheme.typography.titleSmall,
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                    Divider(
+                                        color = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier
+                                            .padding(top = 10.dp)
+                                            .fillMaxWidth()
+                                            .height(0.20.dp),
+                                    )
+                                }
+
                             }
 
-                        }
-
-
-                        Row {
-                            Divider(
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier.padding(bottom = 10.dp, top = 5.dp)
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.FlightTakeoff,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
+                            Row {
+                                Divider(
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier.padding(bottom = 10.dp, top = 5.dp)
                                 )
-                            )
+                            }
 
-                            Text(
-                                text = "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${
-                                    util.getCountry(
-                                        searchFormViewModel.screenState.value.addressDeparture!!.code
-                                    )
-                                } ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
-                                modifier = Modifier.padding(4.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.FlightLand,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${
-                                    util.getCountry(
-                                        searchFormViewModel.screenState.value.addressDestination!!.code
-                                    )
-                                } ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
-                                modifier = Modifier.padding(4.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.EventNote,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = destinationDate,
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.Timer,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = "Heure de départ : 18:44:00",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.EventNote,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = "Date d'arrivée : ",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.Timer,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = "Heure d'arrivée : 18:44:00",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.EuroSymbol,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            )
-
-                            Text(
-                                text = "${screenState.announcement[0].price} €/Kg",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.weight_fill0_wght400_grad0_opsz48),
-                                contentDescription = "",
+                            Row(
                                 modifier = Modifier
-                                                .height(24.dp)
-                                                .width(24.dp),
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.FlightTakeoff,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${
+                                        util.getCountry(
+                                            searchFormViewModel.screenState.value.addressDeparture!!.code
+                                        )
+                                    } ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))",
+                                    modifier = Modifier.padding(4.dp),
+                                    style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
-                            )
+                            }
 
-                            Text(
-                                text = "${screenState.announcement[0].price} Kg (max)",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.FlightLand,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
 
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.LocationOn,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
+                                Text(
+                                    text = "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${
+                                        util.getCountry(
+                                            searchFormViewModel.screenState.value.addressDestination!!.code
+                                        )
+                                    } ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))",
+                                    modifier = Modifier.padding(4.dp),
+                                    style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
-                            )
+                            }
 
-                            Text(
-                                text = "Rdv de départ : lieux 1",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.EventNote,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
 
-                        Row(
-                            modifier = Modifier
-                                .padding(9.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.LocationOn,
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(
+                                Text(
+                                    text = destinationDate,
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
                                     color = MaterialTheme.colorScheme.primary
                                 )
-                            )
+                            }
 
-                            Text(
-                                text = "Rdv d'arrivée : lieux 2",
-                                modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
-                                style = MaterialTheme.typography.titleSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.primary
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.Timer,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "Heure de départ : 18:44:00",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.EventNote,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "Date d'arrivée : ",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.Timer,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "Heure d'arrivée : 18:44:00",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.EuroSymbol,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "${screenState.announcement[0].price} €/Kg",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.weight_fill0_wght400_grad0_opsz48),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .height(24.dp)
+                                        .width(24.dp),
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "${screenState.announcement[0].price} Kg (max)",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.LocationOn,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "Rdv de départ : lieux 1",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(9.dp)
+                                    .animateContentSize(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    imageVector = Icons.Outlined.LocationOn,
+                                    contentDescription = "",
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+
+                                Text(
+                                    text = "Rdv d'arrivée : lieux 2",
+                                    modifier = Modifier.padding(4.dp, 0.dp, 0.dp, 0.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Divider(
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .padding(top = 10.dp)
+                                    .fillMaxWidth()
+                                    .height(0.20.dp),
                             )
                         }
                     }
-
-
 
                     LaunchedEffect(true) {
                         delay(3)

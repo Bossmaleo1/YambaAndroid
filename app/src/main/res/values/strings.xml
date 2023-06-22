@@ -50,4 +50,5 @@
     <string name="profile_details">Profile Details</string>
     <string name="edit_profile">Edit profile</string>
     <string name="payment">Payment</string>
+    <string name="empty_announcement">There are no announcement for this search</string>
 </resources>
