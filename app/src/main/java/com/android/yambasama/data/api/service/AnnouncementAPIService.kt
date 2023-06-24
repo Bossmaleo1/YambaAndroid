@@ -4,6 +4,7 @@ import com.android.yambasama.data.model.dataRemote.Announcement
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AnnouncementAPIService {
@@ -25,5 +26,14 @@ interface AnnouncementAPIService {
         @Header("Authorization")
         token: String
     ): Response<List<Announcement>>
+
+
+    @GET("/api/announcement/{id}")
+    suspend fun getAnnouncement(
+        @Path("id")
+        id: Int,
+        @Header("Authorization")
+        token: String
+    ): Response<Announcement>
 
 }

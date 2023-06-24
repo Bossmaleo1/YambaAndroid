@@ -228,3 +228,307 @@ fun ShimmerGridItemAnnouncement(brush: Brush) {
         }
     }
 }
+
+
+@ExperimentalMaterial3Api
+@Composable
+fun ShimmerGridItemAnnouncementDetails(brush: Brush) {
+    Row(
+        modifier = Modifier
+            .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(2.dp)
+                .clip(RoundedCornerShape(1.dp))
+                .fillMaxWidth(fraction = 1f)
+                .background(brush)
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(2.dp)
+                .clip(RoundedCornerShape(1.dp))
+                .fillMaxWidth(fraction = 1f)
+                .background(brush)
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(
+            modifier =
+            Modifier.background(MaterialTheme.colorScheme.background),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(verticalArrangement = Arrangement.Center, modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(all = 10.dp), verticalAlignment = Alignment.Top
+    ) {
+
+        Spacer(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background), verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+}

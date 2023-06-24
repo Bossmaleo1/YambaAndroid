@@ -28,4 +28,11 @@ class AnnouncementRemoteDataSourceImpl(
         )
     }
 
+    override suspend fun getAnnouncement(id: Int, token: String): Response<Announcement> {
+        return  announcementAPIService.getAnnouncement(
+            id = id,
+            token = token
+        )
+    }
+
 }

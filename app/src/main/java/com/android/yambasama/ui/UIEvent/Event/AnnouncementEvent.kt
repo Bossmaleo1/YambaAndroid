@@ -11,6 +11,11 @@ sealed class AnnouncementEvent {
         val arrivingTimeBefore: String,
         val refreshing: Boolean
     ): AnnouncementEvent()
+
+    data class AnnouncementDetails(
+        val token: String,
+        val id: Int
+    ): AnnouncementEvent()
     object IsNetworkConnected: AnnouncementEvent()
     object InitAnnouncementState:AnnouncementEvent()
     object IsNetworkError:AnnouncementEvent()

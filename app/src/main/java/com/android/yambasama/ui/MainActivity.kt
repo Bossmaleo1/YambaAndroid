@@ -391,7 +391,8 @@ class MainActivity : ComponentActivity() {
                 AnnouncementDetails(
                     navController = navController,
                     announcementViewModel = announcementViewModel,
-                    searchFormViewModel = searchFormViewModel
+                    searchFormViewModel = searchFormViewModel,
+                    userViewModel = userViewModel
                 )
             }
 

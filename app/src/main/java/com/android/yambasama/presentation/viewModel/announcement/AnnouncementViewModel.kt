@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
@@ -11,8 +12,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.yambasama.R
+import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementsUseCase
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
+import com.android.yambasama.ui.UIEvent.ScreenState.AnnouncementState.AnnouncementDetailsScreenState
 import com.android.yambasama.ui.UIEvent.ScreenState.AnnouncementState.AnnouncementScreenState
 import com.android.yambasama.ui.UIEvent.UIEvent
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +26,8 @@ import javax.inject.Inject
 
 class AnnouncementViewModel @Inject constructor(
     private val app: Application,
-    private val getAnnoucementsUseCase: GetAnnouncementsUseCase
+    private val getAnnoucementsUseCase: GetAnnouncementsUseCase,
+    private val getAnnouncementUseCase: GetAnnouncementUseCase
 ) : AndroidViewModel(app) {
 
     private val _screenState = mutableStateOf(
@@ -31,7 +35,14 @@ class AnnouncementViewModel @Inject constructor(
             announcementList = mutableStateListOf()
         )
     )
+
+    private val _screenAnnouncementState = mutableStateOf(
+        AnnouncementDetailsScreenState(
+            announcementDetails = null
+        )
+    )
     val screenState: State<AnnouncementScreenState> = _screenState
+    val screenAnnouncementState: State<AnnouncementDetailsScreenState> = _screenAnnouncementState
     private val _uiEventFlow = MutableSharedFlow<UIEvent>()
     val uiEventFlow = _uiEventFlow.asSharedFlow()
     val currentPage : MutableState<Int> = mutableStateOf(1)
@@ -89,11 +100,52 @@ class AnnouncementViewModel @Inject constructor(
                 _screenState.value = _screenState.value.copy(
                     isNetworkError = true,
                     isNetworkConnected = true,
-                    isLoad = false
+                    isLoad = false,
+                    refreshing = false
                 )
             }
         } else {
             _screenState.value = _screenState.value.copy(
+                isNetworkConnected = false,
+                isNetworkError = false,
+                isLoad = false,
+                refreshing = false
+            )
+        }
+    }
+
+    fun getAnnouncement(
+        id: Int,
+        token: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("MALEO9393TESTTEST9393", "MALEO Testing")
+        if (isNetworkAvailable(app)) {
+            try {
+                _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                    isNetworkConnected = true,
+                    isLoad = true,
+                    isNetworkError = false,
+                )
+
+                val apiResult = getAnnouncementUseCase.execute(id = id,token = "Bearer $token")
+                apiResult.data?.let { apiAnnouncementResponse ->
+                    screenAnnouncementState.value.announcementDetails = apiAnnouncementResponse
+                    screenAnnouncementState.value.refreshing = false
+
+                    _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                        isLoad = false
+                    )
+                }
+            } catch (e: Exception) {
+                _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                    isNetworkError = true,
+                    isNetworkConnected = true,
+                    isLoad = false
+                )
+            }
+
+        } else {
+            _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
                 isNetworkConnected = false,
                 isNetworkError = false,
                 isLoad = false
@@ -120,6 +172,17 @@ class AnnouncementViewModel @Inject constructor(
                     arrivingTimeBefore = event.arrivingTimeBefore,
                     destinationAddressId = event.destinationAddressId,
                     departureAddressId = event.departureAddressId
+                )
+            }
+            is AnnouncementEvent.AnnouncementDetails -> {
+                Log.d("MALEO9393TESTTEST9393", "MALEO Testing exterieur")
+                _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                    isLoad = true
+                )
+
+                getAnnouncement(
+                    token = event.token,
+                    id = event.id
                 )
             }
             is AnnouncementEvent.InitAnnouncementState -> {
