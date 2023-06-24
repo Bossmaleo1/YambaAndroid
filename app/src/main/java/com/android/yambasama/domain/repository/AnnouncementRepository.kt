@@ -13,4 +13,9 @@ interface AnnouncementRepository {
         destinationAddress: Int,
         token: String
     ): Resource<List<Announcement>>
+
+    suspend fun getAnnouncement(
+        id: Int,
+        token: String
+    ): Resource<Announcement>
 }

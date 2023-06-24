@@ -17,4 +17,8 @@ interface AnnouncementRemoteDataSource {
         token: String
     ): Response<List<Announcement>>
 
+    suspend fun getAnnouncement(
+        id: Int,
+        token: String
+    ): Response<Announcement>
 }

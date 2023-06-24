@@ -10,7 +10,16 @@ class AnnouncementRepositoryImpl(
     private val annoucementRemoteDataSource: AnnouncementRemoteDataSource
 ): AnnouncementRepository {
 
-    private fun responseToRessourceAnnouncement(response: Response<List<Announcement>>): Resource<List<Announcement>> {
+    private fun responseToRessourceAnnouncements(response: Response<List<Announcement>>): Resource<List<Announcement>> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
+                return Resource.Success(result)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun responseToRessourceAnnouncement(response: Response<Announcement>): Resource<Announcement> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
                 return Resource.Success(result)
@@ -28,7 +37,7 @@ class AnnouncementRepositoryImpl(
         destinationAddress: Int,
         token: String
     ): Resource<List<Announcement>> {
-        return responseToRessourceAnnouncement(
+        return responseToRessourceAnnouncements(
             annoucementRemoteDataSource.getAnnouncements(
                 page = page,
                 pagination = pagination,
@@ -36,6 +45,15 @@ class AnnouncementRepositoryImpl(
                 departureTimeBefore = arrivingTimeBefore,
                 departureAddress = departureAddress,
                 destinationAddress = destinationAddress,
+                token = token
+            )
+        )
+    }
+
+    override suspend fun getAnnouncement(id: Int, token: String): Resource<Announcement> {
+        return  responseToRessourceAnnouncement(
+            annoucementRemoteDataSource.getAnnouncement(
+                id = id,
                 token = token
             )
         )
