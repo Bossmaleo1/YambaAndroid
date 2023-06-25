@@ -51,4 +51,12 @@
     <string name="edit_profile">Edit profile</string>
     <string name="payment">Payment</string>
     <string name="empty_announcement">There are no announcement for this search</string>
+    <string name="departure_appointment">Departure appointment</string>
+    <string name="arrival_meeting">Arrival meeting</string>
+    <string name="arriving_time">Arriving time</string>
+    <string name="arrival_date">Arrival date</string>
+    <string name="departure_time">Departure time</string>
+    <string name="price">Price</string>
+    <string name="available_kilo_number">Number of Kilos available</string>
+    <string name="departure_date">Departure date</string>
 </resources>
