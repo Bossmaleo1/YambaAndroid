@@ -51,4 +51,12 @@
     <string name="edit_profile">Modifier Profil</string>
     <string name="payment">Paiement</string>
     <string name="empty_announcement">Il n\'y a pas d\'annonce pour cette recherche</string>
+    <string name="departure_appointment">Rdv de départ</string>
+    <string name="arrival_meeting">Rdv d\'arrivée</string>
+    <string name="arriving_time">Heure d\'arrivée</string>
+    <string name="arrival_date">Date d\'arrivée</string>
+    <string name="departure_time">Heure de départ</string>
+    <string name="price">Prix</string>
+    <string name="available_kilo_number">Nombre de kilos disponibles</string>
+    <string name="departure_date">Date de départ</string>
 </resources>

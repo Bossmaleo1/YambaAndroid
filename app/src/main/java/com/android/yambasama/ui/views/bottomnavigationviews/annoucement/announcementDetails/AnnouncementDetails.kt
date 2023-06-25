@@ -70,11 +70,11 @@ fun AnnouncementDetails(
     var visibleImage by remember { mutableStateOf(false) }
     val userName by rememberSaveable { mutableStateOf("${screenState.announcement[0].user.firstName} ${screenState.announcement[0].user.lastName}") }
     val isDark = isSystemInDarkTheme()
-    val destinationDate by rememberSaveable { mutableStateOf(util.getDateTimeFormatter(screenState.announcement[0].arrivingTime)) }
+    val departureDate by rememberSaveable { mutableStateOf(util.getDateTimeFormatter(screenState.announcement[0].arrivingTime)) }
     val postDateTime by rememberSaveable { mutableStateOf(util.getDateFormatter(screenState.announcement[0].published)) }
     val screenAnnouncementState = announcementViewModel.screenAnnouncementState.value
     val refreshScope = rememberCoroutineScope()
-    var refreshing by remember { mutableStateOf(false) }
+    var refreshing by remember { mutableStateOf(value = false) }
     val screenStateUser = userViewModel.screenState.value
 
     fun refresh() = refreshScope.launch {
@@ -164,14 +164,14 @@ fun AnnouncementDetails(
                         ) {
 
                             if (screenAnnouncementState.isLoad) {
-                                    items(count = 1) {
-                                        Column(
-                                            modifier = Modifier.padding(top = 80.dp)
-                                        ) {
-                                            AnnouncementDetailsShimmer(1)
-                                        }
+                                items(count = 1) {
+                                    Column(
+                                        modifier = Modifier.padding(top = 80.dp)
+                                    ) {
+                                        AnnouncementDetailsShimmer(1)
                                     }
-                             }
+                                }
+                            }
 
                             if (!refreshing && !screenAnnouncementState.isLoad) {
                                 items(count = 1) {
@@ -182,6 +182,15 @@ fun AnnouncementDetails(
                                         backgroundColor = MaterialTheme.colorScheme.background,
                                     ) {
                                         Column {
+                                            Row {
+                                                Divider(
+                                                    color = MaterialTheme.colorScheme.background,
+                                                    modifier = Modifier.padding(
+                                                        bottom = 2.dp,
+                                                        top = 2.dp
+                                                    )
+                                                )
+                                            }
                                             Row(
                                                 modifier = Modifier.fillMaxWidth(),
                                                 horizontalArrangement = Arrangement.Start
@@ -340,7 +349,7 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = destinationDate,
+                                                    text = "${stringResource(R.string.available_kilo_number)} : ${departureDate}",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -353,34 +362,6 @@ fun AnnouncementDetails(
                                                 )
                                             }
 
-                                            Row(
-                                                modifier = Modifier
-                                                    .padding(9.dp)
-                                                    .animateContentSize(),
-                                                horizontalArrangement = Arrangement.Center
-                                            ) {
-                                                Image(
-                                                    imageVector = Icons.Outlined.Timer,
-                                                    contentDescription = "",
-                                                    contentScale = ContentScale.Crop,
-                                                    colorFilter = ColorFilter.tint(
-                                                        color = MaterialTheme.colorScheme.primary
-                                                    )
-                                                )
-
-                                                Text(
-                                                    text = "Heure de départ : 18:44:00",
-                                                    modifier = Modifier.padding(
-                                                        4.dp,
-                                                        0.dp,
-                                                        0.dp,
-                                                        0.dp
-                                                    ),
-                                                    style = MaterialTheme.typography.titleSmall,
-                                                    textAlign = TextAlign.Center,
-                                                    color = MaterialTheme.colorScheme.primary
-                                                )
-                                            }
 
                                             Row(
                                                 modifier = Modifier
@@ -398,36 +379,13 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = "Date d'arrivée : ",
-                                                    modifier = Modifier.padding(
-                                                        4.dp,
-                                                        0.dp,
-                                                        0.dp,
-                                                        0.dp
-                                                    ),
-                                                    style = MaterialTheme.typography.titleSmall,
-                                                    textAlign = TextAlign.Center,
-                                                    color = MaterialTheme.colorScheme.primary
-                                                )
-                                            }
-
-                                            Row(
-                                                modifier = Modifier
-                                                    .padding(9.dp)
-                                                    .animateContentSize(),
-                                                horizontalArrangement = Arrangement.Center
-                                            ) {
-                                                Image(
-                                                    imageVector = Icons.Outlined.Timer,
-                                                    contentDescription = "",
-                                                    contentScale = ContentScale.Crop,
-                                                    colorFilter = ColorFilter.tint(
-                                                        color = MaterialTheme.colorScheme.primary
-                                                    )
-                                                )
-
-                                                Text(
-                                                    text = "Heure d'arrivée : 18:44:00",
+                                                    text = "${stringResource(R.string.arrival_date)} : ${
+                                                        screenAnnouncementState.announcementDetails?.departureTime?.let {
+                                                            util.getDateTimeFormatter(
+                                                                it
+                                                            )
+                                                        }
+                                                    }",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -456,7 +414,7 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = "${screenState.announcement[0].price} €/Kg",
+                                                    text = "${stringResource(R.string.price)} : ${screenState.announcement[0].price} €/Kg",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -488,7 +446,13 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = "${screenState.announcement[0].price} Kg (max)",
+                                                    text = "${stringResource(R.string.available_kilo_number)} : ${
+                                                        screenAnnouncementState.announcementDetails?.numberOfKgs?.let {
+                                                            util.getNumberOfKg(
+                                                                it
+                                                            )
+                                                        }
+                                                    } Kg (max)",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -517,7 +481,7 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = "Rdv de départ : ${screenAnnouncementState.announcementDetails?.meetingPlaces1}",
+                                                    text = "${stringResource(R.string.departure_appointment)} : ${screenAnnouncementState.announcementDetails?.meetingPlaces1}",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -546,7 +510,7 @@ fun AnnouncementDetails(
                                                 )
 
                                                 Text(
-                                                    text = "Rdv d'arrivée : ${screenAnnouncementState.announcementDetails?.meetingPlaces2}",
+                                                    text = "${stringResource(R.string.arrival_meeting)} : ${screenAnnouncementState.announcementDetails?.meetingPlaces2}",
                                                     modifier = Modifier.padding(
                                                         4.dp,
                                                         0.dp,
@@ -588,6 +552,7 @@ fun AnnouncementDetails(
                                             message = event.message
                                         )
                                     }
+
                                     else -> {}
                                 }
                             }

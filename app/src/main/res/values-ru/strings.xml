@@ -51,4 +51,12 @@
     <string name="edit_profile">Редактировать профиль</string>
     <string name="payment">Оплата</string>
     <string name="empty_announcement">Для этого поиска нет объявлений</string>
+    <string name="departure_appointment">Выездная встреча</string>
+    <string name="arrival_meeting">Прибытие встреча</string>
+    <string name="arriving_time">Время прибытия</string>
+    <string name="arrival_date">Дата прибытия</string>
+    <string name="departure_time">Время отправления</string>
+    <string name="price">Цена</string>
+    <string name="available_kilo_number">Доступное количество килограммов</string>
+    <string name="departure_date">Дата выезда</string>
 </resources>

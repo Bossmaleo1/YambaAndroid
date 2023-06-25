@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.util
 
+import com.android.yambasama.data.model.dataRemote.NumberOfKg
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +20,13 @@ class Util {
     fun getDateFormatter(date: Date): String {
         val formatter: SimpleDateFormat = SimpleDateFormat("EEE d MMM yy", Locale.getDefault())
         return formatter.format(date)
+    }
+
+    fun getNumberOfKg(numberOfKgs: List<NumberOfKg>): Float {
+        if(numberOfKgs.isEmpty()) {
+            return 0F
+        }
+        return numberOfKgs.filter { numberOfKg -> !numberOfKg.status }[0].numberOfKg
     }
 
     fun getDateTimeFormatter(date: Date): String { //"dd/MM/yyyy  HH:mm"
