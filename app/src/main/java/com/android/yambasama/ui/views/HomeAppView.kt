@@ -1,6 +1,5 @@
 package com.android.yambasama.ui.views
 
-import android.app.NotificationManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -64,7 +63,7 @@ fun HomeApp(
     val screenState = userViewModel.screenState.value
     var switch by rememberSaveable { mutableStateOf(true) }
     var selectedItem by remember { mutableStateOf(0) }
-    val country = Util()
+    val util = Util()
     val items = listOf(
         BottomNavigationItem(
             Icons.Outlined.Search,
@@ -262,9 +261,12 @@ fun HomeApp(
                                         if (screenState.userRoom[0].imageUrl?.length == 0) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.ic_profile_colorier),
-                                                modifier = Modifier.size(40.dp).clip(RoundedCornerShape(corner = CornerSize(20.dp))).clickable {
+                                                modifier = Modifier
+                                                    .size(40.dp)
+                                                    .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+                                                    .clickable {
                                                         navController.navigate(Route.accountView)
-                                                },
+                                                    },
                                                 contentScale = ContentScale.Crop,
                                                 contentDescription = "Profile picture description"
                                             )
@@ -310,25 +312,26 @@ fun HomeApp(
                     )
                 }) { innerPadding ->
 
-                if (switch) {
-                    Column(
-                        Modifier.padding(
-                            top = 100.dp,
-                            bottom = 0.dp,
-                            start = 0.dp,
-                            end = 0.dp
-                        )
-                    ) {
+                Column(
+                    Modifier.padding(
+                        top = 100.dp,
+                        bottom = 0.dp,
+                        start = 0.dp,
+                        end = 0.dp
+                    )
+                ) {
+                    if (switch) {
                         SearchView(
                             navController = navController,
                             searchFormViewModel = searchFormViewModel,
-                            util = country,
+                            util = util,
                             announcementViewModel = announcementViewModel
                         )
+                    } else {
+                        AddAdView(util = util)
                     }
-                } else {
-                    AddAdView()
                 }
+
 
             }
         },

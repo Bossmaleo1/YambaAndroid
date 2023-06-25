@@ -34,4 +34,28 @@ class Util {
         return formatter.format(date)
     }
 
+    fun getDateDisplayingStart(date: Date): String {
+        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        cal.time = date
+        val monthCount = (cal.get(Calendar.MONTH)+1)
+        val monthDay: String = if (monthCount >= 10) {
+            "${(cal.get(Calendar.MONTH)+1)}"
+        } else {
+            "0${(cal.get(Calendar.MONTH)+1)}"
+        }
+        return "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T00:00:00"
+    }
+
+    fun getDateDisplayingEnd(date: Date): String {
+        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        cal.time = date
+        val monthCount = (cal.get(Calendar.MONTH)+1)
+        val monthDay: String = if (monthCount >= 10) {
+            "${(cal.get(Calendar.MONTH)+1)}"
+        } else {
+            "0${(cal.get(Calendar.MONTH)+1)}"
+        }
+        return "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T23:59:00"
+    }
+
 }

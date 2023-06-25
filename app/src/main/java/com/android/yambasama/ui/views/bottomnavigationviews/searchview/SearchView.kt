@@ -2,9 +2,7 @@ package com.android.yambasama.ui.views.bottomnavigationviews
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -43,7 +41,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterial3Api
 @Composable
 fun SearchView(
@@ -302,16 +299,16 @@ fun SearchView(
                             val date = datePickerState.selectedDateMillis?.let { Date(it) }
                             mDate.value = date?.let { util.getDateFormatter(it) }.toString()
                             searchFormViewModel.screenState.value.dateDialog = date
-                            val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                            /*val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
                             cal.time = date
                             val monthCount = (cal.get(Calendar.MONTH)+1)
                             val monthDay: String = if (monthCount >= 10) {
                                 "${(cal.get(Calendar.MONTH)+1)}"
                             } else {
                                 "0${(cal.get(Calendar.MONTH)+1)}"
-                            }
-                            val departureTimeAfter = "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T00:00:00"
-                            val departureTimeBefore = "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T23:59:00"
+                            }*/
+                            val departureTimeAfter = date?.let { util.getDateDisplayingStart(it) }
+                            val departureTimeBefore = date?.let { util.getDateDisplayingEnd(it) }
                             searchFormViewModel.screenState.value.arrivingTimeAfter = departureTimeAfter
                             searchFormViewModel.screenState.value.arrivingTimeBefore = departureTimeBefore
                         },

@@ -311,6 +311,7 @@ class MainActivity : ComponentActivity() {
         val notificationPermissionState = rememberPermissionState(
             android.Manifest.permission.POST_NOTIFICATIONS
         )
+        val announcementDetailsListState = rememberLazyListState()
         val activity = (LocalContext.current as? Activity)
         //We call our init view model method
         this.initViewModel()
@@ -364,7 +365,6 @@ class MainActivity : ComponentActivity() {
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
                     announcementViewModel = announcementViewModel
-                    //addressData =  it.arguments?.getString("inputName").toString()
                 )
             }
 
@@ -392,7 +392,8 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     announcementViewModel = announcementViewModel,
                     searchFormViewModel = searchFormViewModel,
-                    userViewModel = userViewModel
+                    userViewModel = userViewModel,
+                    listState = announcementDetailsListState
                 )
             }
 
