@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
@@ -304,10 +306,11 @@ class MainActivity : ComponentActivity() {
 
     @SuppressLint("PermissionLaunchedDuringComposition")
     @OptIn(ExperimentalPermissionsApi::class)
-    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController) {
+        var visibleForm = remember { mutableStateOf(true) }
+        var visibleNextForm = remember { mutableStateOf(false) }
         val notificationPermissionState = rememberPermissionState(
             android.Manifest.permission.POST_NOTIFICATIONS
         )
@@ -364,7 +367,9 @@ class MainActivity : ComponentActivity() {
                     dropViewModel = dropViewModel,
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
-                    announcementViewModel = announcementViewModel
+                    announcementViewModel = announcementViewModel,
+                    visibleForm = visibleForm,
+                    visibleNextForm = visibleNextForm
                 )
             }
 

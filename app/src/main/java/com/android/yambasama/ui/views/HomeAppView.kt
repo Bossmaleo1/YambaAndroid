@@ -48,7 +48,6 @@ import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import androidx.compose.material.Scaffold
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @ExperimentalMaterial3Api
 fun HomeApp(
@@ -56,7 +55,9 @@ fun HomeApp(
     dropViewModel: DropViewModel,
     userViewModel: UserViewModel,
     searchFormViewModel: SearchFormViewModel,
-    announcementViewModel: AnnouncementViewModel
+    announcementViewModel: AnnouncementViewModel,
+    visibleForm: MutableState<Boolean>,
+    visibleNextForm: MutableState<Boolean>
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -312,25 +313,33 @@ fun HomeApp(
                     )
                 }) { innerPadding ->
 
-                Column(
-                    Modifier.padding(
-                        top = 100.dp,
-                        bottom = 0.dp,
-                        start = 0.dp,
-                        end = 0.dp
-                    )
-                ) {
+
                     if (switch) {
-                        SearchView(
-                            navController = navController,
-                            searchFormViewModel = searchFormViewModel,
-                            util = util,
-                            announcementViewModel = announcementViewModel
-                        )
+                        Column(
+                            Modifier.padding(
+                                top = 100.dp
+                            )
+                        ) {
+                            SearchView(
+                                navController = navController,
+                                searchFormViewModel = searchFormViewModel,
+                                util = util,
+                                announcementViewModel = announcementViewModel
+                            )
+                        }
                     } else {
-                        AddAdView(util = util)
+                        Column(
+                            Modifier.padding(
+                                top = 20.dp
+                            )
+                        ) {
+                            AddAdView(
+                                util = util,
+                                visibleForm = visibleForm,
+                                visibleNextForm = visibleNextForm
+                            )
+                        }
                     }
-                }
 
 
             }
