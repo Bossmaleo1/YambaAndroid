@@ -73,6 +73,7 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
     implementation "io.github.vanpra.compose-material-dialogs:core:0.9.0"
+    implementation "com.github.skydoves:balloon-compose:1.5.4"
 
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
     implementation "com.google.accompanist:accompanist-insets:$accompanist_version"

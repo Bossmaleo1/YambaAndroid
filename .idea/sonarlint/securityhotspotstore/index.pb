@@ -13,8 +13,6 @@ o
 aapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/paymentView/PaymentView.kt,0/a/0ab4d1c8651cf327b1658625842d549d05d21842
 ‘
 aapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/accountView/AccountView.kt,0/d/0de05a2dfd210e920eecff9a56cfb6aff8b562e1
-m
-=app/src/main/java/com/android/yambasama/ui/views/LoginView.kt,7/e/7ef3d84c6a7d000678bef1dc533af6e9dd411254
 z
 Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
 u
@@ -39,8 +37,6 @@ mapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/address/
 Zapp/src/main/java/com/android/yambasama/presentation/viewModel/address/AddressViewModel.kt,b/9/b9c112118df0ff56b6b6881ee7a7f1da4fe676f6
 •
 eapp/src/main/java/com/android/yambasama/data/repository/dataSource/address/AddressRemoteDataSource.kt,e/d/ed02ca48bb2a3f2a6af106b95afc20b627dd9b0e
-v
-Fapp/src/main/java/com/android/yambasama/ui/views/utils/InfiniteList.kt,c/2/c229c565ac855d92aa54cbc6394b120afb6bbb53
 —
 gapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AddressScreenState/AddressScreenState.kt,9/a/9aca4aece8abbed9da8a9785e9a5c5a79635a0b6
 x

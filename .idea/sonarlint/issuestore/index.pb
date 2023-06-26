@@ -13,8 +13,6 @@ o
 ?app/src/main/java/com/android/yambasama/ui/views/model/Route.kt,d/c/dc1de80d7a94f67b598186a73b5ca666c38fd741
 ‘
 aapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/accountView/AccountView.kt,0/d/0de05a2dfd210e920eecff9a56cfb6aff8b562e1
-m
-=app/src/main/java/com/android/yambasama/ui/views/LoginView.kt,7/e/7ef3d84c6a7d000678bef1dc533af6e9dd411254
 z
 Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
 }
@@ -35,8 +33,6 @@ Happ/src/main/java/com/android/yambasama/data/model/dataRemote/Address.kt,2/3/2
 Papp/src/main/java/com/android/yambasama/data/repository/AddressRepositoryImpl.kt,8/1/81f2dcd1681f5c10182bcfee74f273a1b0aca52e
 •
 eapp/src/main/java/com/android/yambasama/data/repository/dataSource/address/AddressRemoteDataSource.kt,e/d/ed02ca48bb2a3f2a6af106b95afc20b627dd9b0e
-v
-Fapp/src/main/java/com/android/yambasama/ui/views/utils/InfiniteList.kt,c/2/c229c565ac855d92aa54cbc6394b120afb6bbb53
 x
 Happ/src/main/java/com/android/yambasama/ui/UIEvent/Event/AddressEvent.kt,6/d/6dbb6abed3181a8c076182f5a13869ed271da1c6
 Š
