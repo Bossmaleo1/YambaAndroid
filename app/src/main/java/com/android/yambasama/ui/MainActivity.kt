@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.graphics.*
 import android.os.Build
 import android.os.Bundle
@@ -15,7 +13,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -23,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -43,7 +39,6 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.theme.YambaSamaTheme
-import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.HomeApp
 import com.android.yambasama.ui.views.LaunchView
 import com.android.yambasama.ui.views.bottomnavigationviews.accountView.AccountDetailView
@@ -62,7 +57,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.android.yambasama.R
 import com.android.yambasama.ui.views.bottomnavigationviews.notice.AddNoticeView
 import com.android.yambasama.ui.views.bottomnavigationviews.notice.NoticeView
 import com.android.yambasama.ui.views.bottomnavigationviews.request.TransportePackageRequestView
@@ -309,7 +303,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     @ExperimentalMaterial3Api
     fun MainView(navController: NavHostController) {
-        var visibleForm = remember { mutableStateOf(true) }
+        var visibleCurrentForm = remember { mutableStateOf(true) }
         var visibleNextForm = remember { mutableStateOf(false) }
         val notificationPermissionState = rememberPermissionState(
             android.Manifest.permission.POST_NOTIFICATIONS
@@ -368,7 +362,7 @@ class MainActivity : ComponentActivity() {
                     userViewModel = userViewModel,
                     searchFormViewModel = searchFormViewModel,
                     announcementViewModel = announcementViewModel,
-                    visibleForm = visibleForm,
+                    visibleCurrentForm = visibleCurrentForm,
                     visibleNextForm = visibleNextForm
                 )
             }
@@ -487,8 +481,6 @@ class MainActivity : ComponentActivity() {
                     navController = navController
                 )
             }
-
-            //TransportePackageRequestView
         }
     }
 
