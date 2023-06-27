@@ -77,8 +77,6 @@ fapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/user/Use
 gapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/user/UserRemoteDataSourceImpl.kt,3/9/39d280d87f2278a10dcdbc7ad9a49cf9c7360794
 ¦
 vapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/annoucement/AnnouncementRemoteDataSourceImpl.kt,4/f/4f5f3553b170073103dcd59e6bf2382afbdd9487
-m
-=app/src/main/java/com/android/yambasama/ui/UIEvent/UIEvent.kt,5/2/528bec875c38435a273f9cfb432fa01718477478
 ƒ
 Sapp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnouncementItemShimmer.kt,d/5/d56bfe7e307e62322e609893f4af91dc8ff9eb34
 ~

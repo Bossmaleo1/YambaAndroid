@@ -1,7 +1,5 @@
 package com.android.yambasama.ui.views
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.*
 import androidx.compose.animation.slideInHorizontally
@@ -56,7 +54,7 @@ fun HomeApp(
     userViewModel: UserViewModel,
     searchFormViewModel: SearchFormViewModel,
     announcementViewModel: AnnouncementViewModel,
-    visibleForm: MutableState<Boolean>,
+    visibleCurrentForm: MutableState<Boolean>,
     visibleNextForm: MutableState<Boolean>
 ) {
 
@@ -335,8 +333,8 @@ fun HomeApp(
                         ) {
                             AddAdView(
                                 util = util,
-                                visibleForm = visibleForm,
-                                visibleNextForm = visibleNextForm
+                                visibleCurrentForm = visibleCurrentForm,
+                                visiblePreviousForm = visibleNextForm
                             )
                         }
                     }
