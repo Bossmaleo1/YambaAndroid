@@ -48,17 +48,35 @@ class SearchFormViewModel @Inject constructor(
                     isDestinationError = event.isDestination
                 )
             }
+            is SearchFormEvent.IsTravelDateCreatedUpdated -> {
+                _screenState.value = _screenState.value.copy(
+                    isDepartureTimeCreatedError = event.isTravelDateCreated,
+                    isDepartureCreatedError =  event.isDepartureCreated,
+                    isDestinationCreatedError = event.isDestinationCreated
+                )
+            }
            is SearchFormEvent.SearchFormInitAddressDeparture -> {
                _screenState.value = _screenState.value.copy(
                    addressDeparture = event.addressDeparture
                )
            }
+
+            is SearchFormEvent.SearchFormInitAddressDepartureCreated -> {
+                _screenState.value = _screenState.value.copy(
+                    addressDepartureCreated = event.addressDepartureCreated
+                )
+            }
+
            is SearchFormEvent.SearchFormInitAddressDestination -> {
                _screenState.value = _screenState.value.copy(
                    addressDestination = event.addressDestination
                )
            }
-
+            is SearchFormEvent.SearchFormInitAddressDestinationCreated -> {
+                _screenState.value = _screenState.value.copy(
+                    addressDestinationCreated = event.addressDestinationCreated
+                )
+            }
             is SearchFormEvent.ErrorDestination -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
@@ -68,7 +86,28 @@ class SearchFormViewModel @Inject constructor(
                     )
                 }
             }
+
+            is SearchFormEvent.ErrorDestinationCreated -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = app.getString(R.string.form_destination_error)
+                        )
+                    )
+                }
+            }
+
             is SearchFormEvent.ErrorDeparture -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = app.getString(R.string.form_departure_error),
+                        )
+                    )
+                }
+            }
+
+            is SearchFormEvent.ErrorDepartureCreated -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(

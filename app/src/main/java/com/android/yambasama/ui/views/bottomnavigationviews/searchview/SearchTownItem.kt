@@ -58,6 +58,24 @@ fun SearchTownItem(
                     } else {
                         this.background(colorResource(R.color.GrayDark))
                     }
+                } else if (
+                    searchFormViewModel.screenState.value.departureOrDestination == 3
+                    && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                ) {
+                    if(isDark) {
+                        this.background(colorResource(R.color.GrayLight))
+                    } else {
+                        this.background(colorResource(R.color.GrayDark))
+                    }
+                } else if (
+                    searchFormViewModel.screenState.value.departureOrDestination == 4
+                    && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+                ) {
+                    if(isDark) {
+                        this.background(colorResource(R.color.GrayLight))
+                    } else {
+                        this.background(colorResource(R.color.GrayDark))
+                    }
                 } else {
                     this.background(MaterialTheme.colorScheme.background)
                 }
@@ -70,48 +88,87 @@ fun SearchTownItem(
                 && searchFormViewModel.screenState.value.addressDestination?.id == address.id
             ) {
                 searchFormViewModel.onEvent(SearchFormEvent.ErrorDestination)
-            } else
-                if (
-                    searchFormViewModel.screenState.value.departureOrDestination == 2
-                    && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
-                ) {
-                    searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture)
-                } else {
-                    if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
-                        searchFormViewModel.onEvent(
-                            SearchFormEvent.SearchFormInitAddressDeparture(
-                                addressDeparture = address
-                            )
-                        )
-                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
-                        searchFormViewModel.onEvent(
-                            SearchFormEvent.SearchFormInitAddressDestination(
-                                addressDestination = address
-                            )
-                        )
-                    }
-                    //We initialize our error display
-                    if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
-                        searchFormViewModel.onEvent(
-                            SearchFormEvent.IsTravelDateUpdated(
-                                isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
-                                isDeparture = searchFormViewModel.screenState.value.addressDeparture === null,
-                                isDestination = searchFormViewModel.screenState.value.isDestinationError
-                            )
-                        )
-                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 2){
-                        searchFormViewModel.onEvent(
-                            SearchFormEvent.IsTravelDateUpdated(
-                                isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
-                                isDeparture = searchFormViewModel.screenState.value.isDepartureError,
-                                isDestination = searchFormViewModel.screenState.value.addressDestination === null
-                            )
-                        )
-                    }
+            } else if (
+                searchFormViewModel.screenState.value.departureOrDestination == 2
+                && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
+            ) {
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture)
+            } else if (
+                searchFormViewModel.screenState.value.departureOrDestination == 3
+                && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+            ) {
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDepartureCreated)
+            } else if (
+                searchFormViewModel.screenState.value.departureOrDestination == 4
+                && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+            ) {
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestinationCreated)
+            } else {
 
-
-                    navController.navigate(Route.homeView)
+                if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.SearchFormInitAddressDeparture(
+                            addressDeparture = address
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.SearchFormInitAddressDestination(
+                            addressDestination = address
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 3) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.SearchFormInitAddressDepartureCreated(
+                            addressDepartureCreated = address
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 4) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.SearchFormInitAddressDestinationCreated(
+                            addressDestinationCreated = address
+                        )
+                    )
                 }
+                //We initialize our error display
+                if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.IsTravelDateUpdated(
+                            isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
+                            isDeparture = searchFormViewModel.screenState.value.addressDeparture === null,
+                            isDestination = searchFormViewModel.screenState.value.isDestinationError
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 2) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.IsTravelDateUpdated(
+                            isTravelDate = searchFormViewModel.screenState.value.isDepartureTimeError,
+                            isDeparture = searchFormViewModel.screenState.value.isDepartureError,
+                            isDestination = searchFormViewModel.screenState.value.addressDestination === null
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 3) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.IsTravelDateCreatedUpdated(
+                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureTimeCreatedError,
+                            isDepartureCreated = searchFormViewModel.screenState.value.addressDepartureCreated  === null,
+                            isDestinationCreated = searchFormViewModel.screenState.value.isDestinationCreatedError
+                        )
+                    )
+                } else if (searchFormViewModel.screenState.value.departureOrDestination == 4) {
+                    searchFormViewModel.onEvent(
+                        SearchFormEvent.IsTravelDateCreatedUpdated(
+                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureTimeCreatedError,
+                            isDepartureCreated = searchFormViewModel.screenState.value.isDepartureError,
+                            isDestinationCreated = searchFormViewModel.screenState.value.addressDestinationCreated === null
+                        )
+                    )
+                }
+
+
+                navController.navigate(Route.homeView)
+
+            }
         }
     ) {
         Column(
@@ -133,7 +190,24 @@ fun SearchTownItem(
                         } else {
                             this.background(colorResource(R.color.GrayDark))
                         }
-                    } else {
+                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
+                        && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                    ) {
+                        if(isDark) {
+                            this.background(colorResource(R.color.GrayLight))
+                        } else {
+                            this.background(colorResource(R.color.GrayDark))
+                        }
+                    } else if (searchFormViewModel.screenState.value.departureOrDestination == 4
+                        && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+                    ) {
+                        if (isDark) {
+                            this.background(colorResource(R.color.GrayLight))
+                        } else {
+                            this.background(colorResource(R.color.GrayDark))
+                        }
+                    }
+                    else {
                         this.background(MaterialTheme.colorScheme.background)
                     }
                 }
@@ -153,6 +227,22 @@ fun SearchTownItem(
                             }
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 2
                             && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
+                        ) {
+                            if(isDark) {
+                                this.background(colorResource(R.color.GrayLight))
+                            } else {
+                                this.background(colorResource(R.color.GrayDark))
+                            }
+                        } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
+                            && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                        ) {
+                            if(isDark) {
+                                this.background(colorResource(R.color.GrayLight))
+                            } else {
+                                this.background(colorResource(R.color.GrayDark))
+                            }
+                        } else if (searchFormViewModel.screenState.value.departureOrDestination == 4
+                            && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                         ) {
                             if(isDark) {
                                 this.background(colorResource(R.color.GrayLight))

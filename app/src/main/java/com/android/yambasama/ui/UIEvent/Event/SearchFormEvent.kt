@@ -12,18 +12,36 @@ sealed class SearchFormEvent {
         val addressDeparture: Address
     ): SearchFormEvent()
 
+    data class SearchFormInitAddressDepartureCreated(
+        val addressDepartureCreated: Address
+    ): SearchFormEvent()
+
     data class SearchFormInitAddressDestination(
         val addressDestination: Address
     ): SearchFormEvent()
 
+    data class SearchFormInitAddressDestinationCreated(
+        val addressDestinationCreated: Address
+    ): SearchFormEvent()
+
     object ErrorDestination: SearchFormEvent()
 
+    object ErrorDestinationCreated: SearchFormEvent()
+
     object ErrorDeparture: SearchFormEvent()
+
+    object ErrorDepartureCreated: SearchFormEvent()
 
     data class IsTravelDateUpdated(
         val isTravelDate: Boolean,
         val isDeparture: Boolean,
         val isDestination: Boolean
         ): SearchFormEvent()
+
+    data class IsTravelDateCreatedUpdated(
+        val isTravelDateCreated: Boolean,
+        val isDepartureCreated: Boolean,
+        val isDestinationCreated: Boolean
+    ): SearchFormEvent()
 
 }
