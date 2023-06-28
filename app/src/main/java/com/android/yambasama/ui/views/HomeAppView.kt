@@ -55,13 +55,13 @@ fun HomeApp(
     searchFormViewModel: SearchFormViewModel,
     announcementViewModel: AnnouncementViewModel,
     visibleCurrentForm: MutableState<Boolean>,
-    visibleNextForm: MutableState<Boolean>
+    visibleNextForm: MutableState<Boolean>,
+    switch: MutableState<Boolean>,
+    selectedItem: MutableState<Int>
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val screenState = userViewModel.screenState.value
-    var switch by rememberSaveable { mutableStateOf(true) }
-    var selectedItem by remember { mutableStateOf(0) }
     val util = Util()
     val items = listOf(
         BottomNavigationItem(
@@ -312,7 +312,7 @@ fun HomeApp(
                 }) { innerPadding ->
 
 
-                    if (switch) {
+                    if (switch.value) {
                         Column(
                             Modifier.padding(
                                 top = 100.dp
@@ -333,8 +333,10 @@ fun HomeApp(
                         ) {
                             AddAdView(
                                 util = util,
+                                navController = navController,
                                 visibleCurrentForm = visibleCurrentForm,
-                                visiblePreviousForm = visibleNextForm
+                                visiblePreviousForm = visibleNextForm,
+                                searchFormViewModel = searchFormViewModel
                             )
                         }
                     }
@@ -356,10 +358,10 @@ fun HomeApp(
                             Text(
                                 remember { item.title })
                         },
-                        selected = selectedItem == index,
+                        selected = selectedItem.value == index,
                         onClick = {
-                            selectedItem = index
-                            switch = index != 1
+                            selectedItem.value = index
+                            switch.value = index != 1
                         }
                     )
                 }

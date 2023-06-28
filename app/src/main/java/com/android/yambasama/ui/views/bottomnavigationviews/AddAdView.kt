@@ -75,8 +75,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.ui.util.Util
+import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.utils.TimePickerDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -92,8 +95,10 @@ import java.util.TimeZone
 @Composable
 fun AddAdView(
     util: Util,
+    navController: NavHostController,
     visibleCurrentForm: MutableState<Boolean>,
-    visiblePreviousForm: MutableState<Boolean>
+    visiblePreviousForm: MutableState<Boolean>,
+    searchFormViewModel: SearchFormViewModel
 ) {
 
     val departureDateOpenDialog = remember { mutableStateOf(false) }
@@ -177,7 +182,7 @@ fun AddAdView(
                         )
                     ),
                     onClick = {
-                        //departureDateOpenDialog.value = true
+                        navController.navigate(Route.searchLocalizeView)
                     }) {
 
                     Column(
@@ -226,6 +231,7 @@ fun AddAdView(
                     ),
                     onClick = {
                         //departureDateOpenDialog.value = true
+                        navController.navigate(Route.searchLocalizeView)
                     }) {
 
                     Column(
@@ -352,28 +358,6 @@ fun AddAdView(
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
-                /*val tooltipState = rememberPlainTooltipState()
-                val scope = rememberCoroutineScope()
-
-                    Box(
-                        propagateMinConstraints = false,
-                    ) {
-                        PlainTooltipBox(
-                            tooltip = { Text("Add to list") },
-                            tooltipState = tooltipState,
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ) {
-                            Button(
-                                modifier = Modifier.align(Alignment.Center),
-                                onClick = {
-                                    //departureTimeOpenDialog.value = true
-                                    scope.launch {
-                                        tooltipState.show()
-                                    }
-                                }
-                            ) { Text("Set Time") }
-                        }
-                    }*/
 
                 OutlinedButton(
                     modifier = Modifier
@@ -595,7 +579,7 @@ fun AddAdView(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     shape = RoundedCornerShape(30),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     leadingIcon = {
                         IconButton(onClick = { }) {
                             Icon(
@@ -621,7 +605,7 @@ fun AddAdView(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     shape = RoundedCornerShape(30),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     leadingIcon = {
                         IconButton(onClick = { }) {
                             Icon(
