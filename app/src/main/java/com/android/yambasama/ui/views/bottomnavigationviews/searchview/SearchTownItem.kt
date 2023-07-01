@@ -60,7 +60,7 @@ fun SearchTownItem(
                     }
                 } else if (
                     searchFormViewModel.screenState.value.departureOrDestination == 3
-                    && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                    && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                 ) {
                     if(isDark) {
                         this.background(colorResource(R.color.GrayLight))
@@ -69,7 +69,7 @@ fun SearchTownItem(
                     }
                 } else if (
                     searchFormViewModel.screenState.value.departureOrDestination == 4
-                    && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+                    && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
                 ) {
                     if(isDark) {
                         this.background(colorResource(R.color.GrayLight))
@@ -95,14 +95,14 @@ fun SearchTownItem(
                 searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture)
             } else if (
                 searchFormViewModel.screenState.value.departureOrDestination == 3
-                && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
-            ) {
-                searchFormViewModel.onEvent(SearchFormEvent.ErrorDepartureCreated)
-            } else if (
-                searchFormViewModel.screenState.value.departureOrDestination == 4
                 && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
             ) {
                 searchFormViewModel.onEvent(SearchFormEvent.ErrorDestinationCreated)
+            } else if (
+                searchFormViewModel.screenState.value.departureOrDestination == 4
+                && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+            ) {
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDepartureCreated)
             } else {
 
                 if (searchFormViewModel.screenState.value.departureOrDestination == 1) {
@@ -191,7 +191,7 @@ fun SearchTownItem(
                             this.background(colorResource(R.color.GrayDark))
                         }
                     } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
-                        && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                        && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                     ) {
                         if(isDark) {
                             this.background(colorResource(R.color.GrayLight))
@@ -199,7 +199,7 @@ fun SearchTownItem(
                             this.background(colorResource(R.color.GrayDark))
                         }
                     } else if (searchFormViewModel.screenState.value.departureOrDestination == 4
-                        && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+                        && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
                     ) {
                         if (isDark) {
                             this.background(colorResource(R.color.GrayLight))
@@ -234,7 +234,7 @@ fun SearchTownItem(
                                 this.background(colorResource(R.color.GrayDark))
                             }
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
-                            && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
+                            && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                         ) {
                             if(isDark) {
                                 this.background(colorResource(R.color.GrayLight))
@@ -242,7 +242,7 @@ fun SearchTownItem(
                                 this.background(colorResource(R.color.GrayDark))
                             }
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 4
-                            && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
+                            && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
                         ) {
                             if(isDark) {
                                 this.background(colorResource(R.color.GrayLight))
