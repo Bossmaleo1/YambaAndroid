@@ -12,6 +12,9 @@ data class SearchFormState (
 
     var departureOrDestination: Int = 0,
     var dateDialog: Date? = null,
+    var dateDialogDepartureCreated: Date? = null,
+    var dateDialogDestinationCreated: Date? = null,
+
     var arrivingTimeAfter: String? = null,
     var arrivingTimeBefore: String? = null,
     var isDepartureError: Boolean = false,
