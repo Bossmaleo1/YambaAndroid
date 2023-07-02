@@ -93,10 +93,6 @@ wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucem
 wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementView.kt,c/0/c009548dc84243c4551c08b3518239f7fb0572de
 ”
 dapp/src/main/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModel.kt,4/7/479937a1164949186da6c6180ab83c5b998bb49b
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-m
-=app/src/main/java/com/android/yambasama/ui/views/LoginView.kt,7/e/7ef3d84c6a7d000678bef1dc533af6e9dd411254
 ­
 }app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementDetails/AnnouncementDetails.kt,d/8/d8807eff2bfc080112238ed5b774f04426b56e7c
 v
@@ -141,9 +137,5 @@ j
 :app/src/main/java/com/android/yambasama/ui/MainActivity.kt,c/c/ccd77adc08c4847b715fda1bbb217de33951cb85
 o
 ?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-{
-Kapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/SearchFormEvent.kt,a/e/ae4c83a47a544e808f642f20cb80d4e7200ac541
 —
 gapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AddressScreenState/AddressScreenState.kt,9/a/9aca4aece8abbed9da8a9785e9a5c5a79635a0b6

@@ -11,6 +11,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -61,7 +61,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,6 +78,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.utils.TimePickerDialog
@@ -360,7 +360,7 @@ fun AddAdView(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    border = if (searchFormViewModel.screenState.value.isDepartureTimeCreatedError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
@@ -402,7 +402,7 @@ fun AddAdView(
 
                 }
 
-                if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                if (searchFormViewModel.screenState.value.isDepartureTimeCreatedError) {
                     Text(
                         color = Color.Red,
                         text = "L'heure de départ est obligatoire"
@@ -526,6 +526,18 @@ fun AddAdView(
                         .width(280.dp),
                     border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
                     onClick = {
+
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.IsValidFirstFormStepp(
+                                isDepartureCreatedError = searchFormViewModel.screenState.value.addressDepartureCreated === null,
+                                isDestinationCreatedError = searchFormViewModel.screenState.value.addressDestinationCreated === null,
+                                isDepartureDateCreatedError = searchFormViewModel.screenState.value.dateDialogDepartureCreated === null,
+                                isDepartureTimeCreatedError = searchFormViewModel.screenState.value.timeHourDepartureCreated === null,
+                                isDestinationDateCreatedError = searchFormViewModel.screenState.value.dateDialogDestinationCreated === null,
+                                isDestinationTimeCreatedError = searchFormViewModel.screenState.value.timeHourDestinationCreated === null
+                            )
+                        )
+
                         if (
                             searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null
                             && searchFormViewModel.screenState.value.dateDialogDestinationCreated !== null
@@ -593,7 +605,13 @@ fun AddAdView(
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(280.dp),
+                        .width(280.dp)
+                        .border(border = if (searchFormViewModel.screenState.value.isPriceCreatedError) {
+                            BorderStroke(1.dp, color = Color.Red)
+                        } else {
+                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                        },
+                        shape = RoundedCornerShape(30)),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -611,15 +629,31 @@ fun AddAdView(
                     value = priceField,
                     onValueChange = { priceField = it },
                     placeholder = {
-                        Text("Prix")
+                        Text(
+                            text = "Prix",
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 )
+
+                if (searchFormViewModel.screenState.value.isPriceCreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "Veuillez renseigner le prix"
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(280.dp),
+                        .width(280.dp)
+                        .border(border = if (searchFormViewModel.screenState.value.isNumberOfKgCreatedError) {
+                            BorderStroke(1.dp, color = Color.Red)
+                        } else {
+                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                        },
+                        shape = RoundedCornerShape(30)),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -640,18 +674,33 @@ fun AddAdView(
                             )
                         }
                     },
-                    value = priceField,
-                    onValueChange = { priceField = it },
+                    value = numberOfKgField,
+                    onValueChange = { numberOfKgField = it },
                     placeholder = {
-                        Text("Nombre de Kg")
+                        Text(
+                            text = "Nombre de Kg",
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 )
+
+                if (searchFormViewModel.screenState.value.isNumberOfKgCreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "Veuillez renseigner le nombre de kilos disponibles"
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(280.dp),
+                        .width(280.dp)
+                        .border(border = if (searchFormViewModel.screenState.value.isMeetingPlace1CreatedError) {
+                            BorderStroke(1.dp, color = Color.Red)
+                        } else {
+                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                        }, shape = RoundedCornerShape(30)),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -666,18 +715,34 @@ fun AddAdView(
                             )
                         }
                     },
-                    value = priceField,
-                    onValueChange = { priceField = it },
+                    value = meetingPlace1,
+                    onValueChange = { meetingPlace1 = it },
                     placeholder = {
-                        Text("Lieux de rencontre au départ")
+                        Text(
+                            text = "Lieux de rencontre au départ",
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 )
+
+                if (searchFormViewModel.screenState.value.isMeetingPlace1CreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "Veuillez renseigner le lieux de rencontres de départ"
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(280.dp),
+                        .width(280.dp)
+                        .border(border = if (searchFormViewModel.screenState.value.isMeetingPlace2CreatedError) {
+                            BorderStroke(1.dp, color = Color.Red)
+                        } else {
+                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                        },
+                        shape = RoundedCornerShape(30)),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -692,12 +757,22 @@ fun AddAdView(
                             )
                         }
                     },
-                    value = priceField,
-                    onValueChange = { priceField = it },
+                    value = meetingPlace2,
+                    onValueChange = { meetingPlace2 = it },
                     placeholder = {
-                        Text("Lieux de rencontre à l'arrivée")
+                        Text(
+                            text = "Lieux de rencontre à l'arrivée",
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 )
+
+                if (searchFormViewModel.screenState.value.isMeetingPlace2CreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "Veuillez renseigner le lieux de rencontres d'arrivée"
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -706,6 +781,24 @@ fun AddAdView(
                         .width(280.dp),
                     border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
                     onClick = {
+
+                        searchFormViewModel.onEvent(
+                            SearchFormEvent.IsValidFinalFormStepp(
+                                isPriceCreatedError = priceField.isNotEmpty(),
+                                isNumberOfKgCreatedError = numberOfKgField.isNotEmpty(),
+                                isMeetingPlace1CreatedError = meetingPlace1.isNotEmpty(),
+                                isMeetingPlace2CreatedError = meetingPlace2.isNotEmpty()
+                            )
+                        )
+
+                        if (
+                            meetingPlace1.isNotEmpty()
+                            && meetingPlace2.isNotEmpty()
+                            && priceField.isNotEmpty()
+                            && numberOfKgField.isNotEmpty()
+                        ) {
+                            //here we must to submit our form
+                        }
 
                     }) {
                     Icon(
@@ -734,7 +827,7 @@ fun AddAdView(
             },
             onCancel = { departureTimeOpenDialog.value = false },
             onConfirm = {
-                mDepartureTime.value = util.getTimeFormatterSimple(
+                mDepartureTime.value = util.getTimeFormatter(
                     hour = departureTimePickerState.hour,
                     minute = departureTimePickerState.minute
                 )
@@ -743,6 +836,7 @@ fun AddAdView(
                     departureTimePickerState.hour
                 searchFormViewModel.screenState.value.timeMinuteDepartureCreated =
                     departureTimePickerState.minute
+                searchFormViewModel.screenState.value.isDepartureTimeCreatedError = false
             },
             toggle = {
                 if (configuration.screenHeightDp > 400) {
@@ -809,7 +903,7 @@ fun AddAdView(
             },
             onCancel = { destinationTimeOpenDialog.value = false },
             onConfirm = {
-                mDestinationTime.value = util.getTimeFormatterSimple(
+                mDestinationTime.value = util.getTimeFormatter(
                     hour = destinationTimePickerState.hour,
                     minute = destinationTimePickerState.minute
                 )
@@ -818,6 +912,7 @@ fun AddAdView(
                     destinationTimePickerState.hour
                 searchFormViewModel.screenState.value.timeMinuteDestinationCreated =
                     destinationTimePickerState.minute
+                searchFormViewModel.screenState.value.isDestinationTimeCreatedError = false
             },
             toggle = {
                 if (configuration.screenHeightDp > 400) {
@@ -894,6 +989,7 @@ fun AddAdView(
                         mDepartureDate.value =
                             date?.let { util.getDateFormatter(it) }.toString()
                         searchFormViewModel.screenState.value.dateDialogDepartureCreated = date
+                        searchFormViewModel.screenState.value.isDepartureDateCreatedError = false
                     },
                     enabled = departureTimeConfirmEnabled.value
                 ) {
@@ -935,8 +1031,7 @@ fun AddAdView(
                         mDestinationDate.value =
                             date?.let { util.getDateFormatter(it) }.toString()
                         searchFormViewModel.screenState.value.dateDialogDestinationCreated = date
-
-
+                        searchFormViewModel.screenState.value.isDestinationDateCreatedError = false
                     },
                     enabled = departureTimeConfirmEnabled.value
                 ) {
@@ -946,7 +1041,7 @@ fun AddAdView(
             dismissButton = {
                 TextButton(
                     onClick = {
-                        departureDateOpenDialog.value = false
+                        destinationDateOpenDialog.value = false
                     }
                 ) {
                     Text(text = stringResource(R.string.cancel))

@@ -31,5 +31,9 @@ data class SearchFormState (
     var isDepartureDateCreatedError: Boolean = false,
     var isDestinationDateCreatedError: Boolean = false,
     var isDepartureTimeCreatedError: Boolean = false,
-    var isDestinationTimeCreatedError: Boolean = false
+    var isDestinationTimeCreatedError: Boolean = false,
+    var isPriceCreatedError: Boolean = false,
+    var isNumberOfKgCreatedError: Boolean = false,
+    var isMeetingPlace1CreatedError: Boolean = false,
+    var isMeetingPlace2CreatedError: Boolean = false
  )
