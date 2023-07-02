@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchFormViewModel @Inject constructor(
     private val app: Application
-): AndroidViewModel(app) {
+) : AndroidViewModel(app) {
 
     private val _screenState = mutableStateOf(
         SearchFormState(
@@ -32,32 +32,54 @@ class SearchFormViewModel @Inject constructor(
 
     fun onEvent(event: SearchFormEvent) {
         when (event) {
-           is SearchFormEvent.SearchFormInit -> {
-               _screenState.value = _screenState.value.copy(
-                   addressDeparture = event.addressDeparture,
-                   addressDestination = event.addressDestination
-               )
-           }
+            is SearchFormEvent.SearchFormInit -> {
+                _screenState.value = _screenState.value.copy(
+                    addressDeparture = event.addressDeparture,
+                    addressDestination = event.addressDestination
+                )
+            }
+
+            is SearchFormEvent.IsValidFirstFormStepp -> {
+                _screenState.value = _screenState.value.copy(
+                    isDepartureCreatedError = event.isDepartureCreatedError,
+                    isDestinationCreatedError = event.isDestinationCreatedError,
+                    isDepartureDateCreatedError = event.isDepartureDateCreatedError,
+                    isDepartureTimeCreatedError = event.isDepartureTimeCreatedError,
+                    isDestinationDateCreatedError = event.isDestinationDateCreatedError,
+                    isDestinationTimeCreatedError = event.isDestinationTimeCreatedError
+                )
+            }
+
+            is SearchFormEvent.IsValidFinalFormStepp -> {
+                _screenState.value = _screenState.value.copy(
+                    isPriceCreatedError = event.isPriceCreatedError,
+                    isNumberOfKgCreatedError = event.isNumberOfKgCreatedError,
+                    isMeetingPlace1CreatedError = event.isMeetingPlace1CreatedError,
+                    isMeetingPlace2CreatedError = event.isMeetingPlace2CreatedError
+                )
+            }
 
             is SearchFormEvent.IsTravelDateUpdated -> {
                 _screenState.value = _screenState.value.copy(
                     isDepartureTimeError = event.isTravelDate,
-                    isDepartureError =  event.isDeparture,
+                    isDepartureError = event.isDeparture,
                     isDestinationError = event.isDestination
                 )
             }
+
             is SearchFormEvent.IsTravelDateCreatedUpdated -> {
                 _screenState.value = _screenState.value.copy(
                     isDepartureDateCreatedError = event.isTravelDateCreated,
-                    isDepartureCreatedError =  event.isDepartureCreated,
+                    isDepartureCreatedError = event.isDepartureCreated,
                     isDestinationCreatedError = event.isDestinationCreated
                 )
             }
-           is SearchFormEvent.SearchFormInitAddressDeparture -> {
-               _screenState.value = _screenState.value.copy(
-                   addressDeparture = event.addressDeparture
-               )
-           }
+
+            is SearchFormEvent.SearchFormInitAddressDeparture -> {
+                _screenState.value = _screenState.value.copy(
+                    addressDeparture = event.addressDeparture
+                )
+            }
 
             is SearchFormEvent.SearchFormInitAddressDepartureCreated -> {
                 _screenState.value = _screenState.value.copy(
@@ -65,16 +87,18 @@ class SearchFormViewModel @Inject constructor(
                 )
             }
 
-           is SearchFormEvent.SearchFormInitAddressDestination -> {
-               _screenState.value = _screenState.value.copy(
-                   addressDestination = event.addressDestination
-               )
-           }
+            is SearchFormEvent.SearchFormInitAddressDestination -> {
+                _screenState.value = _screenState.value.copy(
+                    addressDestination = event.addressDestination
+                )
+            }
+
             is SearchFormEvent.SearchFormInitAddressDestinationCreated -> {
                 _screenState.value = _screenState.value.copy(
                     addressDestinationCreated = event.addressDestinationCreated
                 )
             }
+
             is SearchFormEvent.ErrorDestination -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(

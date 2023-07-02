@@ -38,6 +38,22 @@ sealed class SearchFormEvent {
         val isDestination: Boolean
         ): SearchFormEvent()
 
+    data class IsValidFirstFormStepp(
+        val isDepartureCreatedError: Boolean,
+        val isDestinationCreatedError: Boolean,
+        val isDepartureDateCreatedError: Boolean,
+        val isDepartureTimeCreatedError: Boolean,
+        val isDestinationDateCreatedError: Boolean,
+        val  isDestinationTimeCreatedError: Boolean
+    ): SearchFormEvent()
+
+    data class IsValidFinalFormStepp(
+        val isPriceCreatedError: Boolean,
+        val isNumberOfKgCreatedError: Boolean,
+        val isMeetingPlace1CreatedError: Boolean,
+        val isMeetingPlace2CreatedError: Boolean
+    ): SearchFormEvent()
+
     data class IsTravelDateCreatedUpdated(
         val isTravelDateCreated: Boolean,
         val isDepartureCreated: Boolean,
