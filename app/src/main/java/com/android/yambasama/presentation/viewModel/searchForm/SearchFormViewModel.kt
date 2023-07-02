@@ -1,13 +1,11 @@
 package com.android.yambasama.presentation.viewModel.searchForm
 
 import android.app.Application
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.yambasama.R
-import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.SearchFormState.SearchFormState
 import com.android.yambasama.ui.UIEvent.UIEvent
@@ -50,7 +48,7 @@ class SearchFormViewModel @Inject constructor(
             }
             is SearchFormEvent.IsTravelDateCreatedUpdated -> {
                 _screenState.value = _screenState.value.copy(
-                    isDepartureTimeCreatedError = event.isTravelDateCreated,
+                    isDepartureDateCreatedError = event.isTravelDateCreated,
                     isDepartureCreatedError =  event.isDepartureCreated,
                     isDestinationCreatedError = event.isDestinationCreated
                 )

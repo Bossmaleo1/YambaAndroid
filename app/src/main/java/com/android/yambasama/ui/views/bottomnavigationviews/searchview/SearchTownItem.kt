@@ -150,7 +150,7 @@ fun SearchTownItem(
                 } else if (searchFormViewModel.screenState.value.departureOrDestination == 3) {
                     searchFormViewModel.onEvent(
                         SearchFormEvent.IsTravelDateCreatedUpdated(
-                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureTimeCreatedError,
+                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureDateCreatedError,
                             isDepartureCreated = searchFormViewModel.screenState.value.addressDepartureCreated  === null,
                             isDestinationCreated = searchFormViewModel.screenState.value.isDestinationCreatedError
                         )
@@ -158,7 +158,7 @@ fun SearchTownItem(
                 } else if (searchFormViewModel.screenState.value.departureOrDestination == 4) {
                     searchFormViewModel.onEvent(
                         SearchFormEvent.IsTravelDateCreatedUpdated(
-                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureTimeCreatedError,
+                            isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureDateCreatedError,
                             isDepartureCreated = searchFormViewModel.screenState.value.isDepartureError,
                             isDestinationCreated = searchFormViewModel.screenState.value.addressDestinationCreated === null
                         )

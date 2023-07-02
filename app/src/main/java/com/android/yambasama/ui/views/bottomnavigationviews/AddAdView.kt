@@ -83,9 +83,7 @@ import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.utils.TimePickerDialog
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -103,15 +101,15 @@ fun AddAdView(
 ) {
 
     val departureDateOpenDialog = remember { mutableStateOf(false) }
+    val destinationDateOpenDialog = remember { mutableStateOf(false) }
     val departureTimeOpenDialog = remember { mutableStateOf(false) }
+    val destinationTimeOpenDialog = remember { mutableStateOf(false) }
     val departureTimePickerState = rememberTimePickerState(
         initialHour = 12
     )
-    val arrivingTimeOpenDialog = remember { mutableStateOf(false) }
-    val timeFormatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
-    val arrivingTimePickerState = rememberDatePickerState()
-    val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
+    val destinationTimePickerState = rememberTimePickerState(
+        initialHour = 12
+    )
     val configuration = LocalConfiguration.current
 
 
@@ -136,11 +134,13 @@ fun AddAdView(
 
 
     if (searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null) {
-        mDepartureDate.value = formatter.format(searchFormViewModel.screenState.value.dateDialogDepartureCreated!!)
+        mDepartureDate.value =
+            formatter.format(searchFormViewModel.screenState.value.dateDialogDepartureCreated!!)
     }
 
     if (searchFormViewModel.screenState.value.dateDialogDestinationCreated !== null) {
-        mDestinationDate.value = formatter.format(searchFormViewModel.screenState.value.dateDialogDestinationCreated!!)
+        mDestinationDate.value =
+            formatter.format(searchFormViewModel.screenState.value.dateDialogDestinationCreated!!)
     }
 
 
@@ -217,7 +217,11 @@ fun AddAdView(
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                             Text(
                                 text = if (searchFormViewModel.screenState.value.addressDepartureCreated !== null) {
-                                    "${searchFormViewModel.screenState.value.addressDepartureCreated?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDepartureCreated!!.code)} ( ${searchFormViewModel.screenState.value.addressDepartureCreated?.airportName}, ${searchFormViewModel.screenState.value.addressDepartureCreated?.airportCode} ))"
+                                    "${searchFormViewModel.screenState.value.addressDepartureCreated?.townName} ( ${
+                                        util.getCountry(
+                                            searchFormViewModel.screenState.value.addressDepartureCreated!!.code
+                                        )
+                                    } ( ${searchFormViewModel.screenState.value.addressDepartureCreated?.airportName}, ${searchFormViewModel.screenState.value.addressDepartureCreated?.airportCode} ))"
                                 } else {
                                     stringResource(R.string.departure)
                                 },
@@ -241,7 +245,7 @@ fun AddAdView(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    border = if (searchFormViewModel.screenState.value.isDepartureTimeCreatedError) {
+                    border = if (searchFormViewModel.screenState.value.isDestinationCreatedError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
@@ -273,7 +277,11 @@ fun AddAdView(
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                             Text(
                                 text = if (searchFormViewModel.screenState.value.addressDestinationCreated !== null) {
-                                    "${searchFormViewModel.screenState.value.addressDestinationCreated?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDestinationCreated!!.code)} ( ${searchFormViewModel.screenState.value.addressDestinationCreated?.airportName}, ${searchFormViewModel.screenState.value.addressDestinationCreated?.airportCode} ))"
+                                    "${searchFormViewModel.screenState.value.addressDestinationCreated?.townName} ( ${
+                                        util.getCountry(
+                                            searchFormViewModel.screenState.value.addressDestinationCreated!!.code
+                                        )
+                                    } ( ${searchFormViewModel.screenState.value.addressDestinationCreated?.airportName}, ${searchFormViewModel.screenState.value.addressDestinationCreated?.airportCode} ))"
                                 } else {
                                     stringResource(R.string.destination)
                                 },
@@ -297,7 +305,7 @@ fun AddAdView(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    border = if (searchFormViewModel.screenState.value.isDepartureTimeCreatedError) {
+                    border = if (searchFormViewModel.screenState.value.isDepartureDateCreatedError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
@@ -339,17 +347,24 @@ fun AddAdView(
 
                 }
 
+                if (searchFormViewModel.screenState.value.isDepartureDateCreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "La date de départ est obligation"
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedButton(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    /*border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                    },*/
+                    },
                     shape = RoundedCornerShape(30),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(
@@ -357,7 +372,7 @@ fun AddAdView(
                         )
                     ),
                     onClick = {
-                        //departureDateOpenDialog.value = true
+                        departureTimeOpenDialog.value = true
                     }) {
 
                     Column(
@@ -387,17 +402,24 @@ fun AddAdView(
 
                 }
 
+                if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    Text(
+                        color = Color.Red,
+                        text = "L'heure de départ est obligatoire"
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedButton(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    /*border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    border = if (searchFormViewModel.screenState.value.isDestinationDateCreatedError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                    },*/
+                    },
                     shape = RoundedCornerShape(30),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(
@@ -405,7 +427,7 @@ fun AddAdView(
                         )
                     ),
                     onClick = {
-                        //departureDateOpenDialog.value = true
+                        destinationDateOpenDialog.value = true
                     }) {
 
                     Column(
@@ -435,17 +457,24 @@ fun AddAdView(
 
                 }
 
+                if (searchFormViewModel.screenState.value.isDestinationDateCreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "La date d'arrivée est obligatoire"
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedButton(
                     modifier = Modifier
                         .width(280.dp)
                         .height(55.dp),
-                    /*border = if (searchFormViewModel.screenState.value.isDepartureTimeError) {
+                    border = if (searchFormViewModel.screenState.value.isDestinationTimeCreatedError) {
                         BorderStroke(1.dp, color = Color.Red)
                     } else {
                         BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                    },*/
+                    },
                     shape = RoundedCornerShape(30),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(
@@ -453,7 +482,7 @@ fun AddAdView(
                         )
                     ),
                     onClick = {
-                        departureDateOpenDialog.value = true
+                        destinationTimeOpenDialog.value = true
                     }) {
 
                     Column(
@@ -483,6 +512,13 @@ fun AddAdView(
 
                 }
 
+                if (searchFormViewModel.screenState.value.isDestinationTimeCreatedError) {
+                    Text(
+                        color = Color.Red,
+                        text = "L'heure d'arrivée est obligatoire"
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedButton(
@@ -490,8 +526,19 @@ fun AddAdView(
                         .width(280.dp),
                     border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
                     onClick = {
-                        visiblePreviousForm.value = true
-                        visibleCurrentForm.value = false
+                        if (
+                            searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null
+                            && searchFormViewModel.screenState.value.dateDialogDestinationCreated !== null
+                            && searchFormViewModel.screenState.value.addressDepartureCreated !== null
+                            && searchFormViewModel.screenState.value.addressDestinationCreated !== null
+                            && searchFormViewModel.screenState.value.timeHourDepartureCreated !== null
+                            && searchFormViewModel.screenState.value.timeMinuteDepartureCreated !== null
+                            && searchFormViewModel.screenState.value.timeHourDestinationCreated !== null
+                            && searchFormViewModel.screenState.value.timeMinuteDestinationCreated !== null
+                        ) {
+                            visiblePreviousForm.value = true
+                            visibleCurrentForm.value = false
+                        }
                     }) {
                     Icon(
                         imageVector = Icons.Outlined.NextPlan,
@@ -674,24 +721,28 @@ fun AddAdView(
         }
 
 
-
-
     }
 
 
+    //departure Time Dialog
     if (departureTimeOpenDialog.value) {
         TimePickerDialog(
-            title = if (departureTimeOpenDialog.value) { "Select Time " } else { "Enter Time" },
+            title = if (departureTimeOpenDialog.value) {
+                "Select Time "
+            } else {
+                "Enter Time"
+            },
             onCancel = { departureTimeOpenDialog.value = false },
             onConfirm = {
-                val cal = Calendar.getInstance()
-                cal.set(Calendar.HOUR_OF_DAY, departureTimePickerState.hour)
-                cal.set(Calendar.MINUTE, departureTimePickerState.minute)
-                cal.isLenient = false
-                snackScope.launch {
-                    snackState.showSnackbar("Entered time: ${formatter.format(cal.time)}")
-                }
+                mDepartureTime.value = util.getTimeFormatterSimple(
+                    hour = departureTimePickerState.hour,
+                    minute = departureTimePickerState.minute
+                )
                 departureTimeOpenDialog.value = false
+                searchFormViewModel.screenState.value.timeHourDepartureCreated =
+                    departureTimePickerState.hour
+                searchFormViewModel.screenState.value.timeMinuteDepartureCreated =
+                    departureTimePickerState.minute
             },
             toggle = {
                 if (configuration.screenHeightDp > 400) {
@@ -712,7 +763,9 @@ fun AddAdView(
                                 .size(64.dp, 72.dp)
                                 .align(Alignment.BottomStart)
                                 .zIndex(5f),
-                            onClick = { departureTimeOpenDialog.value = !departureTimeOpenDialog.value }) {
+                            onClick = {
+                                departureTimeOpenDialog.value = !departureTimeOpenDialog.value
+                            }) {
 
                             val icon = if (departureTimeOpenDialog.value) {
                                 Icons.Outlined.Keyboard
@@ -746,6 +799,81 @@ fun AddAdView(
     }
 
 
+    //destination Time Dialog
+    if (destinationTimeOpenDialog.value) {
+        TimePickerDialog(
+            title = if (destinationTimeOpenDialog.value) {
+                "Select Time "
+            } else {
+                "Enter Time"
+            },
+            onCancel = { destinationTimeOpenDialog.value = false },
+            onConfirm = {
+                mDestinationTime.value = util.getTimeFormatterSimple(
+                    hour = destinationTimePickerState.hour,
+                    minute = destinationTimePickerState.minute
+                )
+                destinationTimeOpenDialog.value = false
+                searchFormViewModel.screenState.value.timeHourDestinationCreated =
+                    destinationTimePickerState.hour
+                searchFormViewModel.screenState.value.timeMinuteDestinationCreated =
+                    destinationTimePickerState.minute
+            },
+            toggle = {
+                if (configuration.screenHeightDp > 400) {
+                    // Make this take the entire viewport. This will guarantee that Screen readers
+                    // focus the toggle first.
+
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .semantics { isContainer = true }
+                    ) {
+                        IconButton(
+                            modifier = Modifier
+                                // This is a workaround so that the Icon comes up first
+                                // in the talkback traversal order. So that users of a11y
+                                // services can use the text input. When talkback traversal
+                                // order is customizable we can remove this.
+                                .size(64.dp, 72.dp)
+                                .align(Alignment.BottomStart)
+                                .zIndex(5f),
+                            onClick = {
+                                destinationTimeOpenDialog.value = !destinationTimeOpenDialog.value
+                            }) {
+
+                            val icon = if (destinationTimeOpenDialog.value) {
+                                Icons.Outlined.Keyboard
+                            } else {
+                                Icons.Outlined.Schedule
+                            }
+
+                            Icon(
+                                icon,
+                                contentDescription = if (destinationTimeOpenDialog.value) {
+                                    "Switch to Text Input"
+                                } else {
+                                    "Switch to Touch Input"
+                                }
+                            )
+
+                        }
+                    }
+
+                }
+
+            }
+        ) {
+            if (destinationTimeOpenDialog.value && configuration.screenHeightDp > 400) {
+                TimePicker(state = destinationTimePickerState)
+            } else {
+                TimeInput(state = destinationTimePickerState)
+            }
+
+        }
+    }
+
+    //Departure Date Dialog
     if (departureDateOpenDialog.value) {
         val datePickerDeparturePickerState = rememberDatePickerState()
         val departureTimeConfirmEnabled =
@@ -761,10 +889,52 @@ fun AddAdView(
                 TextButton(
                     onClick = {
                         departureDateOpenDialog.value = false
-                        val date = datePickerDeparturePickerState.selectedDateMillis?.let { Date(it) }
+                        val date =
+                            datePickerDeparturePickerState.selectedDateMillis?.let { Date(it) }
                         mDepartureDate.value =
                             date?.let { util.getDateFormatter(it) }.toString()
                         searchFormViewModel.screenState.value.dateDialogDepartureCreated = date
+                    },
+                    enabled = departureTimeConfirmEnabled.value
+                ) {
+                    Text(text = stringResource(R.string.validate))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        departureDateOpenDialog.value = false
+                    }
+                ) {
+                    Text(text = stringResource(R.string.cancel))
+                }
+            }
+        ) {
+            DatePicker(state = datePickerDeparturePickerState)
+        }
+    }
+
+    //Destination Date Dialog
+    if (destinationDateOpenDialog.value) {
+        val datePickerDestinationPickerState = rememberDatePickerState()
+        val departureTimeConfirmEnabled =
+            derivedStateOf { datePickerDestinationPickerState.selectedDateMillis != null }
+        DatePickerDialog(
+            onDismissRequest = {
+                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                // button. If you want to disable that functionality, simply use an empty
+                // onDismissRequest.
+                destinationDateOpenDialog.value = false
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        destinationDateOpenDialog.value = false
+                        val date =
+                            datePickerDestinationPickerState.selectedDateMillis?.let { Date(it) }
+                        mDestinationDate.value =
+                            date?.let { util.getDateFormatter(it) }.toString()
+                        searchFormViewModel.screenState.value.dateDialogDestinationCreated = date
 
 
                     },
@@ -783,7 +953,7 @@ fun AddAdView(
                 }
             }
         ) {
-            DatePicker(state = datePickerDeparturePickerState)
+            DatePicker(state = datePickerDestinationPickerState)
         }
     }
 
