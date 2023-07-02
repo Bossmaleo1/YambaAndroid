@@ -22,6 +22,19 @@ class Util {
         return formatter.format(date)
     }
 
+    fun getTimeFormatter(hour: Int, minute: Int): String {
+        val formatter: SimpleDateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.HOUR_OF_DAY, hour)
+        cal.set(Calendar.MINUTE, minute)
+        cal.isLenient = false
+        return formatter.format(cal.time)
+    }
+
+    fun getTimeFormatterSimple(hour: Int, minute: Int): String {
+        return "$hour:$minute"
+    }
+
     fun getNumberOfKg(numberOfKgs: List<NumberOfKg>): Float {
         if(numberOfKgs.isEmpty()) {
             return 0F

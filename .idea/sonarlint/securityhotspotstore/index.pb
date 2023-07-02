@@ -93,8 +93,6 @@ wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucem
 wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementView.kt,c/0/c009548dc84243c4551c08b3518239f7fb0572de
 ”
 dapp/src/main/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModel.kt,4/7/479937a1164949186da6c6180ab83c5b998bb49b
-g
-7app/src/main/java/com/android/yambasama/ui/util/Util.kt,c/f/cfe5324df6b5f21720de1c9ec619d506b93c809e
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 m

@@ -15,6 +15,11 @@ data class SearchFormState (
     var dateDialogDepartureCreated: Date? = null,
     var dateDialogDestinationCreated: Date? = null,
 
+    var timeHourDepartureCreated: Int? = null,
+    var timeMinuteDepartureCreated: Int? = null,
+    var timeHourDestinationCreated: Int? = null,
+    var timeMinuteDestinationCreated: Int? = null,
+
     var arrivingTimeAfter: String? = null,
     var arrivingTimeBefore: String? = null,
     var isDepartureError: Boolean = false,
@@ -23,5 +28,8 @@ data class SearchFormState (
 
     var isDepartureCreatedError: Boolean = false,
     var isDestinationCreatedError: Boolean = false,
-    var isDepartureTimeCreatedError: Boolean = false
+    var isDepartureDateCreatedError: Boolean = false,
+    var isDestinationDateCreatedError: Boolean = false,
+    var isDepartureTimeCreatedError: Boolean = false,
+    var isDestinationTimeCreatedError: Boolean = false
  )
