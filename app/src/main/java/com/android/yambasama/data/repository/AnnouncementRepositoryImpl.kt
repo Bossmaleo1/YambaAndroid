@@ -1,5 +1,6 @@
 package com.android.yambasama.data.repository
 
+import com.android.yambasama.data.model.api.AnnouncementBody
 import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.repository.dataSource.annoucement.AnnouncementRemoteDataSource
 import com.android.yambasama.data.util.Resource
@@ -20,6 +21,15 @@ class AnnouncementRepositoryImpl(
     }
 
     private fun responseToRessourceAnnouncement(response: Response<Announcement>): Resource<Announcement> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
+                return Resource.Success(result)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun responseToRessourceCreateAnnouncement(response: Response<String>): Resource<String> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
                 return Resource.Success(result)
@@ -54,6 +64,18 @@ class AnnouncementRepositoryImpl(
         return  responseToRessourceAnnouncement(
             annoucementRemoteDataSource.getAnnouncement(
                 id = id,
+                token = token
+            )
+        )
+    }
+
+    override suspend fun createAnnouncement(
+        announcementBody: AnnouncementBody,
+        token: String
+    ): Resource<String> {
+        return responseToRessourceCreateAnnouncement(
+            annoucementRemoteDataSource.createAnnouncement(
+                announcementBody = announcementBody,
                 token = token
             )
         )

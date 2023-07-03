@@ -1,5 +1,6 @@
 package com.android.yambasama.domain.repository
 
+import com.android.yambasama.data.model.api.AnnouncementBody
 import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.util.Resource
 
@@ -18,4 +19,9 @@ interface AnnouncementRepository {
         id: Int,
         token: String
     ): Resource<Announcement>
+
+    suspend fun createAnnouncement(
+        announcementBody: AnnouncementBody,
+        token: String
+    ): Resource<String>
 }
