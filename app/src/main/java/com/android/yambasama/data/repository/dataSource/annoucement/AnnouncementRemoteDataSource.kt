@@ -1,5 +1,6 @@
 package com.android.yambasama.data.repository.dataSource.annoucement
 
+import com.android.yambasama.data.model.api.AnnouncementBody
 import com.android.yambasama.data.model.api.ApiAnnouncementResponse
 import com.android.yambasama.data.model.dataRemote.Announcement
 import com.android.yambasama.data.util.Resource
@@ -21,4 +22,10 @@ interface AnnouncementRemoteDataSource {
         id: Int,
         token: String
     ): Response<Announcement>
+
+    suspend fun createAnnouncement(
+        announcementBody: AnnouncementBody,
+        token: String
+    ): Response<String>
+
 }
