@@ -61,4 +61,16 @@
     <string name="available_kilo_number">Número de quilos disponíveis</string>
     <string name="departure_date">Data de partida</string>
     <string name="departureTimeError">O horário de saída é obrigatório</string>
+    <string name="departureTimeDateError">A hora de chegada é obrigatória</string>
+    <string name="next">Próximo</string>
+    <string name="priceError">Por favor, preencha o preço</string>
+    <string name="kilo_number">Número de Quilograma</string>
+    <string name="kilo_number_error">Por favor, preencha o número de quilos disponíveis</string>
+    <string name="departure_local_meet">Pontos de encontro no início</string>
+    <string name="departure_local_meet_error">Por favor, preencha os locais de encontro de partida</string>
+    <string name="arrival_local_meet_error">Por favor, preencha o local de encontro de chegada</string>
+    <string name="arrival_local_meet">Por favor, preencha o local de encontro de chegada</string>
+    <string name="publish">Publicar</string>
+    <string name="select_time">Seleccionar hora</string>
+    <string name="enter_time">Insira a hora</string>
 </resources>
