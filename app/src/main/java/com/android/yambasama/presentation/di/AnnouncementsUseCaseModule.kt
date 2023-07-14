@@ -1,6 +1,7 @@
 package com.android.yambasama.presentation.di
 
 import com.android.yambasama.domain.repository.AnnouncementRepository
+import com.android.yambasama.domain.usecase.annoucement.CreateAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementsUseCase
 import dagger.Module
@@ -27,5 +28,13 @@ class AnnouncementsUseCaseModule {
         announcementRepository: AnnouncementRepository
     ):GetAnnouncementUseCase {
         return GetAnnouncementUseCase(announcementRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreateAnnouncementUseCase(
+        announcementRepository: AnnouncementRepository
+    ): CreateAnnouncementUseCase {
+        return CreateAnnouncementUseCase(announcementRepository)
     }
 }

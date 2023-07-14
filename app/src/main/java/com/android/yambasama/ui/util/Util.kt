@@ -3,6 +3,7 @@ package com.android.yambasama.ui.util
 import com.android.yambasama.data.model.dataRemote.NumberOfKg
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.time.Duration.Companion.hours
 
 class Util {
 
@@ -48,7 +49,7 @@ class Util {
     }
 
     fun getDateDisplayingStart(date: Date): String {
-        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))
         cal.time = date
         val monthCount = (cal.get(Calendar.MONTH)+1)
         val monthDay: String = if (monthCount >= 10) {
@@ -57,6 +58,28 @@ class Util {
             "0${(cal.get(Calendar.MONTH)+1)}"
         }
         return "${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T00:00:00"
+    }
+
+    fun getAnnouncementDate(
+        dateAnnouncement: Date,
+        hourAnnouncement: Int,
+        minuteAnnouncement: Int
+    ): String {
+        val calAnnouncementDate: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))
+        val calAnnouncementTime: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))
+        calAnnouncementDate.time = dateAnnouncement
+        //calAnnouncementTime.time = timeAnnouncement
+        val monthCount = (calAnnouncementDate.get(Calendar.MONTH) +1)
+        val monthDay: String = if (monthCount >= 10) {
+            "${(calAnnouncementDate.get(Calendar.MONTH)+1)}"
+        } else {
+            "0${(calAnnouncementDate.get(Calendar.MONTH)+1)}"
+        }
+        calAnnouncementTime.set(Calendar.HOUR_OF_DAY, hourAnnouncement)
+        calAnnouncementTime.set(Calendar.MINUTE, minuteAnnouncement)
+        val hourCount : String = "${calAnnouncementTime[Calendar.HOUR_OF_DAY]}"
+        val minuteCount: String = "${calAnnouncementTime[Calendar.MINUTE]}"
+        return "${calAnnouncementDate.get(Calendar.YEAR)}-${monthDay}-${calAnnouncementDate.get(Calendar.DAY_OF_MONTH)}T${hourCount}:${minuteCount}:00"
     }
 
     fun getDateDisplayingEnd(date: Date): String {

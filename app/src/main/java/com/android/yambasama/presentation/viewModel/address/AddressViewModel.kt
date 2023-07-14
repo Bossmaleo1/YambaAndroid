@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -61,7 +62,6 @@ class AddressViewModel @Inject constructor(
                     isNetworkError = false,
                     initCall = screenState.value.initCall++
                 )
-                // Clef 401
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
                     isNetworkError = true,

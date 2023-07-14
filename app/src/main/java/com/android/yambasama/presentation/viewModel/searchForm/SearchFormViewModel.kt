@@ -138,6 +138,8 @@ class SearchFormViewModel @Inject constructor(
                     )
                 }
             }
+
+            else -> {}
         }
     }
 }
