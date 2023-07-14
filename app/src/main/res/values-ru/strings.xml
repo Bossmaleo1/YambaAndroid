@@ -59,4 +59,5 @@
     <string name="price">Цена</string>
     <string name="available_kilo_number">Доступное количество килограммов</string>
     <string name="departure_date">Дата выезда</string>
+    <string name="departureTimeError">Время выезда обязательно</string>
 </resources>

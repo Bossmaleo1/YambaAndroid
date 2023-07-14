@@ -1,6 +1,0 @@
-
-dkotlin:S1172¸"?Use "_" instead of this unused lambda parameter "innerPadding".(Ò¡Éøÿÿÿÿ8í¦é1
-jkotlin:S1073"GThis function has 9 parameters, which is greater than the 7 authorized.(„µŒ®üÿÿÿÿ8ø¦é1
->kotlin:S1128"Remove this unused import.(ïö°Ìøÿÿÿÿ8‚§é1
-vkotlin:S37763"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(„µŒ®üÿÿÿÿ8…§é1
-Rkotlin:S1066Q".Merge this "if" statement with the nested one.(¹êÛ°ûÿÿÿÿ8ˆ§é1

@@ -2,6 +2,7 @@ package com.android.yambasama.presentation.di
 
 import android.app.Application
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
+import com.android.yambasama.domain.usecase.annoucement.CreateAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementsUseCase
 import com.android.yambasama.domain.usecase.user.*
@@ -81,12 +82,14 @@ class FactoryModule {
     fun provideAnnouncementViewModelFactory(
         application: Application,
         getAnnouncementsUseCase: GetAnnouncementsUseCase,
-        getAnnouncementUseCase: GetAnnouncementUseCase
+        getAnnouncementUseCase: GetAnnouncementUseCase,
+        createAnnouncementUseCase: CreateAnnouncementUseCase
     ): AnnouncementViewModelFactory {
         return AnnouncementViewModelFactory(
             application,
             getAnnouncementsUseCase,
-            getAnnouncementUseCase
+            getAnnouncementUseCase,
+            createAnnouncementUseCase
         )
     }
 }

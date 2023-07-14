@@ -77,7 +77,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
+import com.android.yambasama.data.model.api.NumberOfKgBody
+import com.android.yambasama.presentation.viewModel.announcement.AnnouncementViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
+import com.android.yambasama.presentation.viewModel.user.UserViewModel
+import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
@@ -92,12 +96,14 @@ import java.util.TimeZone
 @OptIn(ExperimentalMaterialApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun AddAdView(
+fun AddAnnouncementView(
     util: Util,
     navController: NavHostController,
     visibleCurrentForm: MutableState<Boolean>,
     visiblePreviousForm: MutableState<Boolean>,
-    searchFormViewModel: SearchFormViewModel
+    searchFormViewModel: SearchFormViewModel,
+    announcementViewModel: AnnouncementViewModel,
+    userViewModel: UserViewModel
 ) {
 
     val departureDateOpenDialog = remember { mutableStateOf(false) }
@@ -129,8 +135,9 @@ fun AddAdView(
     var numberOfKgField by remember { mutableStateOf("") }
     var meetingPlace1 by remember { mutableStateOf("") }
     var meetingPlace2 by remember { mutableStateOf("") }
-
     var visibleForm by remember { mutableStateOf(false) }
+
+    val screenState = userViewModel.screenState.value
 
 
     if (searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null) {
@@ -338,7 +345,7 @@ fun AddAdView(
                                 text = if (mDepartureDate.value.length > 3) {
                                     mDepartureDate.value
                                 } else {
-                                    "Date de départ"
+                                    stringResource(id = R.string.departure_date)
                                 },
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -350,7 +357,7 @@ fun AddAdView(
                 if (searchFormViewModel.screenState.value.isDepartureDateCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "La date de départ est obligation"
+                        text = stringResource(id = R.string.departureDateError)
                     )
                 }
 
@@ -393,7 +400,7 @@ fun AddAdView(
                                 text = if (mDepartureTime.value.length > 3) {
                                     mDepartureTime.value
                                 } else {
-                                    "Heure de départ"
+                                    stringResource(id = R.string.departure_time)
                                 },
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -405,7 +412,7 @@ fun AddAdView(
                 if (searchFormViewModel.screenState.value.isDepartureTimeCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "L'heure de départ est obligatoire"
+                        text = stringResource(id = R.string.departureTimeError)
                     )
                 }
 
@@ -797,7 +804,66 @@ fun AddAdView(
                             && priceField.isNotEmpty()
                             && numberOfKgField.isNotEmpty()
                         ) {
-                            //here we must to submit our form
+
+                            searchFormViewModel.screenState.value.addressDestinationCreated?.id?.let {
+                                searchFormViewModel.screenState.value.addressDepartureCreated?.id?.let { it1 ->
+                                    screenState.userRoom[0].id?.let { it2 ->
+                                        searchFormViewModel.screenState.value.dateDialogDepartureCreated?.let { it3 ->
+                                            searchFormViewModel.screenState.value.timeHourDepartureCreated?.let { it4 ->
+                                                searchFormViewModel.screenState.value.timeMinuteDepartureCreated?.let { it5 ->
+                                                    util.getAnnouncementDate(
+                                                        dateAnnouncement = it3,
+                                                        hourAnnouncement = it4,
+                                                        minuteAnnouncement = it5
+                                                    )
+                                                }
+                                            }
+                                        }?.let { it4 ->
+                                            searchFormViewModel.screenState.value.dateDialogDestinationCreated?.let { it3 ->
+                                                searchFormViewModel.screenState.value.timeHourDestinationCreated?.let { it5 ->
+                                                    searchFormViewModel.screenState.value.timeMinuteDestinationCreated?.let { it6 ->
+                                                        util.getAnnouncementDate(
+                                                            dateAnnouncement = it3,
+                                                            hourAnnouncement = it5,
+                                                            minuteAnnouncement = it6
+                                                        )
+                                                    }
+                                                }
+                                            }?.let { it5 ->
+                                                AnnouncementEvent.GenerateAnnouncementBody(
+                                                    departureTime = it4,
+                                                    arrivingTime = it5,
+                                                    price = priceField.toFloat(),
+                                                    meetingPlace1 = meetingPlace1,
+                                                    meetingPlace2 = meetingPlace2,
+                                                    user = it2,
+                                                    destinationAddress = it,
+                                                    departureAddress = it1,
+                                                    numberOfKgs = NumberOfKgBody(
+                                                        numberOfKg = numberOfKgField.toFloat(),
+                                                        status = false
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }?.let {
+                                announcementViewModel.onEvent(
+                                    it
+                                )
+
+                                announcementViewModel.screenAnnouncementCreateScreenState.value.announcementBody?.let { it1 ->
+                                    AnnouncementEvent.CreateAnnouncement(
+                                        announcementBody = it1,
+                                        token = screenState.tokenRoom[0].token
+                                    )
+                                }?.let { it2 ->
+                                    announcementViewModel.onEvent(
+                                        it2
+                                    )
+                                }
+                            }
                         }
 
                     }) {

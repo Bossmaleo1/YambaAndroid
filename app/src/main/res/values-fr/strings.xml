@@ -56,6 +56,7 @@
     <string name="arriving_time">Heure d\'arrivée</string>
     <string name="arrival_date">Date d\'arrivée</string>
     <string name="departure_time">Heure de départ</string>
+    <string name="departureTimeError">L\'heure de départ est obligatoire</string>
     <string name="price">Prix</string>
     <string name="available_kilo_number">Nombre de kilos disponibles</string>
     <string name="departure_date">Date de départ</string>

@@ -59,4 +59,5 @@
     <string name="price">Price</string>
     <string name="available_kilo_number">Number of Kilos available</string>
     <string name="departure_date">Departure date</string>
+    <string name="departureTimeError">Departure time is mandatory</string>
 </resources>

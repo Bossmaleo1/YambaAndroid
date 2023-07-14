@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +39,7 @@ import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.bottomnavigationviews.SearchView
-import com.android.yambasama.ui.views.bottomnavigationviews.AddAdView
+import com.android.yambasama.ui.views.bottomnavigationviews.AddAnnouncementView
 import com.android.yambasama.ui.views.model.BottomNavigationItem
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
@@ -331,12 +330,14 @@ fun HomeApp(
                                 top = 20.dp
                             )
                         ) {
-                            AddAdView(
+                            AddAnnouncementView(
                                 util = util,
                                 navController = navController,
                                 visibleCurrentForm = visibleCurrentForm,
                                 visiblePreviousForm = visibleNextForm,
-                                searchFormViewModel = searchFormViewModel
+                                searchFormViewModel = searchFormViewModel,
+                                announcementViewModel = announcementViewModel,
+                                userViewModel = userViewModel
                             )
                         }
                     }
