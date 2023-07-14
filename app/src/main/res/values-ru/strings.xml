@@ -60,4 +60,17 @@
     <string name="available_kilo_number">Доступное количество килограммов</string>
     <string name="departure_date">Дата выезда</string>
     <string name="departureTimeError">Время выезда обязательно</string>
+    <string name="departureTimeDateError">Время прибытия обязательно</string>
+    <string name="next">Следующий</string>
+    <string name="priceError">Por favor, preencha o preço</string>
+    <string name="kilo_number">Количество килограммов</string>
+    <string name="kilo_number_error">Пожалуйста, заполните количество доступных килограммов</string>
+    <string name="departure_local_meet">Места встречи на старте</string>
+    <string name="departure_local_meet_error">Пожалуйста, заполните места встречи вылета</string>
+    <string name="arrival_local_meet_error">Пожалуйста, заполните место встречи прибытия</string>
+    <string name="arrival_local_meet">Пожалуйста, заполните место встречи прибытия</string>
+    <string name="publish">Публиковать</string>
+    <string name="select_time">Выберите время</string>
+    <string name="enter_time">Введите время</string>
+
 </resources>

@@ -57,7 +57,19 @@
     <string name="arrival_date">Arrival date</string>
     <string name="departure_time">Departure time</string>
     <string name="price">Price</string>
+    <string name="priceError">Please fill in the price</string>
     <string name="available_kilo_number">Number of Kilos available</string>
     <string name="departure_date">Departure date</string>
     <string name="departureTimeError">Departure time is mandatory</string>
+    <string name="departureTimeDateError">Arrival time is mandatory</string>
+    <string name="next">Next</string>
+    <string name="kilo_number">Number of Kilogram</string>
+    <string name="kilo_number_error">Please fill in the number of kilos available</string>
+    <string name="departure_local_meet">Meeting places at the start</string>
+    <string name="departure_local_meet_error">Please fill in the departure meeting places</string>
+    <string name="arrival_local_meet_error">Please fill in the arrival meeting place</string>
+    <string name="arrival_local_meet">Please fill in the arrival meeting place</string>
+    <string name="publish">Publish</string>
+    <string name="select_time">Select Time</string>
+    <string name="enter_time">Enter Time</string>
 </resources>

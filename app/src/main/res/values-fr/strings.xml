@@ -58,6 +58,18 @@
     <string name="departure_time">Heure de départ</string>
     <string name="departureTimeError">L\'heure de départ est obligatoire</string>
     <string name="price">Prix</string>
+    <string name="priceError">Veuillez renseigner le prix</string>
     <string name="available_kilo_number">Nombre de kilos disponibles</string>
+    <string name="kilo_number">Nombre de Kg</string>
     <string name="departure_date">Date de départ</string>
+    <string name="departureTimeDateError">L\'heure d\'arrivée est obligatoire</string>
+    <string name="next">Suivant</string>
+    <string name="kilo_number_error">Veuillez renseigner le nombre de kilos disponibles</string>
+    <string name="departure_local_meet">Lieux de rencontre au départ</string>
+    <string name="departure_local_meet_error">Veuillez renseigner le lieux de rencontres de départ</string>
+    <string name="arrival_local_meet_error">Veuillez renseigner le lieux de rencontres d\'arrivée</string>
+    <string name="arrival_local_meet">Lieux de rencontre à l\'arrivée</string>
+    <string name="publish">Publier</string>
+    <string name="select_time">Sélectionner le temps</string>
+    <string name="enter_time">Insérer le temps</string>
 </resources>

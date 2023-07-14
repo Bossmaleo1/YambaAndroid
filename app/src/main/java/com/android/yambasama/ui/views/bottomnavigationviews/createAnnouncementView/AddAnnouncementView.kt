@@ -455,7 +455,7 @@ fun AddAnnouncementView(
                                 text = if (mDestinationDate.value.length > 3) {
                                     mDestinationDate.value
                                 } else {
-                                    "Date d'arrivée"
+                                    stringResource(id = R.string.arrival_date)
                                 },
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -467,7 +467,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isDestinationDateCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "La date d'arrivée est obligatoire"
+                        text = stringResource(id = R.string.destinationDateError)
                     )
                 }
 
@@ -522,7 +522,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isDestinationTimeCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "L'heure d'arrivée est obligatoire"
+                        text = stringResource(id = R.string.departureTimeDateError)
                     )
                 }
 
@@ -565,7 +565,7 @@ fun AddAnnouncementView(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Text(text = "Suivant")
+                    Text(text = stringResource(id = R.string.next))
                 }
             }
         }
@@ -637,7 +637,7 @@ fun AddAnnouncementView(
                     onValueChange = { priceField = it },
                     placeholder = {
                         Text(
-                            text = "Prix",
+                            text = stringResource(id = R.string.price),
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -646,7 +646,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isPriceCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "Veuillez renseigner le prix"
+                        text = stringResource(id = R.string.priceError)
                     )
                 }
 
@@ -685,7 +685,7 @@ fun AddAnnouncementView(
                     onValueChange = { numberOfKgField = it },
                     placeholder = {
                         Text(
-                            text = "Nombre de Kg",
+                            text = stringResource(id = R.string.kilo_number),
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -694,7 +694,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isNumberOfKgCreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "Veuillez renseigner le nombre de kilos disponibles"
+                        text = stringResource(id = R.string.kilo_number_error)
                     )
                 }
 
@@ -726,7 +726,7 @@ fun AddAnnouncementView(
                     onValueChange = { meetingPlace1 = it },
                     placeholder = {
                         Text(
-                            text = "Lieux de rencontre au départ",
+                            text = stringResource(id = R.string.departure_local_meet),
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -735,7 +735,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isMeetingPlace1CreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "Veuillez renseigner le lieux de rencontres de départ"
+                        text = stringResource(id = R.string.departure_local_meet_error)
                     )
                 }
 
@@ -768,7 +768,7 @@ fun AddAnnouncementView(
                     onValueChange = { meetingPlace2 = it },
                     placeholder = {
                         Text(
-                            text = "Lieux de rencontre à l'arrivée",
+                            text = stringResource(id = R.string.arrival_local_meet),
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -777,7 +777,7 @@ fun AddAnnouncementView(
                 if (searchFormViewModel.screenState.value.isMeetingPlace2CreatedError) {
                     Text(
                         color = Color.Red,
-                        text = "Veuillez renseigner le lieux de rencontres d'arrivée"
+                        text = stringResource(id = R.string.arrival_local_meet_error)
                     )
                 }
 
@@ -873,7 +873,7 @@ fun AddAnnouncementView(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Text(text = "Publier")
+                    Text(text = stringResource(id = R.string.publish))
                 }
 
             }
@@ -887,9 +887,9 @@ fun AddAnnouncementView(
     if (departureTimeOpenDialog.value) {
         TimePickerDialog(
             title = if (departureTimeOpenDialog.value) {
-                "Select Time "
+                stringResource(id = R.string.select_time)
             } else {
-                "Enter Time"
+                stringResource(id = R.string.enter_time)
             },
             onCancel = { departureTimeOpenDialog.value = false },
             onConfirm = {
@@ -963,9 +963,9 @@ fun AddAnnouncementView(
     if (destinationTimeOpenDialog.value) {
         TimePickerDialog(
             title = if (destinationTimeOpenDialog.value) {
-                "Select Time "
+                stringResource(id = R.string.select_time)
             } else {
-                "Enter Time"
+                stringResource(id = R.string.enter_time)
             },
             onCancel = { destinationTimeOpenDialog.value = false },
             onConfirm = {
