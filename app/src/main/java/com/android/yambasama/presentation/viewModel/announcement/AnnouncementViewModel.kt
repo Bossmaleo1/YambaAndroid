@@ -48,7 +48,9 @@ class AnnouncementViewModel @Inject constructor(
 
     private val _screenAnnouncementBodyState = mutableStateOf(
         AnnouncementCreateScreenState(
-            isNetworkError = false
+            isNetworkError = false,
+            isLoad = false,
+            isDoneAnnouncementCreate = false
         )
     )
 
@@ -68,7 +70,8 @@ class AnnouncementViewModel @Inject constructor(
                 _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
                     isNetworkConnected = true,
                     isLoad = true,
-                    isNetworkError = false
+                    isNetworkError = false,
+                    isDoneAnnouncementCreate = false
                 )
 
                 val apiResult = createAnnouncementUseCase.execute(
@@ -80,21 +83,24 @@ class AnnouncementViewModel @Inject constructor(
                     _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
                         isNetworkConnected = true,
                         isLoad = false,
-                        isNetworkError = false
+                        isNetworkError = false,
+                        isDoneAnnouncementCreate = true
                     )
                 }
             } catch (e: Exception) {
                 _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
                     isNetworkError = true,
                     isNetworkConnected = true,
-                    isLoad = false
+                    isLoad = false,
+                    isDoneAnnouncementCreate = false
                 )
             }
         } else {
             _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
                 isNetworkConnected = false,
                 isNetworkError = false,
-                isLoad = false
+                isLoad = false,
+                isDoneAnnouncementCreate = false
             )
         }
     }
@@ -241,6 +247,10 @@ class AnnouncementViewModel @Inject constructor(
             }
 
             is AnnouncementEvent.CreateAnnouncement -> {
+                _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
+                    isLoad = true
+                )
+
                 createAnnouncement(
                     token = event.token,
                     announcementBody = event.announcementBody
@@ -287,7 +297,17 @@ class AnnouncementViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = "Il y a aucune annonce pour cette date"
+                            message = app.getString(R.string.empty_announcement_date)
+                        )
+                    )
+                }
+            }
+
+            is AnnouncementEvent.IsCreateAnnouncementSuccess -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = app.getString(R.string.create_announcement_success)
                         )
                     )
                 }

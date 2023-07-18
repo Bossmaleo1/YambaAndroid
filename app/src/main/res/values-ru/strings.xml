@@ -72,5 +72,7 @@
     <string name="publish">Публиковать</string>
     <string name="select_time">Выберите время</string>
     <string name="enter_time">Введите время</string>
+    <string name="empty_announcement_date">Объявлений на эту дату нет.</string>
+    <string name="create_announcement_success">Объявление успешно создано</string>
 
 </resources>

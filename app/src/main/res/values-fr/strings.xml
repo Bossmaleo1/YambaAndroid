@@ -72,4 +72,6 @@
     <string name="publish">Publier</string>
     <string name="select_time">Sélectionner le temps</string>
     <string name="enter_time">Insérer le temps</string>
+    <string name="empty_announcement_date">Il y a aucune annonce pour cette date</string>
+    <string name="create_announcement_success">Annonce créer avec succès</string>
 </resources>

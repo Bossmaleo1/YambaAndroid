@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,7 +39,10 @@ import androidx.compose.material.icons.outlined.SaveAs
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material.icons.outlined.Today
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -83,10 +87,12 @@ import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewMod
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
+import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.model.Route
 import com.android.yambasama.ui.views.utils.TimePickerDialog
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -118,6 +124,7 @@ fun AddAnnouncementView(
     )
     val configuration = LocalConfiguration.current
 
+    val scaffoldState = rememberScaffoldState()
 
     val mDepartureDate = remember { mutableStateOf("") }
     val mDepartureTime = remember { mutableStateOf("") }
@@ -138,6 +145,7 @@ fun AddAnnouncementView(
     var visibleForm by remember { mutableStateOf(false) }
 
     val screenState = userViewModel.screenState.value
+    val screenAnnouncementCreateState = announcementViewModel.screenAnnouncementCreateScreenState.value
 
 
     if (searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null) {
@@ -148,6 +156,39 @@ fun AddAnnouncementView(
     if (searchFormViewModel.screenState.value.dateDialogDestinationCreated !== null) {
         mDestinationDate.value =
             formatter.format(searchFormViewModel.screenState.value.dateDialogDestinationCreated!!)
+    }
+
+    //our dialogbox
+    Column {
+        if (screenAnnouncementCreateState.isLoad) {
+            AlertDialog(
+                onDismissRequest = {
+                    // Dismiss the dialog when the user clicks outside the dialog or on the back
+                    // button. If you want to disable that functionality, simply use an empty
+                },
+                title = {
+
+                },
+                text = {
+                    Column( modifier = Modifier
+                        .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Row {
+                            CircularProgressIndicator()
+                            Row(Modifier.padding(10.dp)) {
+                                Text(text = stringResource(id = R.string.wait))
+                            }
+                        }
+
+                    }
+                },
+                confirmButton = {
+
+                },
+                dismissButton = {
+
+                }
+            )
+        }
     }
 
 
@@ -799,10 +840,10 @@ fun AddAnnouncementView(
                         )
 
                         if (
-                            meetingPlace1.isEmpty()
-                            && meetingPlace2.isEmpty()
-                            && priceField.toFloat() <= 0
-                            && numberOfKgField.toFloat() <= 0
+                            meetingPlace1.isNotEmpty()
+                            && meetingPlace2.isNotEmpty()
+                            && (priceField.toFloat()>0)
+                            && (numberOfKgField.toFloat()>0)
                         ) {
 
                             searchFormViewModel.screenState.value.addressDestinationCreated?.id?.let {
@@ -1115,6 +1156,23 @@ fun AddAnnouncementView(
             }
         ) {
             DatePicker(state = datePickerDestinationPickerState)
+        }
+    }
+
+    if (screenAnnouncementCreateState.isDoneAnnouncementCreate) {
+        announcementViewModel.onEvent(AnnouncementEvent.IsCreateAnnouncementSuccess)
+    }
+
+    LaunchedEffect(key1 = true) {
+        announcementViewModel.uiEventFlow.collectLatest { event ->
+            when (event) {
+                is UIEvent.ShowMessage -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
+                }
+                else -> {}
+            }
         }
     }
 

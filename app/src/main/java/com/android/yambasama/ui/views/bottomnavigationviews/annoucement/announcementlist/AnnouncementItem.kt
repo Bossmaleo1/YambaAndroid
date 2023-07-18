@@ -67,7 +67,7 @@ fun AnnouncementItem(
 ) {
 
     var visibleImage by remember { mutableStateOf(false) }
-    val userName by rememberSaveable { mutableStateOf("${announcement.user.firstName} ${announcement.user.lastName}") }
+    val userName by rememberSaveable { mutableStateOf("${announcement.user?.firstName} ${announcement.user?.lastName}") }
     val isDark = isSystemInDarkTheme()
     val destinationDate by rememberSaveable { mutableStateOf(util.getDateTimeFormatter(announcement.arrivingTime)) }
     val postDateTime by rememberSaveable { mutableStateOf(util.getDateFormatter(announcement.published)) }
