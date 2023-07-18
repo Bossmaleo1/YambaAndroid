@@ -131,8 +131,8 @@ fun AddAnnouncementView(
     val timeformatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
     val timeZoneId = TimeZone.getDefault().id
 
-    var priceField by remember { mutableStateOf("") }
-    var numberOfKgField by remember { mutableStateOf("") }
+    var priceField by remember { mutableStateOf("0") }
+    var numberOfKgField by remember { mutableStateOf("0") }
     var meetingPlace1 by remember { mutableStateOf("") }
     var meetingPlace2 by remember { mutableStateOf("") }
     var visibleForm by remember { mutableStateOf(false) }
@@ -510,7 +510,7 @@ fun AddAnnouncementView(
                                 text = if (mDestinationTime.value.length > 3) {
                                     mDestinationTime.value
                                 } else {
-                                    "Heure d'arrivée"
+                                    stringResource(id = R.string.departure_time)
                                 },
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -791,18 +791,18 @@ fun AddAnnouncementView(
 
                         searchFormViewModel.onEvent(
                             SearchFormEvent.IsValidFinalFormStepp(
-                                isPriceCreatedError = priceField.isNotEmpty(),
-                                isNumberOfKgCreatedError = numberOfKgField.isNotEmpty(),
-                                isMeetingPlace1CreatedError = meetingPlace1.isNotEmpty(),
-                                isMeetingPlace2CreatedError = meetingPlace2.isNotEmpty()
+                                isPriceCreatedError = priceField.toFloat() <= 0,
+                                isNumberOfKgCreatedError = numberOfKgField.toFloat() <= 0,
+                                isMeetingPlace1CreatedError = meetingPlace1.isEmpty(),
+                                isMeetingPlace2CreatedError = meetingPlace2.isEmpty()
                             )
                         )
 
                         if (
-                            meetingPlace1.isNotEmpty()
-                            && meetingPlace2.isNotEmpty()
-                            && priceField.isNotEmpty()
-                            && numberOfKgField.isNotEmpty()
+                            meetingPlace1.isEmpty()
+                            && meetingPlace2.isEmpty()
+                            && priceField.toFloat() <= 0
+                            && numberOfKgField.toFloat() <= 0
                         ) {
 
                             searchFormViewModel.screenState.value.addressDestinationCreated?.id?.let {

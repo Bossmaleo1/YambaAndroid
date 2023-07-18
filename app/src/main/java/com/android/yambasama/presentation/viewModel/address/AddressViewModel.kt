@@ -59,12 +59,14 @@ class AddressViewModel @Inject constructor(
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
                     isLoad = false,
+                    isInternalError = ((apiResult.message).equals("Internal Server Error")),
                     isNetworkError = false,
                     initCall = screenState.value.initCall++
                 )
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
                     isNetworkError = true,
+                    isInternalError = false,
                     isNetworkConnected = true,
                     isLoad = false
                 )
@@ -73,7 +75,8 @@ class AddressViewModel @Inject constructor(
             _screenState.value = _screenState.value.copy(
                 isNetworkConnected = false,
                 isNetworkError = false,
-                isLoad = false
+                isLoad = false,
+                isInternalError = false,
             )
         }
     }
@@ -134,7 +137,8 @@ class AddressViewModel @Inject constructor(
                     searchInputValue = "",
                     currentPage = 1,
                     addressList = mutableListOf(),
-                    addressListTemp = mutableListOf()
+                    addressListTemp = mutableListOf(),
+                    isInternalError = false
                 )
                 getAddress(
                     token = event.token,
@@ -151,11 +155,23 @@ class AddressViewModel @Inject constructor(
                     isNetworkError = false,
                     currentPage = 1,
                     initCall = 0,
+                    isInternalError = false,
                     addressList = mutableListOf(),
                     addressListTemp = mutableListOf(),
                     searchInputValue = ""
                 )
             }
+
+            is AddressEvent.IsInternalError -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(
+                        UIEvent.ShowMessage(
+                            message = "Internal Error, Error 500"
+                        )
+                    )
+                }
+            }
+
             is AddressEvent.IsNetworkConnected -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
