@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.util
 
+import android.util.Log
 import com.android.yambasama.data.model.dataRemote.NumberOfKg
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,6 +66,7 @@ class Util {
         hourAnnouncement: Int,
         minuteAnnouncement: Int
     ): String {
+        Log.d("MALEO9393MALEO9393","Step 1")
         val calAnnouncementDate: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))
         val calAnnouncementTime: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))
         calAnnouncementDate.time = dateAnnouncement

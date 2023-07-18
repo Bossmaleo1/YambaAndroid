@@ -39,6 +39,8 @@ sealed class AnnouncementEvent {
     object InitAnnouncementState:AnnouncementEvent()
     object IsNetworkError:AnnouncementEvent()
 
+    object IsCreateAnnouncementSuccess:AnnouncementEvent()
+
     object IsEmptyAnnouncement:AnnouncementEvent()
     data class ItemClicked(
         val announcement: Announcement

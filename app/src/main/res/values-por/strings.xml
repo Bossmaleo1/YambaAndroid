@@ -73,4 +73,6 @@
     <string name="publish">Publicar</string>
     <string name="select_time">Seleccionar hora</string>
     <string name="enter_time">Insira a hora</string>
+    <string name="empty_announcement_date">Não há anúncios para esta data.</string>
+    <string name="create_announcement_success">Anúncio criado com sucesso</string>
 </resources>
