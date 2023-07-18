@@ -211,6 +211,13 @@ fun SearchAddress(
                                 iconValue = 1
                             )
                         }
+                    } else if (screenState.isInternalError) {
+                        items(count = 1) {
+                            networkError(
+                                title = "Internal Error, Error 500",
+                                iconValue = 1
+                            )
+                        }
                     }
 
                 }
@@ -219,6 +226,8 @@ fun SearchAddress(
                     addressViewModel.onEvent(AddressEvent.IsNetworkError)
                 } else if (!screenState.isNetworkConnected) {
                     addressViewModel.onEvent(AddressEvent.IsNetworkConnected)
+                } else if (screenState.isInternalError) {
+                    addressViewModel.onEvent(AddressEvent.IsInternalError)
                 }
 
                 LaunchedEffect(key1 = true) {

@@ -14,4 +14,6 @@ sealed class AddressEvent {
     object IsNetworkConnected:AddressEvent()
     object InitAddressState:AddressEvent()
     object IsNetworkError:AddressEvent()
+
+    object IsInternalError:AddressEvent()
 }
