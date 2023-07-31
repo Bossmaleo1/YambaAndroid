@@ -49,6 +49,7 @@ import com.android.yambasama.ui.views.bottomnavigationviews.accountView.AccountE
 import com.android.yambasama.ui.views.bottomnavigationviews.accountView.AccountView
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.AnnouncementDetails
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementDetails.announcementlist.AnnouncementView
+import com.android.yambasama.ui.views.bottomnavigationviews.createAnnouncementView.AnnouncementWellDone
 import com.android.yambasama.ui.views.bottomnavigationviews.notifications.notificationlistView.NotificationListView
 import com.android.yambasama.ui.views.bottomnavigationviews.paymentView.PaymentView
 import com.android.yambasama.ui.views.login
@@ -74,12 +75,16 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var userFactory: UserViewModelFactory
+
     @Inject
     lateinit var dropFactory: DropViewModelFactory
+
     @Inject
     lateinit var addressFactory: AddressViewModelFactory
+
     @Inject
     lateinit var searchFormFactory: SearchFormViewModelFactory
+
     @Inject
     lateinit var announcementFactory: AnnouncementViewModelFactory
 
@@ -105,7 +110,8 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
                     MainView(navController)
-                    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager =
+                        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
                     userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
                         this.token = token?.token
@@ -118,7 +124,8 @@ class MainActivity : ComponentActivity() {
                         if (token === null) {
                             navController.navigate(Route.loginView)
                         } else {
-                            navController.navigate(Route.homeView)
+                           //navController.navigate(Route.homeView)
+                        navController.navigate(Route.announcementDone)
                         }
                     }
                 }
@@ -127,13 +134,14 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
     private fun initViewModel() {
         userViewModel = ViewModelProvider(this, userFactory)[UserViewModel::class.java]
         dropViewModel = ViewModelProvider(this, dropFactory)[DropViewModel::class.java]
-        addressViewModel = ViewModelProvider(this,addressFactory)[AddressViewModel::class.java]
-        searchFormViewModel = ViewModelProvider(this,searchFormFactory)[SearchFormViewModel::class.java]
-        announcementViewModel = ViewModelProvider(this,announcementFactory)[AnnouncementViewModel::class.java]
+        addressViewModel = ViewModelProvider(this, addressFactory)[AddressViewModel::class.java]
+        searchFormViewModel =
+            ViewModelProvider(this, searchFormFactory)[SearchFormViewModel::class.java]
+        announcementViewModel =
+            ViewModelProvider(this, announcementFactory)[AnnouncementViewModel::class.java]
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
@@ -274,16 +282,14 @@ class MainActivity : ComponentActivity() {
             .build()*/
 
 
-
-       // notificationManager?.notify(notificationId,notification)
+        // notificationManager?.notify(notificationId,notification)
     }
 
     private fun receiveInput() {
         val intent = this.intent
         val remoteInput = RemoteInput.getResultsFromIntent(intent)
-        if (remoteInput!=null) {
+        if (remoteInput != null) {
             val inputString = remoteInput.getCharSequence(KEY_REPLY).toString()
-            Log.d("MALEOMALEO9393", inputString)
         }
     }
 
@@ -292,9 +298,9 @@ class MainActivity : ComponentActivity() {
         name: String,
         channelDescription: String
     ) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(id,name,importance).apply {
+            val channel = NotificationChannel(id, name, importance).apply {
                 description = channelDescription
             }
             notificationManager?.createNotificationChannel(channel)
@@ -343,20 +349,21 @@ class MainActivity : ComponentActivity() {
             ) {
 
                 if (userViewModel.screenState.value.userRoom.isEmpty()
-                    && userViewModel.screenState.value.tokenRoom.isEmpty()) {
+                    && userViewModel.screenState.value.tokenRoom.isEmpty()
+                ) {
                     addressViewModel.onEvent(AddressEvent.InitAddressState)
                 }
 
-                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     //we launch the notification permission
                     notificationPermissionState.launchPermissionRequest()
                     //if the permission is Granted
                     if (notificationPermissionState.status.isGranted) {
-                        createNotificationChannel(channelID,"DemoChannel", "this is maleo-sama !!")
+                        createNotificationChannel(channelID, "DemoChannel", "this is maleo-sama !!")
                         displayNotification()
                     }
                 } else {
-                    createNotificationChannel(channelID,"DemoChannel", "this is maleo-sama !!")
+                    createNotificationChannel(channelID, "DemoChannel", "this is maleo-sama !!")
                     //displayNotification()
                 }
 
@@ -488,21 +495,31 @@ class MainActivity : ComponentActivity() {
                     navController = navController
                 )
             }
+
+            composable(
+                route = Route.announcementDone
+            ) {
+                AnnouncementWellDone(
+                    navController = navController,
+                    announcementViewModel = announcementViewModel
+                )
+            }
         }
     }
 
     fun getCircleBitmap(bitmap: Bitmap): Bitmap {
         val output: Bitmap = Bitmap.createBitmap(
             bitmap.width,
-            bitmap.height, Bitmap.Config.ARGB_8888)
+            bitmap.height, Bitmap.Config.ARGB_8888
+        )
         val canvas: Canvas = Canvas(output)
         val color = Color.Red
         val paint: Paint = Paint()
-        val rect: Rect = Rect(0,0, bitmap.width, bitmap.height)
+        val rect: Rect = Rect(0, 0, bitmap.width, bitmap.height)
         val rectF: RectF = RectF(rect)
 
         paint.isAntiAlias = true
-        canvas.drawARGB(0,0,0,0)
+        canvas.drawARGB(0, 0, 0, 0)
         //paint.color = color
         canvas.drawOval(rectF, paint)
 

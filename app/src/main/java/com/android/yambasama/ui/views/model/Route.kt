@@ -22,5 +22,6 @@ class Route {
         const val trackerPackageView = "tracker_package_view"
         const val addNoticeView = "add_notice_view"
         const val transportePackageRequestView = "transporte_package_request"
+        const val announcementDone = "announcement_done"
     }
 }
