@@ -654,12 +654,14 @@ fun AddAnnouncementView(
                 OutlinedTextField(
                     modifier = Modifier
                         .width(280.dp)
-                        .border(border = if (searchFormViewModel.screenState.value.isPriceCreatedError) {
-                            BorderStroke(1.dp, color = Color.Red)
-                        } else {
-                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                        },
-                        shape = RoundedCornerShape(30)),
+                        .border(
+                            border = if (searchFormViewModel.screenState.value.isPriceCreatedError) {
+                                BorderStroke(1.dp, color = Color.Red)
+                            } else {
+                                BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                            },
+                            shape = RoundedCornerShape(30)
+                        ),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -696,12 +698,14 @@ fun AddAnnouncementView(
                 OutlinedTextField(
                     modifier = Modifier
                         .width(280.dp)
-                        .border(border = if (searchFormViewModel.screenState.value.isNumberOfKgCreatedError) {
-                            BorderStroke(1.dp, color = Color.Red)
-                        } else {
-                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                        },
-                        shape = RoundedCornerShape(30)),
+                        .border(
+                            border = if (searchFormViewModel.screenState.value.isNumberOfKgCreatedError) {
+                                BorderStroke(1.dp, color = Color.Red)
+                            } else {
+                                BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                            },
+                            shape = RoundedCornerShape(30)
+                        ),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -744,11 +748,13 @@ fun AddAnnouncementView(
                 OutlinedTextField(
                     modifier = Modifier
                         .width(280.dp)
-                        .border(border = if (searchFormViewModel.screenState.value.isMeetingPlace1CreatedError) {
-                            BorderStroke(1.dp, color = Color.Red)
-                        } else {
-                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                        }, shape = RoundedCornerShape(30)),
+                        .border(
+                            border = if (searchFormViewModel.screenState.value.isMeetingPlace1CreatedError) {
+                                BorderStroke(1.dp, color = Color.Red)
+                            } else {
+                                BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                            }, shape = RoundedCornerShape(30)
+                        ),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -785,12 +791,14 @@ fun AddAnnouncementView(
                 OutlinedTextField(
                     modifier = Modifier
                         .width(280.dp)
-                        .border(border = if (searchFormViewModel.screenState.value.isMeetingPlace2CreatedError) {
-                            BorderStroke(1.dp, color = Color.Red)
-                        } else {
-                            BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
-                        },
-                        shape = RoundedCornerShape(30)),
+                        .border(
+                            border = if (searchFormViewModel.screenState.value.isMeetingPlace2CreatedError) {
+                                BorderStroke(1.dp, color = Color.Red)
+                            } else {
+                                BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
+                            },
+                            shape = RoundedCornerShape(30)
+                        ),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
@@ -1159,8 +1167,21 @@ fun AddAnnouncementView(
         }
     }
 
+
+    announcementViewModel.onEvent(AnnouncementEvent.IsCreateAnnouncementSuccess)
+
+
+
+
+    //We navigate to the new view
     if (screenAnnouncementCreateState.isDoneAnnouncementCreate) {
-        announcementViewModel.onEvent(AnnouncementEvent.IsCreateAnnouncementSuccess)
+        navController.navigate(Route.announcementDone)
+    }
+    LaunchedEffect(
+        key1 = true
+    ) {
+        delay(3)
+        visibleForm = true
     }
 
     LaunchedEffect(key1 = true) {
@@ -1174,12 +1195,5 @@ fun AddAnnouncementView(
                 else -> {}
             }
         }
-    }
-
-    LaunchedEffect(
-        key1 = true
-    ) {
-        delay(3)
-        visibleForm = true
     }
 }

@@ -86,7 +86,9 @@ class AnnouncementViewModel @Inject constructor(
                         isNetworkError = false,
                         isDoneAnnouncementCreate = true
                     )
+                    Log.d("MALEOMALEO9393MALEO9393", "MALEO-SAMA ${screenAnnouncementCreateScreenState.value.isDoneAnnouncementCreate}")
                 }
+
             } catch (e: Exception) {
                 _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
                     isNetworkError = true,

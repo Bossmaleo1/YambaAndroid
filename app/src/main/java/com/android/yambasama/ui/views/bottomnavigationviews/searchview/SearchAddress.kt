@@ -239,6 +239,7 @@ fun SearchAddress(
                                     message = event.message
                                 )
                             }
+
                             else -> {}
                         }
                     }
@@ -253,6 +254,7 @@ fun SearchAddress(
                             message = event.message
                         )
                     }
+
                     else -> {}
                 }
             }

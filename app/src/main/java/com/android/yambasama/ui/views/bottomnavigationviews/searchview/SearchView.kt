@@ -120,7 +120,11 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDeparture !== null) {
-                                "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDeparture!!.code)} ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))"
+                                "${searchFormViewModel.screenState.value.addressDeparture?.townName} ( ${
+                                    util.getCountry(
+                                        searchFormViewModel.screenState.value.addressDeparture!!.code
+                                    )
+                                } ( ${searchFormViewModel.screenState.value.addressDeparture?.airportName}, ${searchFormViewModel.screenState.value.addressDeparture?.airportCode} ))"
                             } else {
                                 stringResource(R.string.departure)
                             },
@@ -175,7 +179,11 @@ fun SearchView(
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = if (searchFormViewModel.screenState.value.addressDestination !== null) {
-                                "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${util.getCountry(searchFormViewModel.screenState.value.addressDestination!!.code)} ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))"
+                                "${searchFormViewModel.screenState.value.addressDestination?.townName} ( ${
+                                    util.getCountry(
+                                        searchFormViewModel.screenState.value.addressDestination!!.code
+                                    )
+                                } ( ${searchFormViewModel.screenState.value.addressDestination?.airportName}, ${searchFormViewModel.screenState.value.addressDestination?.airportCode} ))"
                             } else {
                                 stringResource(R.string.destination)
                             },
@@ -309,12 +317,14 @@ fun SearchView(
                             }*/
                             val departureTimeAfter = date?.let { util.getDateDisplayingStart(it) }
                             val departureTimeBefore = date?.let { util.getDateDisplayingEnd(it) }
-                            searchFormViewModel.screenState.value.arrivingTimeAfter = departureTimeAfter
-                            searchFormViewModel.screenState.value.arrivingTimeBefore = departureTimeBefore
+                            searchFormViewModel.screenState.value.arrivingTimeAfter =
+                                departureTimeAfter
+                            searchFormViewModel.screenState.value.arrivingTimeBefore =
+                                departureTimeBefore
                         },
                         enabled = confirmEnabled.value
                     ) {
-                        Text(text=stringResource(R.string.validate))
+                        Text(text = stringResource(R.string.validate))
                     }
                 },
                 dismissButton = {
@@ -323,7 +333,7 @@ fun SearchView(
                             openDialog.value = false
                         }
                     ) {
-                        Text(text=stringResource(R.string.cancel))
+                        Text(text = stringResource(R.string.cancel))
                     }
                 }
             ) {
@@ -372,7 +382,7 @@ fun RequestLocationPermission() {
 }
 
 fun handleLocationData(locationData: LocationData) {
-    if(handleLocationException(locationData.exception)) {
+    if (handleLocationException(locationData.exception)) {
         return
     }
 
@@ -386,7 +396,7 @@ fun handleLocationData(locationData: LocationData) {
 
 fun handleLocationException(exception: Exception?): Boolean {
     exception ?: return false
-    when(exception) {
+    when (exception) {
         is SecurityException -> {
             Log.d("MALEO9393", "Testing !!")
         }

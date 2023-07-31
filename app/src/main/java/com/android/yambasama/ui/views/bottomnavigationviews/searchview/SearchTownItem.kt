@@ -44,7 +44,7 @@ fun SearchTownItem(
                     searchFormViewModel.screenState.value.departureOrDestination == 1
                     && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                 ) {
-                    if(isDark) {
+                    if (isDark) {
                         this.background(colorResource(R.color.GrayLight))
                     } else {
                         this.background(colorResource(R.color.GrayDark))
@@ -53,7 +53,7 @@ fun SearchTownItem(
                     searchFormViewModel.screenState.value.departureOrDestination == 2
                     && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                 ) {
-                    if(isDark) {
+                    if (isDark) {
                         this.background(colorResource(R.color.GrayLight))
                     } else {
                         this.background(colorResource(R.color.GrayDark))
@@ -62,7 +62,7 @@ fun SearchTownItem(
                     searchFormViewModel.screenState.value.departureOrDestination == 3
                     && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                 ) {
-                    if(isDark) {
+                    if (isDark) {
                         this.background(colorResource(R.color.GrayLight))
                     } else {
                         this.background(colorResource(R.color.GrayDark))
@@ -71,7 +71,7 @@ fun SearchTownItem(
                     searchFormViewModel.screenState.value.departureOrDestination == 4
                     && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
                 ) {
-                    if(isDark) {
+                    if (isDark) {
                         this.background(colorResource(R.color.GrayLight))
                     } else {
                         this.background(colorResource(R.color.GrayDark))
@@ -151,7 +151,7 @@ fun SearchTownItem(
                     searchFormViewModel.onEvent(
                         SearchFormEvent.IsTravelDateCreatedUpdated(
                             isTravelDateCreated = searchFormViewModel.screenState.value.isDepartureDateCreatedError,
-                            isDepartureCreated = searchFormViewModel.screenState.value.addressDepartureCreated  === null,
+                            isDepartureCreated = searchFormViewModel.screenState.value.addressDepartureCreated === null,
                             isDestinationCreated = searchFormViewModel.screenState.value.isDestinationCreatedError
                         )
                     )
@@ -177,7 +177,7 @@ fun SearchTownItem(
                     if (searchFormViewModel.screenState.value.departureOrDestination == 1
                         && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                     ) {
-                        if(isDark) {
+                        if (isDark) {
                             this.background(colorResource(R.color.GrayLight))
                         } else {
                             this.background(colorResource(R.color.GrayDark))
@@ -185,7 +185,7 @@ fun SearchTownItem(
                     } else if (searchFormViewModel.screenState.value.departureOrDestination == 2
                         && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                     ) {
-                        if(isDark) {
+                        if (isDark) {
                             this.background(colorResource(R.color.GrayLight))
                         } else {
                             this.background(colorResource(R.color.GrayDark))
@@ -193,7 +193,7 @@ fun SearchTownItem(
                     } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
                         && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                     ) {
-                        if(isDark) {
+                        if (isDark) {
                             this.background(colorResource(R.color.GrayLight))
                         } else {
                             this.background(colorResource(R.color.GrayDark))
@@ -206,8 +206,7 @@ fun SearchTownItem(
                         } else {
                             this.background(colorResource(R.color.GrayDark))
                         }
-                    }
-                    else {
+                    } else {
                         this.background(MaterialTheme.colorScheme.background)
                     }
                 }
@@ -220,7 +219,7 @@ fun SearchTownItem(
                         if (searchFormViewModel.screenState.value.departureOrDestination == 1
                             && searchFormViewModel.screenState.value.addressDestination?.id == address.id
                         ) {
-                            if(isDark) {
+                            if (isDark) {
                                 this.background(colorResource(R.color.GrayLight))
                             } else {
                                 this.background(colorResource(R.color.GrayDark))
@@ -228,7 +227,7 @@ fun SearchTownItem(
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 2
                             && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
                         ) {
-                            if(isDark) {
+                            if (isDark) {
                                 this.background(colorResource(R.color.GrayLight))
                             } else {
                                 this.background(colorResource(R.color.GrayDark))
@@ -236,7 +235,7 @@ fun SearchTownItem(
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 3
                             && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
                         ) {
-                            if(isDark) {
+                            if (isDark) {
                                 this.background(colorResource(R.color.GrayLight))
                             } else {
                                 this.background(colorResource(R.color.GrayDark))
@@ -244,7 +243,7 @@ fun SearchTownItem(
                         } else if (searchFormViewModel.screenState.value.departureOrDestination == 4
                             && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
                         ) {
-                            if(isDark) {
+                            if (isDark) {
                                 this.background(colorResource(R.color.GrayLight))
                             } else {
                                 this.background(colorResource(R.color.GrayDark))
