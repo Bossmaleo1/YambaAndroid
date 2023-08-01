@@ -1,6 +1,5 @@
 package com.android.yambasama.domain.usecase.address
 
-import com.android.yambasama.data.model.api.ApiAddressResponse
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.data.util.Resource
 import com.android.yambasama.domain.repository.AddressRepository
