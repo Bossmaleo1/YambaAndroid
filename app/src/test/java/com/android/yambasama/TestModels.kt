@@ -7,7 +7,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
-val addresses = listOf<Address>(
+val addressesTest = listOf<Address>(
     Address(
         id = 93,
         isoCode = "COG",

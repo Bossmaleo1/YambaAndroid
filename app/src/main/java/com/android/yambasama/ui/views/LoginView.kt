@@ -1,8 +1,5 @@
 package com.android.yambasama.ui.views
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -33,21 +31,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import com.android.yambasama.R
-import com.android.yambasama.data.model.dataLocal.TokenRoom
-import com.android.yambasama.data.model.dataLocal.UserRoom
-import com.android.yambasama.data.model.dataRemote.User
-import com.android.yambasama.data.util.Resource
+import com.android.yambasama.presentation.util.getFieldError
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
-import com.android.yambasama.ui.UIEvent.Event.AddressEvent
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
 import com.android.yambasama.ui.views.model.Route
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @Composable
@@ -59,6 +50,7 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
 
     val screenState = userViewModel.screenState.value
     val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -77,8 +69,11 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
 
                         },
                         text = {
-                            Column( modifier = Modifier
-                                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
                                 Row {
                                     CircularProgressIndicator()
                                     Row(Modifier.padding(10.dp)) {
@@ -157,7 +152,11 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                     },
                     label = { Text(stringResource(id = R.string.your_password)) },
                     visualTransformation =
-                    if (passwordHidden) { PasswordVisualTransformation() } else { VisualTransformation.None},
+                    if (passwordHidden) {
+                        PasswordVisualTransformation()
+                    } else {
+                        VisualTransformation.None
+                    },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     leadingIcon = {
                         IconButton(onClick = { }) {
@@ -173,7 +172,8 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                             val visibilityIcon =
                                 if (passwordHidden) painterResource(id = R.drawable.baseline_visibility_24)
                                 else painterResource(id = R.drawable.baseline_visibility_off_24)
-                            val description = if (passwordHidden) "Show password" else "Hide password"
+                            val description =
+                                if (passwordHidden) "Show password" else "Hide password"
                             Icon(painter = visibilityIcon, contentDescription = description)
                         }
                     },
@@ -192,7 +192,8 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                         withStyle(
                             style = SpanStyle(
                                 color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline,
+                                fontWeight = FontWeight.Bold,
+                                textDecoration = TextDecoration.Underline,
                                 fontSize = 15.sp
                             )
                         ) {
@@ -216,11 +217,11 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                     onClick = {
                         //we init our fields
                         userViewModel.onEvent(
-                            AuthEvent.IsInitField(email,password)
+                            AuthEvent.IsInitField(email, password)
                         )
                         //we test if fields is Empties
                         userViewModel.onEvent(
-                            AuthEvent.IsEmptyField
+                            AuthEvent.IsEmptyField(getFieldError(context, password, email))
                         )
 
                         //We initialize the connection parameters
@@ -231,10 +232,13 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                         //We get our token
                         userViewModel.onEvent(
                             AuthEvent.GetToken(
+                                app = context,
                                 userName = email,
                                 password = password
                             )
                         )
+
+
                     }) {
                     Icon(
                         imageVector = Icons.Outlined.Login,
@@ -264,15 +268,15 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
             }
 
             if (screenState.isNetworkError) {
-                userViewModel.onEvent(AuthEvent.IsNetworkError)
+                userViewModel.onEvent(AuthEvent.IsNetworkError(context.getString(R.string.is_connect_error)))
             } else if (!screenState.isNetworkConnected) {
-                userViewModel.onEvent(AuthEvent.IsNetworkConnected)
+                userViewModel.onEvent(AuthEvent.IsNetworkConnected(context.getString(R.string.network_error)))
             }
 
             LaunchedEffect(key1 = true) {
-                userViewModel.uiEventFlow.collectLatest {event->
-                    when(event) {
-                        is UIEvent.ShowMessage-> {
+                userViewModel.uiEventFlow.collectLatest { event ->
+                    when (event) {
+                        is UIEvent.ShowMessage -> {
                             scaffoldState.snackbarHostState.showSnackbar(
                                 message = event.message
                             )

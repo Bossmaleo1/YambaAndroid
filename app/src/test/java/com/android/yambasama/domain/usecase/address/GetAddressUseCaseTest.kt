@@ -15,5 +15,13 @@ class GetAddressUseCaseTest {
 
     private val mockAddressRepository: AddressRepository = mock()
 
+    @Test
+    fun `delete activity interacts with repository`() = runTest {
+        // Arrange
+        val addresses = GetAddressUseCase(mockAddressRepository)
+
+        // Act
+       // addresses(addressesTest)
+    }
 
 }

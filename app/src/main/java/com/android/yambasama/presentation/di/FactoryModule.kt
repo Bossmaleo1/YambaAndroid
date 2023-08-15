@@ -24,7 +24,6 @@ class FactoryModule {
     @Singleton
     @Provides
     fun provideUserViewModelFactory(
-        application: Application,
         getUserUseCase: GetUserUseCase,
         getTokenUseCase: GetTokenUseCase,
         saveUserUseCase: SaveUserUseCase,
@@ -33,7 +32,6 @@ class FactoryModule {
         getSavedTokenUseCase: GetSavedTokenUseCase
     ): UserViewModelFactory {
         return UserViewModelFactory(
-            application,
             getUserUseCase,
             getTokenUseCase,
             saveUserUseCase,
