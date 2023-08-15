@@ -44,11 +44,9 @@ class FactoryModule {
     @Singleton
     @Provides
     fun provideAddressViewModelFactory(
-        application: Application,
         getAddressUseCase: GetAddressUseCase
     ): AddressViewModelFactory {
         return  AddressViewModelFactory(
-            application,
             getAddressUseCase
         )
     }
