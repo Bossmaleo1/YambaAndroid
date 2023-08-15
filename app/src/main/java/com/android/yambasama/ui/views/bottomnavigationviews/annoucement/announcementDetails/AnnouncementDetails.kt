@@ -47,6 +47,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.UIEvent
@@ -78,12 +79,14 @@ fun AnnouncementDetails(
     val refreshScope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(value = false) }
     val screenStateUser = userViewModel.screenState.value
+    val context = LocalContext.current
 
     fun refresh() = refreshScope.launch {
         refreshing = true
         announcementViewModel.screenAnnouncementState.value.refreshing = true
         announcementViewModel.onEvent(
             AnnouncementEvent.AnnouncementDetails(
+                app = context,
                 token = screenStateUser.tokenRoom[0].token,
                 id = screenState.announcement[0].id
             )
@@ -99,6 +102,7 @@ fun AnnouncementDetails(
     LaunchedEffect(key1 = screenAnnouncementState.announcementDetails !== null) {
         announcementViewModel.onEvent(
             AnnouncementEvent.AnnouncementDetails(
+                app = context,
                 token = screenStateUser.tokenRoom[0].token,
                 id = screenState.announcement[0].id
             )
@@ -541,9 +545,9 @@ fun AnnouncementDetails(
                         PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
 
                         if (screenAnnouncementState.isNetworkError) {
-                            announcementViewModel.onEvent(AnnouncementEvent.IsNetworkError)
+                            announcementViewModel.onEvent(AnnouncementEvent.IsNetworkError(context.getString(R.string.is_connect_error)))
                         } else if (!screenAnnouncementState.isNetworkConnected) {
-                            announcementViewModel.onEvent(AnnouncementEvent.IsNetworkConnected)
+                            announcementViewModel.onEvent(AnnouncementEvent.IsNetworkConnected(context.getString(R.string.network_error)))
                         }
 
                         LaunchedEffect(key1 = true) {

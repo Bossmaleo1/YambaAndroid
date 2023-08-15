@@ -1,11 +1,13 @@
 package com.android.yambasama.ui.UIEvent.Event
 
+import android.content.Context
 import com.android.yambasama.data.model.api.AnnouncementBody
 import com.android.yambasama.data.model.api.NumberOfKgBody
 import com.android.yambasama.data.model.dataRemote.Announcement
 
 sealed class AnnouncementEvent {
     data class AnnouncementInt(
+        val app: Context,
         val token: String,
         val departureAddressId: Int,
         val destinationAddressId: Int,
@@ -27,21 +29,23 @@ sealed class AnnouncementEvent {
     ): AnnouncementEvent()
 
     data class CreateAnnouncement(
+        val app: Context,
         val announcementBody: AnnouncementBody,
         val token: String
     ): AnnouncementEvent()
 
     data class AnnouncementDetails(
+        val app: Context,
         val token: String,
         val id: Int
     ): AnnouncementEvent()
-    object IsNetworkConnected: AnnouncementEvent()
+    data class IsNetworkConnected(val errorMessage: String): AnnouncementEvent()
     object InitAnnouncementState:AnnouncementEvent()
-    object IsNetworkError:AnnouncementEvent()
+    data class IsNetworkError(val errorMessage: String):AnnouncementEvent()
 
-    object IsCreateAnnouncementSuccess:AnnouncementEvent()
+    data class IsCreateAnnouncementSuccess(val errorMessage: String):AnnouncementEvent()
 
-    object IsEmptyAnnouncement:AnnouncementEvent()
+    data class IsEmptyAnnouncement(val errorMessage: String):AnnouncementEvent()
     data class ItemClicked(
         val announcement: Announcement
     ) : AnnouncementEvent()

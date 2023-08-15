@@ -10,29 +10,32 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.yambasama.R
 import com.android.yambasama.data.model.api.AnnouncementBody
 import com.android.yambasama.domain.usecase.annoucement.CreateAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementsUseCase
+import com.android.yambasama.presentation.util.isNetworkAvailable
 import com.android.yambasama.ui.UIEvent.Event.AnnouncementEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.AnnouncementState.AnnouncementCreateScreenState
 import com.android.yambasama.ui.UIEvent.ScreenState.AnnouncementState.AnnouncementDetailsScreenState
 import com.android.yambasama.ui.UIEvent.ScreenState.AnnouncementState.AnnouncementScreenState
 import com.android.yambasama.ui.UIEvent.UIEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class AnnouncementViewModel @Inject constructor(
-    private val app: Application,
     private val getAnnoucementsUseCase: GetAnnouncementsUseCase,
     private val getAnnouncementUseCase: GetAnnouncementUseCase,
     private val createAnnouncementUseCase: CreateAnnouncementUseCase
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private val _screenState = mutableStateOf(
         AnnouncementScreenState(
@@ -56,51 +59,46 @@ class AnnouncementViewModel @Inject constructor(
 
     val screenState: State<AnnouncementScreenState> = _screenState
     val screenAnnouncementState: State<AnnouncementDetailsScreenState> = _screenAnnouncementState
-    val screenAnnouncementCreateScreenState: State<AnnouncementCreateScreenState> = _screenAnnouncementBodyState
+    val screenAnnouncementCreateScreenState: State<AnnouncementCreateScreenState> =
+        _screenAnnouncementBodyState
     private val _uiEventFlow = MutableSharedFlow<UIEvent>()
     val uiEventFlow = _uiEventFlow.asSharedFlow()
-    val currentPage : MutableState<Int> = mutableStateOf(1)
+    val currentPage: MutableState<Int> = mutableStateOf(1)
 
     private fun createAnnouncement(
         announcementBody: AnnouncementBody,
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(app)) {
-            try {
+        try {
+            _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
+                isNetworkConnected = true,
+                isLoad = true,
+                isNetworkError = false,
+                isDoneAnnouncementCreate = false
+            )
+
+            val apiResult = createAnnouncementUseCase.execute(
+                announcementBody = announcementBody,
+                token = "Bearer $token"
+            )
+
+            apiResult.data?.let {
                 _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
-                    isNetworkConnected = true,
-                    isLoad = true,
-                    isNetworkError = false,
-                    isDoneAnnouncementCreate = false
-                )
-
-                val apiResult = createAnnouncementUseCase.execute(
-                    announcementBody = announcementBody,
-                    token = "Bearer $token"
-                )
-
-                apiResult.data?.let {
-                    _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
-                        isNetworkConnected = true,
-                        isLoad = false,
-                        isNetworkError = false,
-                        isDoneAnnouncementCreate = true
-                    )
-                    Log.d("MALEOMALEO9393MALEO9393", "MALEO-SAMA ${screenAnnouncementCreateScreenState.value.isDoneAnnouncementCreate}")
-                }
-
-            } catch (e: Exception) {
-                _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
-                    isNetworkError = true,
                     isNetworkConnected = true,
                     isLoad = false,
-                    isDoneAnnouncementCreate = false
+                    isNetworkError = false,
+                    isDoneAnnouncementCreate = true
+                )
+                Log.d(
+                    "MALEOMALEO9393MALEO9393",
+                    "MALEO-SAMA ${screenAnnouncementCreateScreenState.value.isDoneAnnouncementCreate}"
                 )
             }
-        } else {
+
+        } catch (e: Exception) {
             _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
+                isNetworkError = true,
+                isNetworkConnected = true,
                 isLoad = false,
                 isDoneAnnouncementCreate = false
             )
@@ -115,35 +113,34 @@ class AnnouncementViewModel @Inject constructor(
         arrivingTimeAfter: String,
         arrivingTimeBefore: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(app)) {
-            try {
-                _screenState.value = _screenState.value.copy(
-                    isNetworkConnected = true,
-                    isLoad = true,
-                    isNetworkError = false,
-                    initCall = screenState.value.initCall++,
-                    // currentPage = screenState.value.currentPage++
+        try {
+            _screenState.value = _screenState.value.copy(
+                isNetworkConnected = true,
+                isLoad = true,
+                isNetworkError = false,
+                initCall = screenState.value.initCall++,
+                // currentPage = screenState.value.currentPage++
+            )
+            val apiResult =
+                getAnnoucementsUseCase.execute(
+                    page = screenState.value.currentPage,
+                    pagination = true,
+                    arrivingTimeAfter = arrivingTimeAfter,
+                    arrivingTimeBefore = arrivingTimeBefore,
+                    departureAddress = departureAddressId,
+                    destinationAddress = destinationAddressId,
+                    token = "Bearer $token"
                 )
-                val apiResult =
-                    getAnnoucementsUseCase.execute(
-                        page = screenState.value.currentPage,
-                        pagination = true,
-                        arrivingTimeAfter = arrivingTimeAfter,
-                        arrivingTimeBefore = arrivingTimeBefore,
-                        departureAddress = departureAddressId,
-                        destinationAddress = destinationAddressId,
-                        token = "Bearer $token"
+            apiResult.data?.let { apiAnnouncementResponse ->
+                screenState.value.announcementList.addAll(apiAnnouncementResponse)
+                screenState.value.refreshing = false
+                if (apiAnnouncementResponse.isEmpty()) {
+                    _screenState.value = _screenState.value.copy(
+                        isEmptyAnnouncement = true,
+                        isLoad = false,
                     )
-                apiResult.data?.let { apiAnnouncementResponse ->
-                    screenState.value.announcementList.addAll(apiAnnouncementResponse)
-                    screenState.value.refreshing = false
-                    if (apiAnnouncementResponse.isEmpty()) {
-                        _screenState.value = _screenState.value.copy(
-                            isEmptyAnnouncement = true,
-                            isLoad = false,
-                        )
-                    } else
-                      if(apiAnnouncementResponse.size < 10) {
+                } else
+                    if (apiAnnouncementResponse.size < 10) {
                         _screenState.value = _screenState.value.copy(
                             isNetworkConnected = true,
                             isLoad = false,
@@ -153,21 +150,13 @@ class AnnouncementViewModel @Inject constructor(
                             isEmptyAnnouncement = false
                         )
                     }
-                }
-
-
-            } catch (e: Exception) {
-                _screenState.value = _screenState.value.copy(
-                    isNetworkError = true,
-                    isNetworkConnected = true,
-                    isLoad = false,
-                    refreshing = false
-                )
             }
-        } else {
+
+
+        } catch (e: Exception) {
             _screenState.value = _screenState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
+                isNetworkError = true,
+                isNetworkConnected = true,
                 isLoad = false,
                 refreshing = false
             )
@@ -175,41 +164,34 @@ class AnnouncementViewModel @Inject constructor(
     }
 
     fun getAnnouncement(
+        app: Context,
         id: Int,
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(app)) {
-            try {
-                _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
-                    isNetworkConnected = true,
-                    isLoad = true,
-                    isNetworkError = false,
-                )
+        try {
+            _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                isNetworkConnected = true,
+                isLoad = true,
+                isNetworkError = false,
+            )
 
-                val apiResult = getAnnouncementUseCase.execute(id = id,token = "Bearer $token")
-                apiResult.data?.let { apiAnnouncementResponse ->
-                    screenAnnouncementState.value.announcementDetails = apiAnnouncementResponse
-                    screenAnnouncementState.value.refreshing = false
+            val apiResult = getAnnouncementUseCase.execute(id = id, token = "Bearer $token")
+            apiResult.data?.let { apiAnnouncementResponse ->
+                screenAnnouncementState.value.announcementDetails = apiAnnouncementResponse
+                screenAnnouncementState.value.refreshing = false
 
-                    _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
-                        isLoad = false
-                    )
-                }
-            } catch (e: Exception) {
                 _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
-                    isNetworkError = true,
-                    isNetworkConnected = true,
                     isLoad = false
                 )
             }
-
-        } else {
+        } catch (e: Exception) {
             _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
+                isNetworkError = true,
+                isNetworkConnected = true,
                 isLoad = false
             )
         }
+
     }
 
     fun initAnnouncement() {
@@ -222,13 +204,24 @@ class AnnouncementViewModel @Inject constructor(
                 _screenState.value = _screenState.value.copy(
                     isLoad = true
                 )
-                getAnnouncements(
-                    token = event.token,
-                    arrivingTimeAfter = event.arrivingTimeAfter,
-                    arrivingTimeBefore = event.arrivingTimeBefore,
-                    destinationAddressId = event.destinationAddressId,
-                    departureAddressId = event.departureAddressId
-                )
+
+                if (isNetworkAvailable(event.app)) {
+                    getAnnouncements(
+                        token = event.token,
+                        arrivingTimeAfter = event.arrivingTimeAfter,
+                        arrivingTimeBefore = event.arrivingTimeBefore,
+                        destinationAddressId = event.destinationAddressId,
+                        departureAddressId = event.departureAddressId
+                    )
+                } else {
+                    _screenState.value = _screenState.value.copy(
+                        isNetworkConnected = false,
+                        isNetworkError = false,
+                        isLoad = false,
+                        refreshing = false
+                    )
+                }
+
             }
 
             is AnnouncementEvent.GenerateAnnouncementBody -> {
@@ -244,7 +237,7 @@ class AnnouncementViewModel @Inject constructor(
                     numberOfKgs = listOf(event.numberOfKgs)
                 )
                 _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
-                    announcementBody =  announcementBody
+                    announcementBody = announcementBody
                 )
             }
 
@@ -253,43 +246,69 @@ class AnnouncementViewModel @Inject constructor(
                     isLoad = true
                 )
 
-                createAnnouncement(
-                    token = event.token,
-                    announcementBody = event.announcementBody
-                )
+                if (isNetworkAvailable(event.app)) {
+                    createAnnouncement(
+                        token = event.token,
+                        announcementBody = event.announcementBody
+                    )
+                } else {
+                    _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
+                        isNetworkConnected = false,
+                        isNetworkError = false,
+                        isLoad = false,
+                        isDoneAnnouncementCreate = false
+                    )
+                }
+
+
             }
+
             is AnnouncementEvent.AnnouncementDetails -> {
                 _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
                     isLoad = true
                 )
 
-                getAnnouncement(
-                    token = event.token,
-                    id = event.id
-                )
+                if (isNetworkAvailable(event.app)) {
+                    getAnnouncement(
+                        app = event.app,
+                        token = event.token,
+                        id = event.id
+                    )
+                } else {
+                    _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
+                        isNetworkConnected = false,
+                        isNetworkError = false,
+                        isLoad = false
+                    )
+                }
+
             }
+
             is AnnouncementEvent.InitAnnouncementState -> {
 
             }
+
             is AnnouncementEvent.ItemClicked -> {
                 _screenState.value = _screenState.value.copy(
                     announcement = mutableListOf(event.announcement)
                 )
             }
+
             is AnnouncementEvent.IsNetworkConnected -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.network_error)
+                            message = event.errorMessage
                         )
                     )
                 }
             }
+
             is AnnouncementEvent.IsNetworkError -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.is_connect_error)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -299,7 +318,7 @@ class AnnouncementViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.empty_announcement_date)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -309,7 +328,7 @@ class AnnouncementViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.create_announcement_success)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -323,15 +342,16 @@ class AnnouncementViewModel @Inject constructor(
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            val network =
-                connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    return true
-                }
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
+        val network =
+            connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                return true
             }
+
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
     }
 }
