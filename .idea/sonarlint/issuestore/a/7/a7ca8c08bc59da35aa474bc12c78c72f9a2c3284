@@ -1,13 +1,0 @@
-
-Fkotlin:S108«	")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ
-Mkotlin:S1481‹"/Remove this unused "timeZoneId" local variable.(îýþ”ÿÿÿÿÿ
-Kkotlin:S1481Š"2Remove this unused "timeformatter" local variable.(ÍÇ¸Â
-Zkotlin:S1481‰"<Remove this unused "showDepartureTimePicker" local variable.(Ü¾©žøÿÿÿÿ
-Kkotlin:S1481‡"2Remove this unused "mArrivingDate" local variable.(àÊìã
-<kotlin:S1874™"#Deprecated code should not be used.(çŸ–÷
-<kotlin:S1874Å"#Deprecated code should not be used.(çŸ–÷
-<kotlin:S1874ö"#Deprecated code should not be used.(çŸ–÷
-<kotlin:S1874¢"#Deprecated code should not be used.(çŸ–÷
-Akotlin:S1874Ä"#Deprecated code should not be used.(ÚÞøÏøÿÿÿÿ
-Akotlin:S1874"#Deprecated code should not be used.(ÚÞøÏøÿÿÿÿ
-kkotlin:S3776i"SRefactor this method to reduce its Cognitive Complexity from 212 to the 15 allowed.(í‡ª½

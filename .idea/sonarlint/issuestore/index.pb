@@ -43,8 +43,6 @@ Napp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnoucementShimmer.kt
 Uapp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnouncementDetailShimmer.kt,f/8/f8bcd25d82d19ca5ae550dbb85510af3e5551870
 z
 Japp/src/main/java/com/android/yambasama/data/api/service/UserAPIService.kt,f/1/f134f640fc5d41dd9abbdd5a2f8069cf37a6ef44
-­
-}app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementDetails/AnnouncementDetails.kt,d/8/d8807eff2bfc080112238ed5b774f04426b56e7c
 v
 Fapp/src/main/java/com/android/yambasama/ui/views/utils/InfiniteList.kt,c/2/c229c565ac855d92aa54cbc6394b120afb6bbb53
 
@@ -71,12 +69,6 @@ Japp/src/main/java/com/android/yambasama/ui/views/utils/TimePickerDialog.kt,1/6
 Sapp/src/main/java/com/android/yambasama/domain/repository/AnnouncementRepository.kt,c/e/ceadbf713d3f2f49e629439beee6dc9f60aa14b9
 ž
 napp/src/main/java/com/android/yambasama/data/repository/dataSource/annoucement/AnnouncementRemoteDataSource.kt,5/4/5454d53d11b6c08429b7653edf45ddf964c03b6d
-¯
-app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/InfiniteAnnouncementList.kt,0/a/0a9cf4a1f5d78fb981c0a4e94de6a81648c66f71
-§
-wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementView.kt,c/0/c009548dc84243c4551c08b3518239f7fb0572de
-§
-wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementItem.kt,a/3/a3a3087b390d5ac5c9e1c76aefb998d539f29cb3
 g
 7app/src/main/java/com/android/yambasama/ui/util/Util.kt,c/f/cfe5324df6b5f21720de1c9ec619d506b93c809e
 z
@@ -85,8 +77,6 @@ Japp/src/main/java/com/android/yambasama/data/model/api/AnnouncementBody.kt,6/c
 rapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AnnouncementState/AnnouncementDetailsScreenState.kt,4/3/4317eb5f1b21c726221699aa6e3f3269d3414d8a
 ¡
 qapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AnnouncementState/AnnouncementCreateScreenState.kt,b/4/b4f06278671a5f177ec1c7b43e0f37600b58e671
-}
-Mapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementEvent.kt,5/0/5016b7cd185882beac20cecc0ff4ae12f4e566d2
 š
 japp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/request/TransportePackageRequest.kt,d/4/d4cd8d5b3aed8fd2270ab7a28d9049a5330e10d5
 o
@@ -95,8 +85,6 @@ o
 app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/notifications/notificationlistView/NotificationListView.kt,2/f/2f1e2049db5961729d727d29b4dc8093af6093e6
 n
 >app/src/main/java/com/android/yambasama/ui/views/LaunchView.kt,a/5/a570a3e31582326839415662aa70a5cf567e87b4
-¤
-tapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/createAnnouncementView/AddAnnouncementView.kt,a/7/a7ca8c08bc59da35aa474bc12c78c72f9a2c3284
 ¡
 qapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/createAnnouncementView/AnnounceWellDone.kt,b/4/b43625a7b13ab912a3eb697e4230e069077828bb
 <
@@ -189,7 +177,5 @@ Mapp/src/main/java/com/android/yambasama/data/model/dataRemote/Announcement.kt,
 Sapp/src/main/java/com/android/yambasama/domain/usecase/address/GetAddressUseCase.kt,f/f/ff50eec269cb00a55fd4b9f7db5055971f5dbf8e
 ˜
 happ/src/test/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModelTest.kt,2/9/2925ff86d80507fc29988675d4284cfdfddb027f
-”
-dapp/src/main/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModel.kt,4/7/479937a1164949186da6c6180ab83c5b998bb49b
 ‡
 Wapp/src/test/java/com/android/yambasama/domain/usecase/address/GetAddressUseCaseTest.kt,0/3/03af5e811fecdac6f4fcbd0c13095f07a5545c26

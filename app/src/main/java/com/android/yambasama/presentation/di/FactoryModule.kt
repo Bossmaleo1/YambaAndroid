@@ -76,13 +76,11 @@ class FactoryModule {
     @Singleton
     @Provides
     fun provideAnnouncementViewModelFactory(
-        application: Application,
         getAnnouncementsUseCase: GetAnnouncementsUseCase,
         getAnnouncementUseCase: GetAnnouncementUseCase,
         createAnnouncementUseCase: CreateAnnouncementUseCase
     ): AnnouncementViewModelFactory {
         return AnnouncementViewModelFactory(
-            application,
             getAnnouncementsUseCase,
             getAnnouncementUseCase,
             createAnnouncementUseCase

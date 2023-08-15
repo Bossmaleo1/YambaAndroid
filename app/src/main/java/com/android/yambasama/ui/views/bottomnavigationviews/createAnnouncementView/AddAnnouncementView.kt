@@ -72,6 +72,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isContainer
@@ -146,6 +147,7 @@ fun AddAnnouncementView(
 
     val screenState = userViewModel.screenState.value
     val screenAnnouncementCreateState = announcementViewModel.screenAnnouncementCreateScreenState.value
+    val context = LocalContext.current
 
 
     if (searchFormViewModel.screenState.value.dateDialogDepartureCreated !== null) {
@@ -904,6 +906,7 @@ fun AddAnnouncementView(
 
                                 announcementViewModel.screenAnnouncementCreateScreenState.value.announcementBody?.let { it1 ->
                                     AnnouncementEvent.CreateAnnouncement(
+                                        app = context,
                                         announcementBody = it1,
                                         token = screenState.tokenRoom[0].token
                                     )
@@ -1168,7 +1171,7 @@ fun AddAnnouncementView(
     }
 
 
-    announcementViewModel.onEvent(AnnouncementEvent.IsCreateAnnouncementSuccess)
+    announcementViewModel.onEvent(AnnouncementEvent.IsCreateAnnouncementSuccess(context.getString(R.string.create_announcement_success)))
 
 
 

@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,6 +59,7 @@ fun AnnouncementView(
 
     val refreshScope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     fun refresh() = refreshScope.launch {
         refreshing = true
@@ -69,6 +71,7 @@ fun AnnouncementView(
                 searchFormViewModel.screenState.value.arrivingTimeAfter?.let { it2 ->
                     searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
                         AnnouncementEvent.AnnouncementInt(
+                            app = context,
                             token = screenStateUser.tokenRoom[0].token,
                             destinationAddressId = it1,
                             departureAddressId = it,
@@ -138,6 +141,7 @@ fun AnnouncementView(
                             searchFormViewModel.screenState.value.arrivingTimeAfter?.let { it2 ->
                                 searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
                                     AnnouncementEvent.AnnouncementInt(
+                                        app = context,
                                         token = screenStateUser.tokenRoom[0].token,
                                         destinationAddressId = it1,
                                         departureAddressId = it,
@@ -178,11 +182,11 @@ fun AnnouncementView(
             }
 
             if (screenState.isNetworkError) {
-                announcementViewModel.onEvent(AnnouncementEvent.IsNetworkError)
+                announcementViewModel.onEvent(AnnouncementEvent.IsNetworkError(context.getString(R.string.is_connect_error)))
             } else if (!screenState.isNetworkConnected) {
-                announcementViewModel.onEvent(AnnouncementEvent.IsNetworkConnected)
+                announcementViewModel.onEvent(AnnouncementEvent.IsNetworkConnected(context.getString(R.string.network_error)))
             } else if(screenState.isEmptyAnnouncement && !screenState.isLoad) {
-                announcementViewModel.onEvent(AnnouncementEvent.IsEmptyAnnouncement)
+                announcementViewModel.onEvent(AnnouncementEvent.IsEmptyAnnouncement(context.getString(R.string.empty_announcement_date)))
             }
 
             LaunchedEffect(key1 = true) {
