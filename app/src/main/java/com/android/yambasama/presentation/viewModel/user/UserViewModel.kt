@@ -1,22 +1,17 @@
 package com.android.yambasama.presentation.viewModel.user
 
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
-import com.android.yambasama.R
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.Token
 import com.android.yambasama.domain.usecase.user.*
+import com.android.yambasama.presentation.util.isNetworkAvailable
 import com.android.yambasama.ui.UIEvent.Event.AuthEvent
 import com.android.yambasama.ui.UIEvent.ScreenState.AuthScreenState.AuthScreenState
 import com.android.yambasama.ui.UIEvent.UIEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,15 +19,15 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+@HiltViewModel
 class UserViewModel @Inject constructor(
-    private val app: Application,
     private val getUserUseCase: GetUserUseCase,
     private val getTokenUseCase: GetTokenUseCase,
     private val saveUserUseCase: SaveUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
     private val getSavedUserUseCase: GetSavedUserUseCase,
     private val getSavedTokenUseCase: GetSavedTokenUseCase
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private val _screenState = mutableStateOf(
         AuthScreenState(
@@ -50,7 +45,6 @@ class UserViewModel @Inject constructor(
     }
 
     fun getToken(userName: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(app)) {
             try {
                 val apiResult = getTokenUseCase.execute(userName, password)
                 apiResult.data?.let { apiTokenResponse ->
@@ -77,24 +71,16 @@ class UserViewModel @Inject constructor(
                     isLoad = false
                 )
             }
-        } else {
-            _screenState.value = _screenState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
-                isLoad = false
-            )
-        }
     }
 
     fun getUser(userName: String, token: String) = viewModelScope.launch(Dispatchers.IO) {
 
-        if (isNetworkAvailable(app)) {
+        //if (isNetworkAvailable(app)) {
             try {
                 val apiResult = getUserUseCase.execute(userName, "Bearer $token")
 
                 apiResult.data?.let { apiUserResponse ->
                     screenState.value.user = apiUserResponse
-                    //Log.d("MALEO939393939393", "Testing ${apiUserResponse.users}")
                     viewModelScope.launch {
                         saveTokenUseCase.execute(
                             TokenRoom(
@@ -134,42 +120,18 @@ class UserViewModel @Inject constructor(
                     isLoad = false
                 )
             }
-        } else {
+        /*} else {
             _screenState.value = _screenState.value.copy(
                 isNetworkConnected = false,
                 isNetworkError = false,
                 isLoad = false
             )
-        }
+        }*/
     }
 
     fun getSavedToken() = liveData {
         getSavedTokenUseCase.execute().collect {
             emit(it)
-        }
-    }
-
-
-    private fun isNetworkAvailable(context: Context?): Boolean {
-        if (context == null) return false
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network =
-                connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    return true
-                }
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
-            }
-        } else {
-            @Suppress("DEPRECATION") val networkInfo =
-                connectivityManager.activeNetworkInfo ?: return false
-            @Suppress("DEPRECATION")
-            return networkInfo.isConnected
         }
     }
 
@@ -211,10 +173,20 @@ class UserViewModel @Inject constructor(
                     currentPage = 1,
                     token = mutableListOf()
                 )
-                getToken(
-                    userName = event.userName,
-                    password = event.password
-                )
+
+                if (isNetworkAvailable(event.app)) {
+                    getToken(
+                        userName = event.userName,
+                        password = event.password
+                    )
+                } else {
+                    _screenState.value = _screenState.value.copy(
+                        isNetworkConnected = false,
+                        isNetworkError = false,
+                        isLoad = false
+                    )
+                }
+
             }
             is AuthEvent.GetUser -> {
                 _screenState.value = _screenState.value.copy(
@@ -266,7 +238,7 @@ class UserViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.network_error)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -285,7 +257,7 @@ class UserViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.is_connect_error)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -298,7 +270,7 @@ class UserViewModel @Inject constructor(
                     viewModelScope.launch {
                         _uiEventFlow.emit(
                             UIEvent.ShowMessage(
-                                message = getFieldError()
+                                message = event.errorMessage
                             )
                         )
                     }
@@ -307,15 +279,5 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    private fun getFieldError(): String {
-        return if (screenState.value.passwordInputValue.isEmpty() && screenState.value.passwordInputValue.isEmpty()) {
-            app.getString(R.string.is_login_empty_2_field)
-        } else if (screenState.value.emailInputValue.isEmpty()) {
-            app.getString(R.string.is_login_empty_email_field)
-        } else if (screenState.value.passwordInputValue.isEmpty()) {
-            app.getString(R.string.is_login_empty_password_field)
-        } else {
-            ""
-        }
-    }
+
 }
