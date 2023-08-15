@@ -59,7 +59,6 @@ class FactoryModule {
         deleteTableTokenUseCase: DeleteTableTokenUseCase
     ): DropViewModelFactory {
         return DropViewModelFactory(
-            application,
             deleteTableUserUseCase,
             deleteTableTokenUseCase
         )
@@ -67,10 +66,8 @@ class FactoryModule {
 
     @Singleton
     @Provides
-    fun provideSearchFormViewModelFactory(
-        application: Application
-    ): SearchFormViewModelFactory {
-        return SearchFormViewModelFactory(application)
+    fun provideSearchFormViewModelFactory(): SearchFormViewModelFactory {
+        return SearchFormViewModelFactory()
     }
 
     @Singleton

@@ -1,9 +1,9 @@
 package com.android.yambasama.presentation.viewModel.searchForm
 
-import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.yambasama.R
 import com.android.yambasama.ui.UIEvent.Event.SearchFormEvent
@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchFormViewModel @Inject constructor(
-    private val app: Application
-) : AndroidViewModel(app) {
+class SearchFormViewModel @Inject constructor() : ViewModel() {
 
     private val _screenState = mutableStateOf(
         SearchFormState(
@@ -103,7 +101,7 @@ class SearchFormViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.form_destination_error)
+                            message = event.errorMessage//app.getString(R.string.form_destination_error)
                         )
                     )
                 }
@@ -113,7 +111,7 @@ class SearchFormViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.form_destination_error)
+                            message = event.errorMessage//app.getString(R.string.form_destination_error)
                         )
                     )
                 }
@@ -123,7 +121,7 @@ class SearchFormViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.form_departure_error),
+                            message = event.errorMessage//app.getString(R.string.form_departure_error),
                         )
                     )
                 }
@@ -133,7 +131,7 @@ class SearchFormViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.form_departure_error),
+                            message = event.errorMessage//app.getString(R.string.form_departure_error),
                         )
                     )
                 }

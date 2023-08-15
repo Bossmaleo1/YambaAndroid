@@ -13,6 +13,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -34,6 +35,7 @@ fun SearchTownItem(
     util: Util
 ) {
     val isDark = isSystemInDarkTheme()
+    val context = LocalContext.current
 
     Card(
         modifier = Modifier
@@ -87,22 +89,22 @@ fun SearchTownItem(
                 searchFormViewModel.screenState.value.departureOrDestination == 1
                 && searchFormViewModel.screenState.value.addressDestination?.id == address.id
             ) {
-                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestination)
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestination(context.getString(R.string.form_destination_error)))
             } else if (
                 searchFormViewModel.screenState.value.departureOrDestination == 2
                 && searchFormViewModel.screenState.value.addressDeparture?.id == address.id
             ) {
-                searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture)
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDeparture(context.getString(R.string.form_departure_error)))
             } else if (
                 searchFormViewModel.screenState.value.departureOrDestination == 3
                 && searchFormViewModel.screenState.value.addressDestinationCreated?.id == address.id
             ) {
-                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestinationCreated)
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDestinationCreated(context.getString(R.string.form_destination_error)))
             } else if (
                 searchFormViewModel.screenState.value.departureOrDestination == 4
                 && searchFormViewModel.screenState.value.addressDepartureCreated?.id == address.id
             ) {
-                searchFormViewModel.onEvent(SearchFormEvent.ErrorDepartureCreated)
+                searchFormViewModel.onEvent(SearchFormEvent.ErrorDepartureCreated(context.getString(R.string.form_destination_error)))
             } else {
 
                 if (searchFormViewModel.screenState.value.departureOrDestination == 1) {

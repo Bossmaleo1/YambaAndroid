@@ -24,13 +24,13 @@ sealed class SearchFormEvent {
         val addressDestinationCreated: Address
     ): SearchFormEvent()
 
-    object ErrorDestination: SearchFormEvent()
+    data class ErrorDestination(val errorMessage: String): SearchFormEvent()
 
-    object ErrorDestinationCreated: SearchFormEvent()
+    data class ErrorDestinationCreated(val errorMessage: String): SearchFormEvent()
 
-    object ErrorDeparture: SearchFormEvent()
+    data class ErrorDeparture(val errorMessage: String): SearchFormEvent()
 
-    object ErrorDepartureCreated: SearchFormEvent()
+    data class ErrorDepartureCreated(val errorMessage: String): SearchFormEvent()
 
     data class IsTravelDateUpdated(
         val isTravelDate: Boolean,
