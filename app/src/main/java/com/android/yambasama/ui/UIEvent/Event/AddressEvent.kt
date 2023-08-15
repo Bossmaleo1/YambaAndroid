@@ -1,7 +1,10 @@
 package com.android.yambasama.ui.UIEvent.Event
 
+import android.content.Context
+
 sealed class AddressEvent {
     data class AddressInit(
+        val app: Context,
         val locale: String,
         val value : String,
         val token: String
@@ -9,11 +12,11 @@ sealed class AddressEvent {
     data class SearchValueEntered(
         val locale: String,
         val value : String,
-        val token: String):AddressEvent()
+        val token: String): AddressEvent()
     object ItemClicked : AddressEvent()
-    object IsNetworkConnected:AddressEvent()
+    data class IsNetworkConnected(val errorMessage: String): AddressEvent()
     object InitAddressState:AddressEvent()
-    object IsNetworkError:AddressEvent()
+    data class IsNetworkError(val errorMessage: String): AddressEvent()
 
-    object IsInternalError:AddressEvent()
+    data class IsInternalError(val errorMessage: String): AddressEvent()
 }

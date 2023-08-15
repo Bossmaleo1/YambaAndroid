@@ -1,6 +1,5 @@
 package com.android.yambasama.ui.views.bottomnavigationviews.searchview
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -24,6 +23,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -62,6 +62,7 @@ fun SearchAddress(
     val scaffoldState = rememberScaffoldState()
     val util = Util()
     val isDark = isSystemInDarkTheme()
+    val context = LocalContext.current
 
     userViewModel.onEvent(AuthEvent.GetSavedToken)
     if (screenStateUser.tokenRoom.isNotEmpty()) {
@@ -166,6 +167,7 @@ fun SearchAddress(
                     if (screenStateUser.tokenRoom.isNotEmpty()) {
                         addressViewModel.onEvent(
                             AddressEvent.AddressInit(
+                                app = context,
                                 value = screenState.searchInputValue,
                                 token = screenStateUser.tokenRoom[0].token,
                                 locale = screenState.locale
@@ -223,11 +225,11 @@ fun SearchAddress(
                 }
 
                 if (screenState.isNetworkError) {
-                    addressViewModel.onEvent(AddressEvent.IsNetworkError)
+                    addressViewModel.onEvent(AddressEvent.IsNetworkError(context.getString(R.string.is_connect_error)))
                 } else if (!screenState.isNetworkConnected) {
-                    addressViewModel.onEvent(AddressEvent.IsNetworkConnected)
+                    addressViewModel.onEvent(AddressEvent.IsNetworkConnected(context.getString(R.string.network_error)))
                 } else if (screenState.isInternalError) {
-                    addressViewModel.onEvent(AddressEvent.IsInternalError)
+                    addressViewModel.onEvent(AddressEvent.IsInternalError("Internal Error, Error 500"))
                 }
 
                 LaunchedEffect(key1 = true) {

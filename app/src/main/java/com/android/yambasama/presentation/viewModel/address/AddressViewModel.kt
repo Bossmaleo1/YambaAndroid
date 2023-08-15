@@ -1,14 +1,13 @@
 package com.android.yambasama.presentation.viewModel.address
 
-import android.app.Application
+
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.yambasama.data.model.dataRemote.Address
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
@@ -19,14 +18,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import com.android.yambasama.R
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
 import javax.inject.Inject
 
+@HiltViewModel
 class AddressViewModel @Inject constructor(
-    private val app: Application,
     private val getAddressUseCase: GetAddressUseCase
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private val _screenState = mutableStateOf(
         AddressScreenState(
@@ -43,40 +42,31 @@ class AddressViewModel @Inject constructor(
         locale: String,
         token: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(app)) {
-            try {
-                val apiResult =
-                    getAddressUseCase.execute(
-                        locale = locale,
-                        page = screenState.value.currentPage,
-                        query = screenState.value.searchInputValue,
-                        token = "Bearer $token"
-                    )
-                apiResult.data?.let { apiAddressResponse ->
-                    getAdressResult(apiAddressResponse)
-                }
-
-                _screenState.value = _screenState.value.copy(
-                    isNetworkConnected = true,
-                    isLoad = false,
-                    isInternalError = ((apiResult.message).equals("Internal Server Error")),
-                    isNetworkError = false,
-                    initCall = screenState.value.initCall++
+        try {
+            val apiResult =
+                getAddressUseCase.execute(
+                    locale = locale,
+                    page = screenState.value.currentPage,
+                    query = screenState.value.searchInputValue,
+                    token = "Bearer $token"
                 )
-            } catch (e: Exception) {
-                _screenState.value = _screenState.value.copy(
-                    isNetworkError = true,
-                    isInternalError = false,
-                    isNetworkConnected = true,
-                    isLoad = false
-                )
+            apiResult.data?.let { apiAddressResponse ->
+                getAdressResult(apiAddressResponse)
             }
-        } else {
+
             _screenState.value = _screenState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
+                isNetworkConnected = true,
                 isLoad = false,
+                isInternalError = ((apiResult.message).equals("Internal Server Error")),
+                isNetworkError = false,
+                initCall = screenState.value.initCall++
+            )
+        } catch (e: Exception) {
+            _screenState.value = _screenState.value.copy(
+                isNetworkError = true,
                 isInternalError = false,
+                isNetworkConnected = true,
+                isLoad = false
             )
         }
     }
@@ -93,6 +83,7 @@ class AddressViewModel @Inject constructor(
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                     return true
                 }
+
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
                 else -> false
             }
@@ -131,6 +122,7 @@ class AddressViewModel @Inject constructor(
                     )
                 }
             }
+
             is AddressEvent.AddressInit -> {
                 _screenState.value = _screenState.value.copy(
                     isLoad = true,
@@ -140,14 +132,26 @@ class AddressViewModel @Inject constructor(
                     addressListTemp = mutableListOf(),
                     isInternalError = false
                 )
-                getAddress(
-                    token = event.token,
-                    locale = event.locale
-                )
+
+                if (isNetworkAvailable(event.app)) {
+                    getAddress(
+                        token = event.token,
+                        locale = event.locale
+                    )
+                } else {
+                    _screenState.value = _screenState.value.copy(
+                        isNetworkConnected = false,
+                        isNetworkError = false,
+                        isLoad = false,
+                        isInternalError = false,
+                    )
+                }
             }
+
             is AddressEvent.ItemClicked -> {
 
             }
+
             is AddressEvent.InitAddressState -> {
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
@@ -176,16 +180,17 @@ class AddressViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.network_error)
+                            message = event.errorMessage
                         )
                     )
                 }
             }
+
             is AddressEvent.IsNetworkError -> {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = app.getString(R.string.is_connect_error)
+                            message = event.errorMessage
                         )
                     )
                 }

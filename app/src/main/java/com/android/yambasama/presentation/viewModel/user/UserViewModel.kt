@@ -74,8 +74,6 @@ class UserViewModel @Inject constructor(
     }
 
     fun getUser(userName: String, token: String) = viewModelScope.launch(Dispatchers.IO) {
-
-        //if (isNetworkAvailable(app)) {
             try {
                 val apiResult = getUserUseCase.execute(userName, "Bearer $token")
 
@@ -120,13 +118,6 @@ class UserViewModel @Inject constructor(
                     isLoad = false
                 )
             }
-        /*} else {
-            _screenState.value = _screenState.value.copy(
-                isNetworkConnected = false,
-                isNetworkError = false,
-                isLoad = false
-            )
-        }*/
     }
 
     fun getSavedToken() = liveData {

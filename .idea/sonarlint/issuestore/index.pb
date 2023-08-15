@@ -1,6 +1,4 @@
 
-ë
-aapp/src/main/java/com/android/yambasama/presentation/viewModel/address/AddressViewModelFactory.kt,d/8/d87bbb36564ed5a4181c63a91f8d82cf70b99bce
 g
 7app/src/main/java/com/android/yambasama/YambaSamaApp.kt,2/9/29885daa6f38f4d88e80c863ab0b46a28633c6a2
 ë
@@ -21,8 +19,6 @@ Kapp/src/main/java/com/android/yambasama/ui/views/viewsError/NetWorkError.kt,d/
 Napp/src/main/java/com/android/yambasama/domain/repository/AddressRepository.kt,5/4/545d267d0c31d128ad3ba43dd096051058309b8f
 {
 Kapp/src/main/java/com/android/yambasama/domain/repository/UserRepository.kt,b/5/b59cfa66981551e4e1635eb518a8f35eae7019a2
-
-Oapp/src/main/java/com/android/yambasama/presentation/di/AddressUseCaseModule.kt,0/9/09e7ab5ed8df158695998b1d7b98eaaee78a75cd
 y
 Iapp/src/main/java/com/android/yambasama/presentation/di/DataBaseModule.kt,f/5/f5fbd3d2bac9a235f7bcff9b423ab8a1ab67e0f7
 z
@@ -65,8 +61,6 @@ Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2
 Qapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementFormEvent.kt,9/9/99116ccef4665580b6a5c5e23930e5c5ed0e4347
 m
 =app/src/main/java/com/android/yambasama/ui/UIEvent/UIEvent.kt,5/2/528bec875c38435a273f9cfb432fa01718477478
-ì
-capp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchview/SearchTownItem.kt,d/b/dbea6a7f025dbf3d0ba68a74dd3b4b814c322ded
 A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 X
@@ -77,10 +71,6 @@ Japp/src/main/java/com/android/yambasama/ui/views/utils/TimePickerDialog.kt,1/6
 Sapp/src/main/java/com/android/yambasama/domain/repository/AnnouncementRepository.kt,c/e/ceadbf713d3f2f49e629439beee6dc9f60aa14b9
 û
 napp/src/main/java/com/android/yambasama/data/repository/dataSource/annoucement/AnnouncementRemoteDataSource.kt,5/4/5454d53d11b6c08429b7653edf45ddf964c03b6d
-ó
-gapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AddressScreenState/AddressScreenState.kt,9/a/9aca4aece8abbed9da8a9785e9a5c5a79635a0b6
-x
-Happ/src/main/java/com/android/yambasama/ui/UIEvent/Event/AddressEvent.kt,6/d/6dbb6abed3181a8c076182f5a13869ed271da1c6
 Ø
 app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/InfiniteAnnouncementList.kt,0/a/0a9cf4a1f5d78fb981c0a4e94de6a81648c66f71
 ß
@@ -101,8 +91,6 @@ Mapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementEvent.kt,
 japp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/request/TransportePackageRequest.kt,d/4/d4cd8d5b3aed8fd2270ab7a28d9049a5330e10d5
 o
 ?app/src/main/java/com/android/yambasama/ui/views/model/Route.kt,d/c/dc1de80d7a94f67b598186a73b5ca666c38fd741
-í
-bapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchview/SearchAddress.kt,b/9/b9654322bc11d64f83e7b53f431a8f47924aaf00
 ≤
 Åapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/notifications/notificationlistView/NotificationListView.kt,2/f/2f1e2049db5961729d727d29b4dc8093af6093e6
 n
@@ -201,11 +189,7 @@ Mapp/src/main/java/com/android/yambasama/data/model/dataRemote/Announcement.kt,
 Sapp/src/main/java/com/android/yambasama/domain/usecase/address/GetAddressUseCase.kt,f/f/ff50eec269cb00a55fd4b9f7db5055971f5dbf8e
 ò
 happ/src/test/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModelTest.kt,2/9/2925ff86d80507fc29988675d4284cfdfddb027f
-o
-?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
 î
 dapp/src/main/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModel.kt,4/7/479937a1164949186da6c6180ab83c5b998bb49b
 á
 Wapp/src/test/java/com/android/yambasama/domain/usecase/address/GetAddressUseCaseTest.kt,0/3/03af5e811fecdac6f4fcbd0c13095f07a5545c26
-ä
-Zapp/src/main/java/com/android/yambasama/presentation/viewModel/address/AddressViewModel.kt,b/9/b9c112118df0ff56b6b6881ee7a7f1da4fe676f6
