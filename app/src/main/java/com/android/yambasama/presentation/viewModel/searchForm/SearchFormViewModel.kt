@@ -101,7 +101,7 @@ class SearchFormViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = event.errorMessage//app.getString(R.string.form_destination_error)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -111,7 +111,7 @@ class SearchFormViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = event.errorMessage//app.getString(R.string.form_destination_error)
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -121,7 +121,7 @@ class SearchFormViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = event.errorMessage//app.getString(R.string.form_departure_error),
+                            message = event.errorMessage
                         )
                     )
                 }
@@ -131,7 +131,7 @@ class SearchFormViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _uiEventFlow.emit(
                         UIEvent.ShowMessage(
-                            message = event.errorMessage//app.getString(R.string.form_departure_error),
+                            message = event.errorMessage
                         )
                     )
                 }
