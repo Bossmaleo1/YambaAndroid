@@ -217,5 +217,3 @@ Dapp/src/main/java/com/android/yambasama/data/db/dao/YambaDatabase.kt,e/f/ef21b
 Papp/src/androidTest/java/com/android/yambasama/data/db/dao/TestDispatcherRule.kt,6/e/6e608843ce2889b870f9b7488eae906ec9894ec3
 n
 >app/src/main/java/com/android/yambasama/data/db/dao/UserDAO.kt,d/0/d05e55928e4f22328780d46107d09628676fd04b
-y
-Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930

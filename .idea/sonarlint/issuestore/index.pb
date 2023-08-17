@@ -207,8 +207,6 @@ o
 ?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-y
-Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930
 €
 Papp/src/androidTest/java/com/android/yambasama/data/db/dao/TestDispatcherRule.kt,6/e/6e608843ce2889b870f9b7488eae906ec9894ec3
 n
