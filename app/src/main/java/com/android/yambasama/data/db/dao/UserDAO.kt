@@ -33,4 +33,6 @@ interface UserDAO {
 
     @Query("DELETE  FROM token_data_table")
     suspend fun deleteTableToken()
+
+
 }

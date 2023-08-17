@@ -87,8 +87,6 @@ n
 >app/src/main/java/com/android/yambasama/ui/views/LaunchView.kt,a/5/a570a3e31582326839415662aa70a5cf567e87b4
 ¡
 qapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/createAnnouncementView/AnnounceWellDone.kt,b/4/b43625a7b13ab912a3eb697e4230e069077828bb
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 ~
 Napp/src/test/java/com/android/yambasama/data/api/AnnouncementAPIServiceTest.kt,8/f/8f087ddad9ed19c80c8344ca9f4f4560051b1924
 y
@@ -191,8 +189,6 @@ gapp/src/main/java/com/android/yambasama/ui/UIEvent/ScreenState/AddressScreenSta
 app/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/InfiniteAnnouncementList.kt,0/a/0a9cf4a1f5d78fb981c0a4e94de6a81648c66f71
 ›
 kapp/src/main/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModelFactory.kt,f/0/f00d7321be946c5a75f7e617eb0dc60ab3644156
-m
-=app/src/main/java/com/android/yambasama/ui/views/LoginView.kt,7/e/7ef3d84c6a7d000678bef1dc533af6e9dd411254
 §
 wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementItem.kt,a/3/a3a3087b390d5ac5c9e1c76aefb998d539f29cb3
 ­
@@ -203,8 +199,6 @@ Mapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementEvent.kt,
 wapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/annoucement/announcementlist/AnnouncementView.kt,c/0/c009548dc84243c4551c08b3518239f7fb0572de
 ‹
 [app/src/main/java/com/android/yambasama/presentation/viewModel/drop/DropViewModelFactory.kt,4/9/496fee4e6b5f273f78e96f729da8201c1089b449
-o
-?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
 ¤
 tapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/createAnnouncementView/AddAnnouncementView.kt,a/7/a7ca8c08bc59da35aa474bc12c78c72f9a2c3284
 
@@ -221,7 +215,3 @@ Kapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/SearchFormEvent.kt,a/
 capp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchview/SearchTownItem.kt,d/b/dbea6a7f025dbf3d0ba68a74dd3b4b814c322ded
 ‹
 [app/src/main/java/com/android/yambasama/presentation/viewModel/user/UserViewModelFactory.kt,7/e/7eb0a46c669d026a40b79e2805677512971996f4
-›
-kapp/src/androidTest/java/com/android/yambasama/presentation/viewModel/searchForm/SearchFormViewModelTest.kt,a/4/a4d8ad04567f099fb77d25ee4b8058d4565b5599
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
