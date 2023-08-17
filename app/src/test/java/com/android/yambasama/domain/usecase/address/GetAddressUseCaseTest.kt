@@ -2,6 +2,7 @@ package com.android.yambasama.domain.usecase.address
 
 import com.android.yambasama.domain.repository.AddressRepository
 import com.android.yambasama.domain.repository.FakeAddressRepository
+import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
@@ -28,9 +29,9 @@ class GetAddressUseCaseTest {
 
     @Test
     fun `Get Address List correct address return`() = runTest {
-        // Arrange
-        /*val addresses = getAddressUseCase.execute(locale = "",page = 0,query = "",token="")
-        assertThat*/
+        val addresses = getAddressUseCase.execute(locale = "test",page = 0,query = "test",token="xxx")
+        Truth.assertThat(addresses.data?.size).isEqualTo(3)
+        Truth.assertThat(addresses.data?.size).isNotEqualTo(2)
     }
 
 }

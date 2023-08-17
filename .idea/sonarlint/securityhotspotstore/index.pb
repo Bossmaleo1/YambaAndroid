@@ -157,8 +157,6 @@ u
 Eapp/src/main/java/com/android/yambasama/data/model/dataRemote/User.kt,2/9/2926a5b639e0670bc190c8adca48b0855c324aa3
 }
 Mapp/src/main/java/com/android/yambasama/data/repository/UserRepositoryImpl.kt,0/7/070277f0d15bc3e78ba596e4ecfbe9bf2e5b6fa2
-x
-Happ/src/main/java/com/android/yambasama/data/model/dataRemote/Address.kt,2/3/23cf804512cd0d8dfe4e1e8dbbd52229921b1dbc
 }
 Mapp/src/main/java/com/android/yambasama/data/model/dataRemote/Announcement.kt,f/f/ffd2538a10f96198910f4ca343a36f0a1836037f
 j
