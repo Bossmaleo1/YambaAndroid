@@ -8,6 +8,8 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.mock
 import org.junit.Test
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -21,7 +23,7 @@ class GetAddressUseCaseTest {
         val addresses = GetAddressUseCase(mockAddressRepository)
 
         // Act
-       // addresses(addressesTest)
+        //verify(mockAddressRepository, times(1)).getAddress("","","","")
     }
 
 }

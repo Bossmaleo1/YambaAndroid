@@ -281,6 +281,8 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                                 message = event.message
                             )
                         }
+
+                        else -> {}
                     }
                 }
             }
