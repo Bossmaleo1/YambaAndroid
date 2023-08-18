@@ -11,37 +11,6 @@ import kotlinx.coroutines.flow.first
 
 class FakeAddressRepository: AddressRepository {
 
-   /* private var shouldReturnNetworkError = false
-
-    private val _savedAddress = MutableStateFlow(LinkedHashMap<String, Address>())
-    val savedAddress: StateFlow<LinkedHashMap<String, Address>> = _savedAddress.asStateFlow()
-
-    private val observableAddressList: Flow<List<Address>> = savedAddress.map {
-        if (shouldReturnNetworkError) {
-            throw Exception("Test exception")
-        } else {
-            it.values.toList()
-        }
-    }
-
-    fun setShouldThrowError(value: Boolean) {
-        shouldReturnNetworkError = value
-    }
-
-
-    override suspend fun getAddress(
-        locale: String,
-        page: Int,
-        query: String,
-        token: String
-    ): Resource<List<Address>> {
-        return if (shouldReturnNetworkError) {
-            Resource.Error("Error", null)
-        } else {
-            Resource.Success(observableAddressList.first())
-        }
-    }*/
-
     private var shouldReturnNetworkError = false
 
     val addressResult = Address(id = 95, isoCode = "GAB", code = "GA", airportCode = "LBV", airportName = "Leon Mba", townName = "Libreville")
