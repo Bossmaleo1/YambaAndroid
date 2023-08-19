@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserLocalDataSourceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.data.repository.dataSourceImpl.user</a>
+</div>
+
+<h1>Coverage Summary for Class: UserLocalDataSourceImpl (com.android.yambasama.data.repository.dataSourceImpl.user)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserLocalDataSourceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.data.repository.dataSourceImpl.user
+&nbsp;
+&nbsp;import com.android.yambasama.data.db.dao.UserDAO
+&nbsp;import com.android.yambasama.data.model.dataLocal.TokenRoom
+&nbsp;import com.android.yambasama.data.model.dataLocal.UserRoom
+&nbsp;import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;
+<b class="nc">&nbsp;class UserLocalDataSourceImpl(</b>
+<b class="nc">&nbsp;    private val userDAO: UserDAO</b>
+&nbsp;) : UserLocalDataSource {
+&nbsp;    override suspend fun saveUserToDB(user: UserRoom) {
+<b class="nc">&nbsp;        userDAO.insert(user)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun saveTokenToDB(token: TokenRoom) {
+<b class="nc">&nbsp;        userDAO.insertToken(token)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getSavedToken(): Flow&lt;TokenRoom&gt; {
+<b class="nc">&nbsp;        return userDAO.getToken()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getSavedUsers(): Flow&lt;List&lt;UserRoom&gt;&gt; {
+<b class="nc">&nbsp;        return userDAO.getAllUsers()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun getSavedUser(userToken: String): Flow&lt;UserRoom&gt; {
+<b class="nc">&nbsp;        return userDAO.getUser(userToken)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun deleteUserFromDB(user: UserRoom) {
+<b class="nc">&nbsp;        userDAO.deleteUser(user)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun deleteUserTable() {
+<b class="nc">&nbsp;        userDAO.deleteTableUser()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override suspend fun deleteTokenTable() {
+<b class="nc">&nbsp;        userDAO.deleteTableToken()</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

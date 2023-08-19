@@ -1,0 +1,118 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LocalDataModule_ProvideLocalDataSourceFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.presentation.di</a>
+</div>
+
+<h1>Coverage Summary for Class: LocalDataModule_ProvideLocalDataSourceFactory (com.android.yambasama.presentation.di)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">LocalDataModule_ProvideLocalDataSourceFactory</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.presentation.di;
+&nbsp;
+&nbsp;import com.android.yambasama.data.db.dao.UserDAO;
+&nbsp;import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource;
+&nbsp;import dagger.internal.DaggerGenerated;
+&nbsp;import dagger.internal.Factory;
+&nbsp;import dagger.internal.Preconditions;
+&nbsp;import dagger.internal.QualifierMetadata;
+&nbsp;import dagger.internal.ScopeMetadata;
+&nbsp;import javax.annotation.processing.Generated;
+&nbsp;import javax.inject.Provider;
+&nbsp;
+&nbsp;@ScopeMetadata(&quot;javax.inject.Singleton&quot;)
+&nbsp;@QualifierMetadata
+&nbsp;@DaggerGenerated
+&nbsp;@Generated(
+&nbsp;    value = &quot;dagger.internal.codegen.ComponentProcessor&quot;,
+&nbsp;    comments = &quot;https://dagger.dev&quot;
+&nbsp;)
+&nbsp;@SuppressWarnings({
+&nbsp;    &quot;unchecked&quot;,
+&nbsp;    &quot;rawtypes&quot;,
+&nbsp;    &quot;KotlinInternal&quot;,
+&nbsp;    &quot;KotlinInternalInJava&quot;
+&nbsp;})
+&nbsp;public final class LocalDataModule_ProvideLocalDataSourceFactory implements Factory&lt;UserLocalDataSource&gt; {
+&nbsp;  private final LocalDataModule module;
+&nbsp;
+&nbsp;  private final Provider&lt;UserDAO&gt; userDAOProvider;
+&nbsp;
+&nbsp;  public LocalDataModule_ProvideLocalDataSourceFactory(LocalDataModule module,
+&nbsp;      Provider&lt;UserDAO&gt; userDAOProvider) {
+&nbsp;    this.module = module;
+&nbsp;    this.userDAOProvider = userDAOProvider;
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public UserLocalDataSource get() {
+&nbsp;    return provideLocalDataSource(module, userDAOProvider.get());
+&nbsp;  }
+&nbsp;
+&nbsp;  public static LocalDataModule_ProvideLocalDataSourceFactory create(LocalDataModule module,
+&nbsp;      Provider&lt;UserDAO&gt; userDAOProvider) {
+&nbsp;    return new LocalDataModule_ProvideLocalDataSourceFactory(module, userDAOProvider);
+&nbsp;  }
+&nbsp;
+&nbsp;  public static UserLocalDataSource provideLocalDataSource(LocalDataModule instance,
+&nbsp;      UserDAO userDAO) {
+&nbsp;    return Preconditions.checkNotNullFromProvides(instance.provideLocalDataSource(userDAO));
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>
