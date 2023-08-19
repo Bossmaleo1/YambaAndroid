@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'jacoco'
 }
 
 android {
@@ -94,7 +95,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-gson:$converter_gson_version"
     implementation "androidx.multidex:multidex:$multidex_version"
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -146,4 +147,5 @@ dependencies {
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "androidx.arch.core:core-testing:$arch_testing_version"
+    testImplementation 'org.robolectric:robolectric:4.10.3'
 }
