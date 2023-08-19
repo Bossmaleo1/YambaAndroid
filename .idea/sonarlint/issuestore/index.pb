@@ -55,8 +55,6 @@ Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2
 Qapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementFormEvent.kt,9/9/99116ccef4665580b6a5c5e23930e5c5ed0e4347
 m
 =app/src/main/java/com/android/yambasama/ui/UIEvent/UIEvent.kt,5/2/528bec875c38435a273f9cfb432fa01718477478
-A
-gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 z
@@ -203,8 +201,6 @@ capp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchvi
 [app/src/main/java/com/android/yambasama/presentation/viewModel/user/UserViewModelFactory.kt,7/e/7eb0a46c669d026a40b79e2805677512971996f4
 o
 ?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 €
 Papp/src/androidTest/java/com/android/yambasama/data/db/dao/TestDispatcherRule.kt,6/e/6e608843ce2889b870f9b7488eae906ec9894ec3
 n

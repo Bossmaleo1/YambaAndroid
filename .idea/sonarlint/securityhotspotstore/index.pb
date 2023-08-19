@@ -57,8 +57,6 @@ m
 =app/src/main/java/com/android/yambasama/ui/UIEvent/UIEvent.kt,5/2/528bec875c38435a273f9cfb432fa01718477478
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-A
-gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 z
 Japp/src/main/java/com/android/yambasama/ui/views/utils/TimePickerDialog.kt,1/6/16b75a42466408f6434babe54287b0c5b6cb467f
 ž
@@ -209,8 +207,6 @@ x
 Happ/src/main/java/com/android/yambasama/data/model/dataLocal/UserRoom.kt,3/3/33aac3b192759e645e6bd1bd31fed98c1c23bb30
 t
 Dapp/src/main/java/com/android/yambasama/data/db/dao/YambaDatabase.kt,e/f/ef21b64e2fcc45a3dc6b6f67c41d20bf60cab4fc
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 €
 Papp/src/androidTest/java/com/android/yambasama/data/db/dao/TestDispatcherRule.kt,6/e/6e608843ce2889b870f9b7488eae906ec9894ec3
 n
