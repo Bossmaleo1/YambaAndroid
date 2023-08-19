@@ -1,0 +1,376 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AddressViewModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.presentation.viewModel.address</a>
+</div>
+
+<h1>Coverage Summary for Class: AddressViewModel (com.android.yambasama.presentation.viewModel.address)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddressViewModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddressViewModel$getAddress$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddressViewModel$onEvent$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddressViewModel$onEvent$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddressViewModel$onEvent$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/101)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.presentation.viewModel.address
+&nbsp;
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.net.ConnectivityManager
+&nbsp;import android.net.NetworkCapabilities
+&nbsp;import android.os.Build
+&nbsp;import androidx.compose.runtime.State
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.lifecycle.ViewModel
+&nbsp;import androidx.lifecycle.viewModelScope
+&nbsp;import com.android.yambasama.data.model.dataRemote.Address
+&nbsp;import com.android.yambasama.domain.usecase.address.GetAddressUseCase
+&nbsp;import com.android.yambasama.presentation.util.isNetworkAvailable
+&nbsp;import com.android.yambasama.ui.UIEvent.Event.AddressEvent
+&nbsp;import com.android.yambasama.ui.UIEvent.ScreenState.AddressScreenState.AddressScreenState
+&nbsp;import com.android.yambasama.ui.UIEvent.UIEvent
+&nbsp;import kotlinx.coroutines.Dispatchers
+&nbsp;import kotlinx.coroutines.flow.MutableSharedFlow
+&nbsp;import kotlinx.coroutines.flow.asSharedFlow
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import dagger.hilt.android.lifecycle.HiltViewModel
+&nbsp;import java.util.Locale
+&nbsp;import javax.inject.Inject
+&nbsp;
+&nbsp;@HiltViewModel
+&nbsp;class AddressViewModel @Inject constructor(
+<b class="nc">&nbsp;    private val getAddressUseCase: GetAddressUseCase</b>
+<b class="nc">&nbsp;) : ViewModel() {</b>
+&nbsp;
+<b class="nc">&nbsp;    private val _screenState = mutableStateOf(</b>
+<b class="nc">&nbsp;        AddressScreenState(</b>
+<b class="nc">&nbsp;            addressList = mutableListOf(),</b>
+<b class="nc">&nbsp;            searchInputValue = &quot;&quot;,</b>
+<b class="nc">&nbsp;            locale = &quot;${Locale.getDefault().language}&quot;</b>
+&nbsp;        )
+&nbsp;    )
+<b class="nc">&nbsp;    val screenState: State&lt;AddressScreenState&gt; = _screenState</b>
+<b class="nc">&nbsp;    private val _uiEventFlow = MutableSharedFlow&lt;UIEvent&gt;()</b>
+<b class="nc">&nbsp;    val uiEventFlow = _uiEventFlow.asSharedFlow()</b>
+&nbsp;
+&nbsp;    fun getAddress(
+&nbsp;        locale: String,
+&nbsp;        token: String
+<b class="nc">&nbsp;    ) = viewModelScope.launch(Dispatchers.IO) {</b>
+<b class="nc">&nbsp;        try {</b>
+<b class="nc">&nbsp;            val apiResult =</b>
+<b class="nc">&nbsp;                getAddressUseCase.execute(</b>
+<b class="nc">&nbsp;                    locale = locale,</b>
+<b class="nc">&nbsp;                    page = screenState.value.currentPage,</b>
+<b class="nc">&nbsp;                    query = screenState.value.searchInputValue,</b>
+<b class="nc">&nbsp;                    token = &quot;Bearer $token&quot;</b>
+&nbsp;                )
+<b class="nc">&nbsp;            apiResult.data?.let { apiAddressResponse -&gt;</b>
+<b class="nc">&nbsp;                getAdressResult(apiAddressResponse)</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                isNetworkConnected = true,</b>
+<b class="nc">&nbsp;                isLoad = false,</b>
+<b class="nc">&nbsp;                isInternalError = ((apiResult.message).equals(&quot;Internal Server Error&quot;)),</b>
+<b class="nc">&nbsp;                isNetworkError = false,</b>
+<b class="nc">&nbsp;                initCall = screenState.value.initCall++</b>
+&nbsp;            )
+<b class="nc">&nbsp;        } catch (e: Exception) {</b>
+<b class="nc">&nbsp;            _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                isNetworkError = true,</b>
+<b class="nc">&nbsp;                isInternalError = false,</b>
+<b class="nc">&nbsp;                isNetworkConnected = true,</b>
+<b class="nc">&nbsp;                isLoad = false</b>
+&nbsp;            )
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    fun initAddress() {
+<b class="nc">&nbsp;        _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;            addressList = mutableListOf()</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;
+&nbsp;    fun onEvent(event: AddressEvent) {
+<b class="nc">&nbsp;        when (event) {</b>
+<b class="nc">&nbsp;            is AddressEvent.SearchValueEntered -&gt; {</b>
+<b class="nc">&nbsp;                _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                    searchInputValue = event.value,</b>
+<b class="nc">&nbsp;                    isLoad = true,</b>
+<b class="nc">&nbsp;                    currentPage = 1,</b>
+<b class="nc">&nbsp;                    addressList = mutableListOf()</b>
+&nbsp;                )
+<b class="nc">&nbsp;                getAddress(</b>
+<b class="nc">&nbsp;                    token = event.token,</b>
+<b class="nc">&nbsp;                    locale = event.locale</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                if (event.value.isEmpty()) {</b>
+<b class="nc">&nbsp;                    _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                        addressList = mutableListOf(),</b>
+<b class="nc">&nbsp;                        addressListTemp = mutableListOf()</b>
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.AddressInit -&gt; {</b>
+<b class="nc">&nbsp;                _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                    isLoad = true,</b>
+<b class="nc">&nbsp;                    searchInputValue = &quot;&quot;,</b>
+<b class="nc">&nbsp;                    currentPage = 1,</b>
+<b class="nc">&nbsp;                    addressList = mutableListOf(),</b>
+<b class="nc">&nbsp;                    addressListTemp = mutableListOf(),</b>
+<b class="nc">&nbsp;                    isInternalError = false</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                if (isNetworkAvailable(event.app)) {</b>
+<b class="nc">&nbsp;                    getAddress(</b>
+<b class="nc">&nbsp;                        token = event.token,</b>
+<b class="nc">&nbsp;                        locale = event.locale</b>
+&nbsp;                    )
+&nbsp;                } else {
+<b class="nc">&nbsp;                    _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                        isNetworkConnected = false,</b>
+<b class="nc">&nbsp;                        isNetworkError = false,</b>
+<b class="nc">&nbsp;                        isLoad = false,</b>
+<b class="nc">&nbsp;                        isInternalError = false,</b>
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.ItemClicked -&gt; {</b>
+&nbsp;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.InitAddressState -&gt; {</b>
+<b class="nc">&nbsp;                _screenState.value = _screenState.value.copy(</b>
+<b class="nc">&nbsp;                    isNetworkConnected = true,</b>
+<b class="nc">&nbsp;                    isLoad = false,</b>
+<b class="nc">&nbsp;                    isNetworkError = false,</b>
+<b class="nc">&nbsp;                    currentPage = 1,</b>
+<b class="nc">&nbsp;                    initCall = 0,</b>
+<b class="nc">&nbsp;                    isInternalError = false,</b>
+<b class="nc">&nbsp;                    addressList = mutableListOf(),</b>
+<b class="nc">&nbsp;                    addressListTemp = mutableListOf(),</b>
+<b class="nc">&nbsp;                    searchInputValue = &quot;&quot;</b>
+&nbsp;                )
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.IsInternalError -&gt; {</b>
+<b class="nc">&nbsp;                viewModelScope.launch {</b>
+<b class="nc">&nbsp;                    _uiEventFlow.emit(</b>
+<b class="nc">&nbsp;                        UIEvent.ShowMessage(</b>
+<b class="nc">&nbsp;                            message = &quot;Internal Error, Error 500&quot;</b>
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.IsNetworkConnected -&gt; {</b>
+<b class="nc">&nbsp;                viewModelScope.launch {</b>
+<b class="nc">&nbsp;                    _uiEventFlow.emit(</b>
+<b class="nc">&nbsp;                        UIEvent.ShowMessage(</b>
+<b class="nc">&nbsp;                            message = event.errorMessage</b>
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            is AddressEvent.IsNetworkError -&gt; {</b>
+<b class="nc">&nbsp;                viewModelScope.launch {</b>
+<b class="nc">&nbsp;                    _uiEventFlow.emit(</b>
+<b class="nc">&nbsp;                        UIEvent.ShowMessage(</b>
+<b class="nc">&nbsp;                            message = event.errorMessage</b>
+&nbsp;                        )
+&nbsp;                    )
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private fun getAdressResult(address: List&lt;Address&gt;) {
+<b class="nc">&nbsp;        if (screenState.value.addressList.isEmpty()) {</b>
+<b class="nc">&nbsp;            screenState.value.addressList = address</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (screenState.value.addressListTemp.isEmpty()) {</b>
+<b class="nc">&nbsp;            screenState.value.addressListTemp = address</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

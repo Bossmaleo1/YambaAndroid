@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Util</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.ui.util</a>
+</div>
+
+<h1>Coverage Summary for Class: Util (com.android.yambasama.ui.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Util</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.ui.util
+&nbsp;
+&nbsp;import android.util.Log
+&nbsp;import com.android.yambasama.data.model.dataRemote.NumberOfKg
+&nbsp;import java.text.SimpleDateFormat
+&nbsp;import java.util.*
+&nbsp;import kotlin.time.Duration.Companion.hours
+&nbsp;
+<b class="nc">&nbsp;class Util {</b>
+&nbsp;
+&nbsp;    fun getCountry(code: String): String {
+<b class="nc">&nbsp;        val listCountries = Locale.getISOCountries()</b>
+<b class="nc">&nbsp;        listCountries.forEach { country -&gt;</b>
+<b class="nc">&nbsp;            val locale = Locale(Locale.getDefault().isO3Language, country)</b>
+<b class="nc">&nbsp;            if ((locale.country.lowercase()) == code.lowercase()) {</b>
+<b class="nc">&nbsp;               return locale.displayCountry</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getDateFormatter(date: Date): String {
+<b class="nc">&nbsp;        val formatter: SimpleDateFormat = SimpleDateFormat(&quot;EEE d MMM yy&quot;, Locale.getDefault())</b>
+<b class="nc">&nbsp;        return formatter.format(date)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getTimeFormatter(hour: Int, minute: Int): String {
+<b class="nc">&nbsp;        val formatter: SimpleDateFormat = SimpleDateFormat(&quot;hh:mm a&quot;, Locale.getDefault())</b>
+<b class="nc">&nbsp;        val cal = Calendar.getInstance()</b>
+<b class="nc">&nbsp;        cal.set(Calendar.HOUR_OF_DAY, hour)</b>
+<b class="nc">&nbsp;        cal.set(Calendar.MINUTE, minute)</b>
+<b class="nc">&nbsp;        cal.isLenient = false</b>
+<b class="nc">&nbsp;        return formatter.format(cal.time)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getTimeFormatterSimple(hour: Int, minute: Int): String {
+<b class="nc">&nbsp;        return &quot;$hour:$minute&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getNumberOfKg(numberOfKgs: List&lt;NumberOfKg&gt;): Float {
+<b class="nc">&nbsp;        if(numberOfKgs.isEmpty()) {</b>
+<b class="nc">&nbsp;            return 0F</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return numberOfKgs.filter { numberOfKg -&gt; !numberOfKg.status }[0].numberOfKg</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getDateTimeFormatter(date: Date): String { //&quot;dd/MM/yyyy  HH:mm&quot;
+<b class="nc">&nbsp;        val formatter: SimpleDateFormat = SimpleDateFormat(&quot;EEE d MMM yy  HH:mm&quot;, Locale.getDefault())</b>
+<b class="nc">&nbsp;        return formatter.format(date)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getDateDisplayingStart(date: Date): String {
+<b class="nc">&nbsp;        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))</b>
+<b class="nc">&nbsp;        cal.time = date</b>
+<b class="nc">&nbsp;        val monthCount = (cal.get(Calendar.MONTH)+1)</b>
+<b class="nc">&nbsp;        val monthDay: String = if (monthCount &gt;= 10) {</b>
+<b class="nc">&nbsp;            &quot;${(cal.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            &quot;0${(cal.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T00:00:00&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getAnnouncementDate(
+&nbsp;        dateAnnouncement: Date,
+&nbsp;        hourAnnouncement: Int,
+&nbsp;        minuteAnnouncement: Int
+&nbsp;    ): String {
+<b class="nc">&nbsp;        Log.d(&quot;MALEO9393MALEO9393&quot;,&quot;Step 1&quot;)</b>
+<b class="nc">&nbsp;        val calAnnouncementDate: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))</b>
+<b class="nc">&nbsp;        val calAnnouncementTime: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(TimeZone.getDefault().id))</b>
+<b class="nc">&nbsp;        calAnnouncementDate.time = dateAnnouncement</b>
+&nbsp;        //calAnnouncementTime.time = timeAnnouncement
+<b class="nc">&nbsp;        val monthCount = (calAnnouncementDate.get(Calendar.MONTH) +1)</b>
+<b class="nc">&nbsp;        val monthDay: String = if (monthCount &gt;= 10) {</b>
+<b class="nc">&nbsp;            &quot;${(calAnnouncementDate.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            &quot;0${(calAnnouncementDate.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        calAnnouncementTime.set(Calendar.HOUR_OF_DAY, hourAnnouncement)</b>
+<b class="nc">&nbsp;        calAnnouncementTime.set(Calendar.MINUTE, minuteAnnouncement)</b>
+<b class="nc">&nbsp;        val hourCount : String = &quot;${calAnnouncementTime[Calendar.HOUR_OF_DAY]}&quot;</b>
+<b class="nc">&nbsp;        val minuteCount: String = &quot;${calAnnouncementTime[Calendar.MINUTE]}&quot;</b>
+<b class="nc">&nbsp;        return &quot;${calAnnouncementDate.get(Calendar.YEAR)}-${monthDay}-${calAnnouncementDate.get(Calendar.DAY_OF_MONTH)}T${hourCount}:${minuteCount}:00&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun getDateDisplayingEnd(date: Date): String {
+<b class="nc">&nbsp;        val cal: Calendar =  Calendar.getInstance(TimeZone.getTimeZone(&quot;UTC&quot;))</b>
+<b class="nc">&nbsp;        cal.time = date</b>
+<b class="nc">&nbsp;        val monthCount = (cal.get(Calendar.MONTH)+1)</b>
+<b class="nc">&nbsp;        val monthDay: String = if (monthCount &gt;= 10) {</b>
+<b class="nc">&nbsp;            &quot;${(cal.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            &quot;0${(cal.get(Calendar.MONTH)+1)}&quot;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;${cal.get(Calendar.YEAR)}-${monthDay}-${cal.get(Calendar.DAY_OF_MONTH)}T23:59:00&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

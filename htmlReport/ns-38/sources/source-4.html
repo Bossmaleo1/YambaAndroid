@@ -1,0 +1,94 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AnnouncementRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.domain.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: AnnouncementRepository (com.android.yambasama.domain.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">AnnouncementRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.domain.repository
+&nbsp;
+&nbsp;import com.android.yambasama.data.model.api.AnnouncementBody
+&nbsp;import com.android.yambasama.data.model.dataRemote.Announcement
+&nbsp;import com.android.yambasama.data.util.Resource
+&nbsp;
+&nbsp;interface AnnouncementRepository {
+&nbsp;    suspend fun getAnnouncements(
+&nbsp;        page: Int,
+&nbsp;        pagination: Boolean,
+&nbsp;        arrivingTimeAfter: String,
+&nbsp;        arrivingTimeBefore: String,
+&nbsp;        departureAddress: Int,
+&nbsp;        destinationAddress: Int,
+&nbsp;        token: String
+&nbsp;    ): Resource&lt;List&lt;Announcement&gt;&gt;
+&nbsp;
+&nbsp;    suspend fun getAnnouncement(
+&nbsp;        id: Int,
+&nbsp;        token: String
+&nbsp;    ): Resource&lt;Announcement&gt;
+&nbsp;
+&nbsp;    suspend fun createAnnouncement(
+&nbsp;        announcementBody: AnnouncementBody,
+&nbsp;        token: String
+&nbsp;    ): Resource&lt;String&gt;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

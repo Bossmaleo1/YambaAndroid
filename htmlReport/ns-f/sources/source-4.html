@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UtilsKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.presentation.util</a>
+</div>
+
+<h1>Coverage Summary for Class: UtilsKt (com.android.yambasama.presentation.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UtilsKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.presentation.util
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.net.ConnectivityManager
+&nbsp;import android.net.NetworkCapabilities
+&nbsp;import android.os.Build
+&nbsp;import com.android.yambasama.R
+&nbsp;
+&nbsp;fun isNetworkAvailable(context: Context?): Boolean {
+<b class="nc">&nbsp;    if (context == null) return false</b>
+<b class="nc">&nbsp;    val connectivityManager =</b>
+<b class="nc">&nbsp;        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager</b>
+<b class="nc">&nbsp;    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {</b>
+<b class="nc">&nbsp;        val network =</b>
+<b class="nc">&nbsp;            connectivityManager.activeNetwork ?: return false</b>
+<b class="nc">&nbsp;        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false</b>
+<b class="nc">&nbsp;        return when {</b>
+<b class="nc">&nbsp;            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -&gt; {</b>
+<b class="nc">&nbsp;                return true</b>
+&nbsp;            }
+<b class="nc">&nbsp;            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -&gt; true</b>
+<b class="nc">&nbsp;            else -&gt; false</b>
+&nbsp;        }
+&nbsp;    } else {
+<b class="nc">&nbsp;        @Suppress(&quot;DEPRECATION&quot;) val networkInfo =</b>
+<b class="nc">&nbsp;            connectivityManager.activeNetworkInfo ?: return false</b>
+&nbsp;        @Suppress(&quot;DEPRECATION&quot;)
+<b class="nc">&nbsp;        return networkInfo.isConnected</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;fun getFieldError(app: Context, passwordInputValue: String, emailInputValue: String): String {
+<b class="nc">&nbsp;    return if (passwordInputValue.isEmpty() &amp;&amp; passwordInputValue.isEmpty()) {</b>
+<b class="nc">&nbsp;        app.getString(R.string.is_login_empty_2_field)</b>
+<b class="nc">&nbsp;    } else if (emailInputValue.isEmpty()) {</b>
+<b class="nc">&nbsp;        app.getString(R.string.is_login_empty_email_field)</b>
+<b class="nc">&nbsp;    } else if (passwordInputValue.isEmpty()) {</b>
+<b class="nc">&nbsp;        app.getString(R.string.is_login_empty_password_field)</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;        &quot;&quot;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

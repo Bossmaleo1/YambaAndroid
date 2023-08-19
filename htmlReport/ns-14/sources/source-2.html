@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserViewModelFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.presentation.viewModel.user</a>
+</div>
+
+<h1>Coverage Summary for Class: UserViewModelFactory (com.android.yambasama.presentation.viewModel.user)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserViewModelFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.presentation.viewModel.user
+&nbsp;
+&nbsp;import android.app.Application
+&nbsp;import androidx.lifecycle.ViewModel
+&nbsp;import androidx.lifecycle.ViewModelProvider
+&nbsp;import com.android.yambasama.domain.usecase.user.*
+&nbsp;
+<b class="nc">&nbsp;class UserViewModelFactory(</b>
+&nbsp;    //private val app: Application,
+<b class="nc">&nbsp;    private val getUserUseCase: GetUserUseCase,</b>
+<b class="nc">&nbsp;    private val getTokenUseCase: GetTokenUseCase,</b>
+<b class="nc">&nbsp;    private val saveUserUseCase: SaveUserUseCase,</b>
+<b class="nc">&nbsp;    private val saveTokenUseCase: SaveTokenUseCase,</b>
+<b class="nc">&nbsp;    private val getSavedUserUseCase: GetSavedUserUseCase,</b>
+<b class="nc">&nbsp;    private val getSavedTokenUseCase: GetSavedTokenUseCase</b>
+&nbsp;): ViewModelProvider.Factory {
+&nbsp;    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T {
+<b class="nc">&nbsp;        return UserViewModel(</b>
+&nbsp;            //app,
+<b class="nc">&nbsp;            getUserUseCase,</b>
+<b class="nc">&nbsp;            getTokenUseCase,</b>
+<b class="nc">&nbsp;            saveUserUseCase,</b>
+<b class="nc">&nbsp;            saveTokenUseCase,</b>
+<b class="nc">&nbsp;            getSavedUserUseCase,</b>
+<b class="nc">&nbsp;            getSavedTokenUseCase</b>
+&nbsp;        ) as T
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ThemeKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.android.yambasama.ui.theme</a>
+</div>
+
+<h1>Coverage Summary for Class: ThemeKt (com.android.yambasama.ui.theme)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ThemeKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ThemeKt$YambaSamaTheme$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ThemeKt$YambaSamaTheme$2</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/75)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.android.yambasama.ui.theme
+&nbsp;
+&nbsp;import android.annotation.SuppressLint
+&nbsp;import android.os.Build
+&nbsp;import androidx.compose.foundation.LocalIndication
+&nbsp;import androidx.compose.foundation.isSystemInDarkTheme
+&nbsp;import androidx.compose.material.ripple.rememberRipple
+&nbsp;import androidx.compose.material3.MaterialTheme
+&nbsp;import androidx.compose.material3.darkColorScheme
+&nbsp;import androidx.compose.material3.dynamicDarkColorScheme
+&nbsp;import androidx.compose.material3.dynamicLightColorScheme
+&nbsp;import androidx.compose.material3.lightColorScheme
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.CompositionLocalProvider
+&nbsp;import androidx.compose.ui.graphics.Color
+&nbsp;import androidx.compose.ui.platform.LocalContext
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;private val YambaSamaDarkColorScheme = darkColorScheme(</b>
+<b class="nc">&nbsp;    primary = Blue40,</b>
+<b class="nc">&nbsp;    onPrimary = Blue40,</b>
+<b class="nc">&nbsp;    primaryContainer = Blue90,</b>
+<b class="nc">&nbsp;    onPrimaryContainer = Blue10,</b>
+<b class="nc">&nbsp;    inversePrimary = Blue80,</b>
+<b class="nc">&nbsp;    secondary = DarkBlue40,</b>
+<b class="nc">&nbsp;    onSecondary = Color.White,</b>
+<b class="nc">&nbsp;    secondaryContainer = DarkBlue90,</b>
+<b class="nc">&nbsp;    onSecondaryContainer = DarkBlue10,</b>
+<b class="nc">&nbsp;    tertiary = Yellow40,</b>
+<b class="nc">&nbsp;    onTertiary = Color.White,</b>
+<b class="nc">&nbsp;    tertiaryContainer = Yellow30,</b>
+<b class="nc">&nbsp;    onTertiaryContainer = Yellow90,</b>
+<b class="nc">&nbsp;    error = Red80,</b>
+<b class="nc">&nbsp;    onError = Red20,</b>
+<b class="nc">&nbsp;    errorContainer = Red30,</b>
+<b class="nc">&nbsp;    onErrorContainer = Red90,</b>
+<b class="nc">&nbsp;    background = Grey10,</b>
+<b class="nc">&nbsp;    onBackground = Grey90,</b>
+<b class="nc">&nbsp;    surface = Grey10,</b>
+<b class="nc">&nbsp;    onSurface = Grey80,</b>
+<b class="nc">&nbsp;    inverseSurface = Grey90,</b>
+<b class="nc">&nbsp;    inverseOnSurface = Grey20,</b>
+<b class="nc">&nbsp;    surfaceVariant = BlueGrey30,</b>
+<b class="nc">&nbsp;    onSurfaceVariant = BlueGrey80,</b>
+<b class="nc">&nbsp;    outline = BlueGrey60</b>
+&nbsp;)
+&nbsp;
+<b class="nc">&nbsp;private val YambaSamaLightColorScheme = lightColorScheme(</b>
+<b class="nc">&nbsp;    primary = Blue40,</b>
+<b class="nc">&nbsp;    onPrimary = Color.White,</b>
+<b class="nc">&nbsp;    primaryContainer = Blue90,</b>
+<b class="nc">&nbsp;    onPrimaryContainer = Blue10,</b>
+<b class="nc">&nbsp;    inversePrimary = Blue80,</b>
+<b class="nc">&nbsp;    secondary = DarkBlue40,</b>
+<b class="nc">&nbsp;    onSecondary = Color.White,</b>
+<b class="nc">&nbsp;    secondaryContainer = DarkBlue90,</b>
+<b class="nc">&nbsp;    onSecondaryContainer = DarkBlue10,</b>
+<b class="nc">&nbsp;    tertiary = Yellow40,</b>
+<b class="nc">&nbsp;    onTertiary = Color.White,</b>
+<b class="nc">&nbsp;    tertiaryContainer = Yellow90,</b>
+<b class="nc">&nbsp;    onTertiaryContainer = Yellow10,</b>
+<b class="nc">&nbsp;    error = Red40,</b>
+<b class="nc">&nbsp;    onError = Color.White,</b>
+<b class="nc">&nbsp;    errorContainer = Red90,</b>
+<b class="nc">&nbsp;    onErrorContainer = Red10,</b>
+<b class="nc">&nbsp;    background = Grey99,</b>
+<b class="nc">&nbsp;    onBackground = Grey10,</b>
+<b class="nc">&nbsp;    surface = Grey99,</b>
+<b class="nc">&nbsp;    onSurface = Grey10,</b>
+<b class="nc">&nbsp;    inverseSurface = Grey20,</b>
+<b class="nc">&nbsp;    inverseOnSurface = Grey95,</b>
+<b class="nc">&nbsp;    surfaceVariant = BlueGrey90,</b>
+<b class="nc">&nbsp;    onSurfaceVariant = BlueGrey30,</b>
+<b class="nc">&nbsp;    outline = BlueGrey50</b>
+&nbsp;)
+&nbsp;
+&nbsp;@SuppressLint(&quot;NewApi&quot;)
+&nbsp;@Composable
+&nbsp;fun YambaSamaTheme(
+<b class="nc">&nbsp;    isDarkTheme: Boolean = isSystemInDarkTheme(),</b>
+<b class="nc">&nbsp;    isDynamicColor: Boolean = true,</b>
+&nbsp;    content: @Composable () -&gt; Unit
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;    val dynamicColor = isDynamicColor &amp;&amp; Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.S</b>
+<b class="nc">&nbsp;    val myColorScheme = when {</b>
+<b class="nc">&nbsp;        dynamicColor &amp;&amp; isDarkTheme -&gt; {</b>
+<b class="nc">&nbsp;            dynamicDarkColorScheme(LocalContext.current)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        dynamicColor &amp;&amp; !isDarkTheme -&gt; {</b>
+<b class="nc">&nbsp;            dynamicLightColorScheme(LocalContext.current)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        isDarkTheme -&gt; YambaSamaDarkColorScheme</b>
+<b class="nc">&nbsp;        else -&gt; YambaSamaLightColorScheme</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    MaterialTheme(</b>
+<b class="nc">&nbsp;        colorScheme = myColorScheme,</b>
+<b class="nc">&nbsp;        typography = YambaSamaTypography,</b>
+<b class="nc">&nbsp;    ) {</b>
+&nbsp;        // TODO (M3): MaterialTheme doesn&#39;t provide LocalIndication, remove when it does
+<b class="nc">&nbsp;        val rippleIndication = rememberRipple()</b>
+<b class="nc">&nbsp;        CompositionLocalProvider(</b>
+<b class="nc">&nbsp;            LocalIndication provides rippleIndication,</b>
+<b class="nc">&nbsp;            content = content</b>
+<b class="nc">&nbsp;        )</b>
+&nbsp;    }
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-19 19:11</div>
+</div>
+</body>
+</html>
