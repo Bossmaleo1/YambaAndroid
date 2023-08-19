@@ -29,6 +29,99 @@ buildscript {
         junit_version = '4.13.2'
         jacocoVersion = '0.8.4'
     }
+
+    def localProperties = new Properties()
+    localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+    subprojects {
+        apply plugin: 'jacoco'
+
+        afterEvaluate {
+            android {
+                testOptions {
+                    // It's required for Sonar
+                    reportDir "$project.buildDir/reports/coverage/androidTest/debug/connected"
+
+                    buildTypes {
+                        // Jacoco config: It configures/enables createDebugCoverageReport task to be used in generateCodeCoverage task below
+                        debug.testCoverageEnabled = true
+                    }
+                }
+
+
+                // Jacoco - Generate reports: https://docs.gradle.org/current/userguide/jacoco_plugin.html#default_values_of_the_jacoco_task_extension
+                tasks.register('generateCodeCoverage', JacocoReport) {
+                    dependsOn 'testDebugUnitTest', 'createDebugCoverageReport'
+
+                    sourceDirectories.from = file("${project.projectDir}/src/main/java") // main source set
+                    classDirectories.from = files(JacocoUtil.getKotlinFileTree(project))
+                    executionData.from = fileTree(dir: project.buildDir, includes: [
+                            '**/*.exec', // unit tests
+                            '**/*.ec' // ui tests
+                    ])
+
+                    // run unit tests and ui tests to generate code coverage report
+                    reports {
+                        html.required.set(true)
+                        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+                        xml.required.set(true) // It's required for Sonar
+                        xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacoco.xml"))
+                    }
+                }
+
+                // Jacoco - Verify violations: https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:jacoco_report_violation_rules
+                tasks.register('verifyCodeCoverage', JacocoCoverageVerification) {
+                    dependsOn 'generateCodeCoverage'
+
+                    sourceDirectories.from = file("${project.projectDir}/src/main/java") // main source set
+                    classDirectories.from = files(JacocoUtil.getKotlinFileTree(project))
+                    executionData.from = fileTree(dir: project.buildDir, includes: [
+                            '**/*.exec', // unit tests
+                            '**/*.ec' // ui tests
+                    ])
+
+                    violationRules {
+                        rule {
+                            limit {
+                                minimum = 0.3 // 30%
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Jacoco version: https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:configuring_the_jacoco_plugin
+        jacoco {
+            toolVersion = "0.8.10"
+        }
+
+        // Jacoco test options: https://docs.gradle.org/current/userguide/jacoco_plugin.html#default_values_of_the_jacoco_task_extension
+        tasks.withType(Test).tap {
+            configureEach {
+                jacoco {
+                    includeNoLocationClasses = true // Robolectric support
+                    excludes = ['jdk.internal.*'] // Java compatibility
+                }
+                testLogging {
+                    exceptionFormat = TestExceptionFormat.FULL // Display the full log to identify Paparazzi test failures
+                    showStackTraces = false
+                }
+                // Paparazzi screenshots Java compatibility: https://docs.gradle.org/current/userguide/toolchains.html#toolchains_for_tasks
+                javaLauncher = javaToolchains.launcherFor {
+                    languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_11.toString())
+                }
+            }
+        }
+    }
+
+    // Gradle wrapper: https://docs.gradle.org/current/userguide/gradle_wrapper.html#customizing_wrapper
+    tasks.named('wrapper') {
+        description = "Gradle wrapper task to update binary"
+        gradleVersion = "8.2.1"
+        distributionType = Wrapper.DistributionType.BIN
+    }
+
     repositories {
         google()
         mavenCentral()
@@ -46,4 +139,22 @@ buildscript {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+class JacocoUtil {
+    static ConfigurableFileTree getKotlinFileTree(Project project) {
+        return project.fileTree(
+                // Where generated Kotlin classes are located
+                dir: "$project.buildDir/tmp/kotlin-classes/debug",
+                // Exclude everything that is not created by you, e.g. created by HILT
+                excludes: [
+                        '**/BuildConfig.*',
+                        '**/*$*',
+                        '**/Hilt_*.class',
+                        'hilt_**',
+                        'dagger/hilt/**',
+                        '**/*JsonAdapter.*'
+                ]
+        )
+    }
 }
