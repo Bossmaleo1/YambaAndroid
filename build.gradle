@@ -103,13 +103,9 @@ buildscript {
                     includeNoLocationClasses = true // Robolectric support
                     excludes = ['jdk.internal.*'] // Java compatibility
                 }
-                testLogging {
-                    exceptionFormat = TestExceptionFormat.FULL // Display the full log to identify Paparazzi test failures
-                    showStackTraces = false
-                }
                 // Paparazzi screenshots Java compatibility: https://docs.gradle.org/current/userguide/toolchains.html#toolchains_for_tasks
                 javaLauncher = javaToolchains.launcherFor {
-                    languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_11.toString())
+                    languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_17.toString())
                 }
             }
         }
