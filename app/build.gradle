@@ -50,6 +50,19 @@ android {
     buildFeatures {
         compose true
     }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests {
+            includeAndroidResources = true // Robolectric config: https://robolectric.org/getting-started
+            returnDefaultValues = true
+        }
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = '1.4.3'
         kotlinCompilerVersion '1.7.10'

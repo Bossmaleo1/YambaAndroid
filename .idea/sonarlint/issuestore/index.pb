@@ -79,10 +79,6 @@ n
 >app/src/main/java/com/android/yambasama/ui/views/LaunchView.kt,a/5/a570a3e31582326839415662aa70a5cf567e87b4
 °
 qapp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/createAnnouncementView/AnnounceWellDone.kt,b/4/b43625a7b13ab912a3eb697e4230e069077828bb
-~
-Napp/src/test/java/com/android/yambasama/data/api/AnnouncementAPIServiceTest.kt,8/f/8f087ddad9ed19c80c8344ca9f4f4560051b1924
-y
-Iapp/src/test/java/com/android/yambasama/data/api/AddressAPIServiceTest.kt,d/1/d18c9458bcf1ae1d2ff6a60578eb7c7c38fd9122
 Ñ
 Tapp/src/test/java/com/android/yambasama/data/repository/AddressRepositoryImplTest.kt,0/a/0a243aa7b6d17836425e293b0388b6138f5fc06b
 Å
@@ -91,8 +87,6 @@ Qapp/src/test/java/com/android/yambasama/data/repository/UserRepositoryImplTest.
 Uapp/src/main/java/com/android/yambasama/data/repository/AnnouncementRepositoryImpl.kt,9/3/932c9621092c94c31b5de19f092838c23ae36545
 â
 Yapp/src/test/java/com/android/yambasama/data/repository/AnnouncementRepositoryImplTest.kt,c/0/c031ea7a1ef3e4f09965f9b321c349d46db3080f
-v
-Fapp/src/test/java/com/android/yambasama/data/api/UserAPIServiceTest.kt,5/f/5ffb46c5013ffefa461580d6194cc2152dff5f95
 Ç
 Rapp/src/main/java/com/android/yambasama/data/api/service/AnnouncementAPIService.kt,9/c/9c0436244f398cbd2097fd5346ec0172c3311d71
 }
