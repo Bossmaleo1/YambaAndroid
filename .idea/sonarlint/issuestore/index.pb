@@ -47,8 +47,6 @@ r
 Bapp/src/main/java/com/android/yambasama/data/model/api/ApiLogin.kt,6/8/6858a9c4741dabda080952a1037c363c05eef0cc
 |
 Lapp/src/main/java/com/android/yambasama/data/model/api/ApiAddressResponse.kt,6/9/69c7f318101eda2ef397460335b24acaea052f87
-z
-Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
 Å
 Qapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/AnnouncementFormEvent.kt,9/9/99116ccef4665580b6a5c5e23930e5c5ed0e4347
 m
@@ -101,8 +99,6 @@ Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseC
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCase.kt,d/8/d83fea8ca56c959daad4bee3c429d4bc047ecd77
 ä
 Zapp/src/test/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCaseTest.kt,7/a/7a6b7e9ee9cf63bd1c3bc0347b466f1bb27395a8
-Ö
-Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableUserUseCase.kt,b/f/bff47b00f86b34e12322d24d36843dfd02f7ff1e
 á
 Wapp/src/test/java/com/android/yambasama/domain/usecase/user/GetSavedTokenUseCaseTest.kt,e/a/ea129b0793301236954f2e2f32f239508e6320f1
 É
@@ -191,10 +187,6 @@ n
 happ/src/test/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModelTest.kt,2/9/2925ff86d80507fc29988675d4284cfdfddb027f
 t
 Dapp/src/main/java/com/android/yambasama/data/db/dao/YambaDatabase.kt,e/f/ef21b64e2fcc45a3dc6b6f67c41d20bf60cab4fc
-x
-Happ/src/main/java/com/android/yambasama/data/model/dataLocal/UserRoom.kt,3/3/33aac3b192759e645e6bd1bd31fed98c1c23bb30
-y
-Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930
 à
 Xapp/src/test/java/com/android/yambasama/presentation/viewModel/user/UserViewModelTest.kt,4/5/458b3de0e9f965f8428e4f503d83bbe6e52c8481
 É
