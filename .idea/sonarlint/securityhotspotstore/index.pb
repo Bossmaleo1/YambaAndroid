@@ -85,10 +85,6 @@ Yapp/src/test/java/com/android/yambasama/data/repository/AnnouncementRepositoryI
 Mapp/src/main/java/com/android/yambasama/data/api/service/AddressAPIService.kt,6/f/6f8e0aef4d350375501541cc738564fe2ae29b92
 Ñ
 Tapp/src/test/java/com/android/yambasama/data/repository/AddressRepositoryImplTest.kt,0/a/0a243aa7b6d17836425e293b0388b6138f5fc06b
-å
-\app/src/main/java/com/android/yambasama/domain/usecase/annoucement/GetAnnouncementUseCase.kt,d/5/d5d6c29329fe6ef6cd3c1f60e830bea24b42e56b
-ê
-`app/src/test/java/com/android/yambasama/domain/usecase/annoucement/GetAnnouncementUseCaseTest.kt,5/b/5b98c6b12336772b1630daf43bf7180f1696a649
 Ö
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseCase.kt,d/c/dc1594b3858459931f918eb3183bbfe77dd47308
 Ü

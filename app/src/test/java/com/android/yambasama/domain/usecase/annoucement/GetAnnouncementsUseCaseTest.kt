@@ -17,14 +17,12 @@ import java.util.Date
 class GetAnnouncementsUseCaseTest {
 
     private lateinit var getAnnouncementsUseCase: GetAnnouncementsUseCase
-    private lateinit var getAnnouncementUseCase: GetAnnouncementUseCase
     private lateinit var fakeAnnouncementRepository: FakeAnnouncementRepository
 
     @Before
     fun setUp() {
         fakeAnnouncementRepository = FakeAnnouncementRepository()
         getAnnouncementsUseCase = GetAnnouncementsUseCase(fakeAnnouncementRepository)
-        getAnnouncementUseCase = GetAnnouncementUseCase(fakeAnnouncementRepository)
     }
 
     @Test
