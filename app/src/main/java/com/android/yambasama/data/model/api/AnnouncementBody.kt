@@ -8,7 +8,7 @@ data class AnnouncementBody(
     @SerializedName("arrivingTime")
     val arrivingTime: String,
     @SerializedName("price")
-    val price: Float,
+    var price: Float,
     @SerializedName("meetingPlace1")
     val meetingPlace1: String,
     @SerializedName("meetingPlace2")
