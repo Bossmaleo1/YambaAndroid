@@ -40,7 +40,35 @@ class GetSavedUserUseCaseTest {
             Truth.assertThat(userRoom.imageUrl).isEqualTo("imagexgfsf.png")
             Truth.assertThat(userRoom.role).isEqualTo("ROLE_ADMIN")
             Truth.assertThat(userRoom.userName).isEqualTo("Testing")
-            Truth.assertThat(userRoom.firstName).isEqualTo("Efrem")
+
+            //we test user room set methods
+            userRoom.id = 36
+            userRoom.email = "efrem1maleo@gmail.com"
+            userRoom.firstName = "Efrem1"
+            userRoom.lastName = "MAYEKO"
+            userRoom.phone = "+242067525204"
+            userRoom.sex = "F"
+            userRoom.state = "test1"
+            userRoom.nationality = "test1"
+            userRoom.userToken = "wwxgfdhdjdgfkd1"
+            userRoom.pushNotification = "wxwxxwwx1"
+            userRoom.imageUrl = "imagexgfs1f.png"
+            userRoom.role = "ROLE_ADMIN1"
+            userRoom.userName = "Testing1"
+
+            Truth.assertThat(userRoom.id).isEqualTo(36)
+            Truth.assertThat(userRoom.email).isEqualTo("efrem1maleo@gmail.com")
+            Truth.assertThat(userRoom.firstName).isEqualTo("Efrem1")
+            Truth.assertThat(userRoom.lastName).isEqualTo("MAYEKO")
+            Truth.assertThat(userRoom.phone).isEqualTo("+242067525204")
+            Truth.assertThat(userRoom.sex).isEqualTo("F")
+            Truth.assertThat(userRoom.state).isEqualTo("test1")
+            Truth.assertThat(userRoom.nationality).isEqualTo("test1")
+            Truth.assertThat(userRoom.userToken).isEqualTo("wwxgfdhdjdgfkd1")
+            Truth.assertThat(userRoom.pushNotification).isEqualTo("wxwxxwwx1")
+            Truth.assertThat(userRoom.imageUrl).isEqualTo("imagexgfs1f.png")
+            Truth.assertThat(userRoom.role).isEqualTo("ROLE_ADMIN1")
+            Truth.assertThat(userRoom.userName).isEqualTo("Testing1")
         }
     }
 }
