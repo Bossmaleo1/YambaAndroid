@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import java.util.Date
 
+
 class GetAnnouncementsUseCaseTest {
 
     private lateinit var getAnnouncementsUseCase: GetAnnouncementsUseCase
@@ -30,8 +31,8 @@ class GetAnnouncementsUseCaseTest {
         val announcements = getAnnouncementsUseCase.execute(
             page = 14,
             pagination = true,
-            arrivingTimeAfter = "",
-            arrivingTimeBefore = "",
+            arrivingTimeAfter = "fake",
+            arrivingTimeBefore = "fake",
             departureAddress = 1,
             destinationAddress = 1,
             token = "xxxyzhyeuxbfd"
