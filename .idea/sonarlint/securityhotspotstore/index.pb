@@ -87,10 +87,6 @@ Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseC
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCase.kt,d/8/d83fea8ca56c959daad4bee3c429d4bc047ecd77
 Š
 Zapp/src/test/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCaseTest.kt,7/a/7a6b7e9ee9cf63bd1c3bc0347b466f1bb27395a8
-ƒ
-Sapp/src/main/java/com/android/yambasama/domain/usecase/user/GetSavedTokenUseCase.kt,8/9/89542c1d6725bac9321c2fc4464ee5144b450299
-‡
-Wapp/src/test/java/com/android/yambasama/domain/usecase/user/GetSavedTokenUseCaseTest.kt,e/a/ea129b0793301236954f2e2f32f239508e6320f1
 ~
 Napp/src/main/java/com/android/yambasama/domain/usecase/user/GetTokenUseCase.kt,4/0/402cb478b9adacf6a82e9c8c7bcb2d2dfffe8fe9
 
@@ -181,8 +177,6 @@ Happ/src/main/java/com/android/yambasama/data/model/api/NumberOfKgBody.kt,8/0/8
 Sapp/src/main/java/com/android/yambasama/domain/repository/AnnouncementRepository.kt,c/e/ceadbf713d3f2f49e629439beee6dc9f60aa14b9
 z
 Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
-y
-Iapp/src/main/java/com/android/yambasama/data/model/dataLocal/TokenRoom.kt,8/9/896be5eaa1f1ab7d0fc2f326bd5de736c7e99013
 …
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableUserUseCase.kt,b/f/bff47b00f86b34e12322d24d36843dfd02f7ff1e
 e

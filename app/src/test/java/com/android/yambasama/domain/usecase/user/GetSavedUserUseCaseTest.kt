@@ -25,8 +25,7 @@ class GetSavedUserUseCaseTest {
 
     @Test
     fun getSavedUser_should_be_test() = runTest {
-        val tempRoom = getSavedUserUseCase.execute(userToken = "wwxgfdhdjdgfkd")
-        tempRoom.test {
+        getSavedUserUseCase.execute(userToken = "wwxgfdhdjdgfkd").test {
             val userRoom = expectMostRecentItem()
             Truth.assertThat(userRoom.id).isEqualTo(35)
             Truth.assertThat(userRoom.email).isEqualTo("efremmaleo@gmail.com")
