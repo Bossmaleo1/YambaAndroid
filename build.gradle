@@ -44,7 +44,7 @@ buildscript {
 
                     buildTypes {
                         // Jacoco config: It configures/enables createDebugCoverageReport task to be used in generateCodeCoverage task below
-                        debug.testCoverageEnabled = true
+                        //debug.testCoverageEnabled = true
                     }
                 }
 
