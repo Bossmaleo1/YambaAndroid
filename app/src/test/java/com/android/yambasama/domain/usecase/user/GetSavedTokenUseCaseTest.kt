@@ -30,6 +30,11 @@ class GetSavedTokenUseCaseTest {
             val tokenRoom = expectMostRecentItem()
             Truth.assertThat(tokenRoom.id).isEqualTo(1)
             Truth.assertThat(tokenRoom.token).isEqualTo("xxddjndfhfjf")
+            //we test set methods
+            tokenRoom.id = 2
+            tokenRoom.token = "xxddjndfhfjf9393"
+            Truth.assertThat(tokenRoom.id).isEqualTo(2)
+            Truth.assertThat(tokenRoom.token).isEqualTo("xxddjndfhfjf9393")
         }
     }
 
