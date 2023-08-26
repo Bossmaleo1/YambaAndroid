@@ -3,7 +3,6 @@ package com.android.yambasama.domain.usecase.user
 import com.android.yambasama.domain.repository.FakeUserRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
