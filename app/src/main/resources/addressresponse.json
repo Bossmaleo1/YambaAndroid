@@ -1,0 +1,26 @@
+[
+  {
+    "id": 95,
+    "isoCode": "GAB",
+    "code": "GA",
+    "airportCode": "LBV",
+    "airportName": "Leon Mba",
+    "townName": "Libreville"
+  },
+  {
+    "id": 136,
+    "isoCode": "SEN",
+    "code": "SN",
+    "airportCode": "DKR",
+    "airportName": "Leopold Sedar Senghor",
+    "townName": "Dakar"
+  },
+  {
+    "id": 153,
+    "isoCode": "ITA",
+    "code": "IT",
+    "airportCode": "FCO",
+    "airportName": "Leonardo da Vinci",
+    "townName": "Rome"
+  }
+]

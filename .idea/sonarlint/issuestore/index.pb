@@ -151,8 +151,6 @@ Happ/src/main/java/com/android/yambasama/data/model/api/NumberOfKgBody.kt,8/0/8
 Sapp/src/main/java/com/android/yambasama/domain/repository/AnnouncementRepository.kt,c/e/ceadbf713d3f2f49e629439beee6dc9f60aa14b9
 z
 Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
-e
-5app/src/test/java/com/android/yambasama/TestModels.kt,6/9/69ac530b297e84ee1250dfa096a439f7030d2e4e
 ˆ
 Xapp/src/test/java/com/android/yambasama/presentation/viewModel/user/UserViewModelTest.kt,4/5/458b3de0e9f965f8428e4f503d83bbe6e52c8481
 ƒ
@@ -245,7 +243,5 @@ Sapp/src/main/java/com/android/yambasama/domain/usecase/user/GetSavedTokenUseCas
 fapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/user/UserLocalDataSourceImpl.kt,e/c/ecd14ca1d252ae4a30d31a24d3bb6c78e44e9b93
 Ž
 ^app/src/main/java/com/android/yambasama/data/repository/dataSource/user/UserLocalDataSource.kt,4/2/426700225ec52da14d0a9f2e12a65e47c00a71ae
-y
-Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930
 n
 >app/src/main/java/com/android/yambasama/data/db/dao/UserDAO.kt,d/0/d05e55928e4f22328780d46107d09628676fd04b
