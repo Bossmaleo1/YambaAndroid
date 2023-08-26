@@ -81,8 +81,6 @@ Yapp/src/test/java/com/android/yambasama/data/repository/AnnouncementRepositoryI
 Mapp/src/main/java/com/android/yambasama/data/api/service/AddressAPIService.kt,6/f/6f8e0aef4d350375501541cc738564fe2ae29b92
 „
 Tapp/src/test/java/com/android/yambasama/data/repository/AddressRepositoryImplTest.kt,0/a/0a243aa7b6d17836425e293b0388b6138f5fc06b
-…
-Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseCase.kt,d/c/dc1594b3858459931f918eb3183bbfe77dd47308
 †
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCase.kt,d/8/d83fea8ca56c959daad4bee3c429d4bc047ecd77
 †

@@ -3,23 +3,25 @@ package com.android.yambasama.domain.usecase.user
 import com.android.yambasama.domain.repository.FakeUserRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class DeleteTableTokenUseCaseTest {
+class DeleteTableUserUseCaseTest {
 
     private lateinit var fakeUserRepository: FakeUserRepository
-    private lateinit var deleteTableTokenUseCase: DeleteTableTokenUseCase
+    private lateinit var deleteTableUserUseCase: DeleteTableUserUseCase
 
     @Before
     fun setUp() {
         fakeUserRepository = FakeUserRepository()
-        deleteTableTokenUseCase = DeleteTableTokenUseCase(fakeUserRepository)
+        deleteTableUserUseCase = DeleteTableUserUseCase(fakeUserRepository)
     }
 
     @Test
-    fun getDeleteTableToken_should_be_test() = runTest {
-        deleteTableTokenUseCase.execute()
-        Truth.assertThat(fakeUserRepository.tokenRooms.size).isEqualTo(0)
+    fun getDeleteTableUser_should_be_test() = runTest {
+        deleteTableUserUseCase.execute()
+        Truth.assertThat(fakeUserRepository.userRooms.size).isEqualTo(0)
     }
+
 }
