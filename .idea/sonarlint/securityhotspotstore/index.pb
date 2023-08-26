@@ -85,8 +85,6 @@ Tapp/src/test/java/com/android/yambasama/data/repository/AddressRepositoryImplTe
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseCase.kt,d/c/dc1594b3858459931f918eb3183bbfe77dd47308
 †
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableTokenUseCase.kt,d/8/d83fea8ca56c959daad4bee3c429d4bc047ecd77
-~
-Napp/src/main/java/com/android/yambasama/domain/usecase/user/GetTokenUseCase.kt,4/0/402cb478b9adacf6a82e9c8c7bcb2d2dfffe8fe9
 †
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/UpdateSavedTokenUseCase.kt,f/b/fb245c4758cd39ab1143ef98b7b0f2a27986482f
 ~
