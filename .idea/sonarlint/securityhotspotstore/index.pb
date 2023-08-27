@@ -173,8 +173,6 @@ aapp/src/test/java/com/android/yambasama/domain/usecase/annoucement/GetAnnouncem
 `app/src/test/java/com/android/yambasama/domain/usecase/annoucement/GetAnnouncementUseCaseTest.kt,5/b/5b98c6b12336772b1630daf43bf7180f1696a649
 „
 Tapp/src/main/java/com/android/yambasama/presentation/viewModel/drop/DropViewModel.kt,1/2/1200f1c0716b58527a6709963a5ed5efd118b0db
-}
-Mapp/src/main/java/com/android/yambasama/domain/usecase/user/GetUserUseCase.kt,5/1/51409cb5945379e4a4cf789d31aec9da3c9630de
 …
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteTableUserUseCase.kt,b/f/bff47b00f86b34e12322d24d36843dfd02f7ff1e
 
@@ -198,10 +196,6 @@ Rapp/src/test/java/com/android/yambasama/domain/usecase/user/SaveUserUseCaseTest
 Š
 Zapp/src/test/java/com/android/yambasama/domain/usecase/user/UpdateSavedTokenUseCaseTest.kt,0/e/0e86e1138d768c2f88caa6f1e2280dc062285936
 …
-Uapp/src/main/java/com/android/yambasama/domain/usecase/user/GetSearchedUserUseCase.kt,9/2/92bdaf717f02d5f075a6a4648cb657064d6eafc9
-~
-Napp/src/main/java/com/android/yambasama/domain/usecase/user/GetTokenUseCase.kt,4/0/402cb478b9adacf6a82e9c8c7bcb2d2dfffe8fe9
-…
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/DeleteSavedUserUseCase.kt,d/c/dc1594b3858459931f918eb3183bbfe77dd47308
 †
 Vapp/src/main/java/com/android/yambasama/domain/usecase/user/UpdateSavedTokenUseCase.kt,f/b/fb245c4758cd39ab1143ef98b7b0f2a27986482f
@@ -209,8 +203,6 @@ Vapp/src/main/java/com/android/yambasama/domain/usecase/user/UpdateSavedTokenUse
 Uapp/src/main/java/com/android/yambasama/domain/usecase/user/UpdateSavedUseUserCase.kt,e/2/e255bb859eabade00d29f4da5d8129278890ba64
 ˜
 happ/src/test/java/com/android/yambasama/presentation/viewModel/announcement/AnnouncementViewModelTest.kt,2/9/2925ff86d80507fc29988675d4284cfdfddb027f
-‚
-Rapp/src/main/java/com/android/yambasama/domain/usecase/user/GetSavedUserUseCase.kt,c/f/cffd845777883f81272cafca5a07bdd671969b90
 
 Qapp/src/test/java/com/android/yambasama/domain/usecase/user/GetUserUseCaseTest.kt,b/c/bc2fb30169e3ca84e71451496c71470f2567f645
 y
@@ -219,10 +211,6 @@ Iapp/src/main/java/com/android/yambasama/data/model/dataLocal/TokenRoom.kt,8/9/
 Oapp/src/main/java/com/android/yambasama/domain/usecase/user/SaveTokenUseCase.kt,9/b/9b802467074254e2260695ad5e5ef2c6c57be55e
 j
 :app/src/main/java/com/android/yambasama/ui/MainActivity.kt,c/c/ccd77adc08c4847b715fda1bbb217de33951cb85
-„
-Tapp/src/main/java/com/android/yambasama/presentation/viewModel/user/UserViewModel.kt,e/c/ec9204fb3656287211957e8fa002efe01cae4387
-ƒ
-Sapp/src/main/java/com/android/yambasama/domain/usecase/user/GetSavedTokenUseCase.kt,8/9/89542c1d6725bac9321c2fc4464ee5144b450299
 n
 >app/src/main/java/com/android/yambasama/data/db/dao/UserDAO.kt,d/0/d05e55928e4f22328780d46107d09628676fd04b
 –
@@ -231,8 +219,6 @@ fapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/user/Use
 ^app/src/main/java/com/android/yambasama/data/repository/dataSource/user/UserLocalDataSource.kt,4/2/426700225ec52da14d0a9f2e12a65e47c00a71ae
 }
 Mapp/src/main/java/com/android/yambasama/data/repository/UserRepositoryImpl.kt,0/7/070277f0d15bc3e78ba596e4ecfbe9bf2e5b6fa2
-{
-Kapp/src/main/java/com/android/yambasama/domain/repository/UserRepository.kt,b/5/b59cfa66981551e4e1635eb518a8f35eae7019a2
 y
 Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930
 e
