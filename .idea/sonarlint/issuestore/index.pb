@@ -125,8 +125,6 @@ Kapp/src/main/java/com/android/yambasama/ui/UIEvent/Event/SearchFormEvent.kt,a/
 capp/src/main/java/com/android/yambasama/ui/views/bottomnavigationviews/searchview/SearchTownItem.kt,d/b/dbea6a7f025dbf3d0ba68a74dd3b4b814c322ded
 ã
 [app/src/main/java/com/android/yambasama/presentation/viewModel/user/UserViewModelFactory.kt,7/e/7eb0a46c669d026a40b79e2805677512971996f4
-o
-?app/src/main/java/com/android/yambasama/ui/views/HomeAppView.kt,2/8/28ea9a2b8b6d89017492507d5525a84b5c0f528b
 t
 Dapp/src/main/java/com/android/yambasama/data/db/dao/YambaDatabase.kt,e/f/ef21b64e2fcc45a3dc6b6f67c41d20bf60cab4fc
 F
@@ -169,10 +167,6 @@ x
 Happ/src/main/java/com/android/yambasama/data/model/dataLocal/UserRoom.kt,3/3/33aac3b192759e645e6bd1bd31fed98c1c23bb30
 á
 Wapp/src/test/java/com/android/yambasama/domain/usecase/address/GetAddressUseCaseTest.kt,0/3/03af5e811fecdac6f4fcbd0c13095f07a5545c26
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 9
@@ -245,3 +239,16 @@ fapp/src/main/java/com/android/yambasama/data/repository/dataSourceImpl/user/Use
 ^app/src/main/java/com/android/yambasama/data/repository/dataSource/user/UserLocalDataSource.kt,4/2/426700225ec52da14d0a9f2e12a65e47c00a71ae
 n
 >app/src/main/java/com/android/yambasama/data/db/dao/UserDAO.kt,d/0/d05e55928e4f22328780d46107d09628676fd04b
+y
+Iapp/src/androidTest/java/com/android/yambasama/data/db/dao/UserDAOTest.kt,c/c/cc4e2cad831c11941b5a94ea8afcf76b775d0930
+e
+5app/src/test/java/com/android/yambasama/TestModels.kt,6/9/69ac530b297e84ee1250dfa096a439f7030d2e4e
+~
+Napp/src/test/java/com/android/yambasama/data/api/service/UserAPIServiceTest.kt,d/d/ddcfd02ac505e5279ad9b757fff8c1168d7275f6
+Å
+Qapp/src/test/java/com/android/yambasama/data/api/service/AddressAPIServiceTest.kt,7/9/79633a2f5b425b9850dc1edfcdd4d7259169c20a
+Ü
+Vapp/src/test/java/com/android/yambasama/data/api/service/AnnouncementAPIServiceTest.kt,a/7/a79c377575f54df0e0e309aedd27f61728b4ccd6
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
