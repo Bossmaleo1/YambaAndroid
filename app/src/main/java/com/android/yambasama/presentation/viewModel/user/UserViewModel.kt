@@ -3,6 +3,7 @@ package com.android.yambasama.presentation.viewModel.user
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.android.yambasama.data.model.api.RefreshBody
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.Token
@@ -42,6 +43,14 @@ class UserViewModel @Inject constructor(
 
     init {
 
+    }
+
+    fun getRefresh(refreshBody: RefreshBody) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            //val apiResult =
+        }catch (e: Exception) {
+
+        }
     }
 
     fun getToken(userName: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
@@ -266,6 +275,10 @@ class UserViewModel @Inject constructor(
                         )
                     }
                 }
+            }
+
+            else -> {
+
             }
         }
     }
