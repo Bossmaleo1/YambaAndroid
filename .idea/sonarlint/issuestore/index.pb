@@ -31,14 +31,10 @@ Sapp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnouncementItemShimme
 Napp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnoucementShimmer.kt,c/9/c987991cead893c9e1387cd701b6421bf0ae6f8d
 Ö
 Uapp/src/main/java/com/android/yambasama/ui/views/shimmer/AnnouncementDetailShimmer.kt,f/8/f8bcd25d82d19ca5ae550dbb85510af3e5551870
-z
-Japp/src/main/java/com/android/yambasama/data/api/service/UserAPIService.kt,f/1/f134f640fc5d41dd9abbdd5a2f8069cf37a6ef44
 v
 Fapp/src/main/java/com/android/yambasama/ui/views/utils/InfiniteList.kt,c/2/c229c565ac855d92aa54cbc6394b120afb6bbb53
 Å
 Qapp/src/main/java/com/android/yambasama/data/model/api/ApiAnnouncementResponse.kt,e/5/e5cf6f00bbd1b9983519ef4ffd84bc0cc1801c55
-r
-Bapp/src/main/java/com/android/yambasama/data/model/api/ApiLogin.kt,6/8/6858a9c4741dabda080952a1037c363c05eef0cc
 |
 Lapp/src/main/java/com/android/yambasama/data/model/api/ApiAddressResponse.kt,6/9/69c7f318101eda2ef397460335b24acaea052f87
 Å

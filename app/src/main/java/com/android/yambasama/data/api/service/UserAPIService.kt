@@ -1,7 +1,9 @@
 package com.android.yambasama.data.api.service
 
 import com.android.yambasama.data.model.api.ApiLogin
+import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.api.ApiTokenResponse
+import com.android.yambasama.data.model.api.RefreshBody
 import com.android.yambasama.data.model.dataRemote.User
 import retrofit2.Response
 import retrofit2.http.*
@@ -19,4 +21,10 @@ interface UserAPIService {
         @Header("Authorization")
         token: String
     ): Response<List<User>>
+
+    @POST("/api/token/refresh")
+    suspend fun getRefresh(
+        @Body refreshBody: RefreshBody
+    ): Response<ApiRefreshTokenResponse>
+
 }

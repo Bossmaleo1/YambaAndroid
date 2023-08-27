@@ -2,9 +2,7 @@ package com.android.yambasama.data.model.api
 
 import com.google.gson.annotations.SerializedName
 
-class ApiRefreshTokenResponse (
-    @SerializedName("token")
-    val token: String,
+data class RefreshBody (
     @SerializedName("refresh_token")
-    val refreshToken: String,
+    val refreshToken: String
 )
