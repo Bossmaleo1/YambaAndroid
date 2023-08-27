@@ -147,8 +147,6 @@ x
 Happ/src/main/java/com/android/yambasama/data/model/api/NumberOfKgBody.kt,8/0/80d5fde94fa5b48fb0c8be589be1f9020f6fd563
 ƒ
 Sapp/src/main/java/com/android/yambasama/domain/repository/AnnouncementRepository.kt,c/e/ceadbf713d3f2f49e629439beee6dc9f60aa14b9
-z
-Japp/src/main/java/com/android/yambasama/data/model/api/ApiTokenResponse.kt,9/2/929cb675f4a3bbf61a80d5f79b7d2a29aa585eca
 ˆ
 Xapp/src/test/java/com/android/yambasama/presentation/viewModel/user/UserViewModelTest.kt,4/5/458b3de0e9f965f8428e4f503d83bbe6e52c8481
 ƒ
