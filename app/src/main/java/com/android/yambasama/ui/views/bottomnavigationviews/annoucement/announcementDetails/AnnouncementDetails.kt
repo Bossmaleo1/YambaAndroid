@@ -189,12 +189,12 @@ fun AnnouncementDetails(
                                     ) {
                                         Column {
                                             Row {
-                                                Divider(
-                                                    color = MaterialTheme.colorScheme.background,
+                                                HorizontalDivider(
                                                     modifier = Modifier.padding(
                                                         bottom = 2.dp,
                                                         top = 2.dp
-                                                    )
+                                                    ),
+                                                    color = MaterialTheme.colorScheme.background
                                                 )
                                             }
                                             Row(
@@ -264,24 +264,24 @@ fun AnnouncementDetails(
                                                             color = MaterialTheme.colorScheme.primary
                                                         )
                                                     }
-                                                    Divider(
-                                                        color = MaterialTheme.colorScheme.primary,
+                                                    HorizontalDivider(
                                                         modifier = Modifier
                                                             .padding(top = 10.dp)
                                                             .fillMaxWidth()
                                                             .height(0.20.dp),
+                                                        color = MaterialTheme.colorScheme.primary
                                                     )
                                                 }
 
                                             }
 
                                             Row {
-                                                Divider(
-                                                    color = MaterialTheme.colorScheme.background,
+                                                HorizontalDivider(
                                                     modifier = Modifier.padding(
                                                         bottom = 10.dp,
                                                         top = 5.dp
-                                                    )
+                                                    ),
+                                                    color = MaterialTheme.colorScheme.background
                                                 )
                                             }
 
@@ -529,12 +529,12 @@ fun AnnouncementDetails(
                                                 )
                                             }
 
-                                            Divider(
-                                                color = MaterialTheme.colorScheme.primary,
+                                            HorizontalDivider(
                                                 modifier = Modifier
                                                     .padding(top = 10.dp)
                                                     .fillMaxWidth()
                                                     .height(0.20.dp),
+                                                color = MaterialTheme.colorScheme.primary
                                             )
                                         }
                                     }

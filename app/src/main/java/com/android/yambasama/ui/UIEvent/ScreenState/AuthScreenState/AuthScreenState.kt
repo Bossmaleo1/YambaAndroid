@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.UIEvent.ScreenState.AuthScreenState
 
+import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.Token
@@ -15,6 +16,7 @@ data class AuthScreenState (
     var user: List<User> = mutableListOf(),
     var userRoom: List<UserRoom> = mutableListOf(),
     var token: List<Token> = mutableListOf(),
+    var refreshToken: List<ApiRefreshTokenResponse> = mutableListOf(),
     var tokenRoom: List<TokenRoom> = mutableListOf(),
     var emailInputValue: String = "",
     var passwordInputValue: String = "",

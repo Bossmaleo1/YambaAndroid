@@ -3,6 +3,7 @@ package com.android.yambasama.presentation.viewModel.user
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.api.RefreshBody
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
@@ -17,6 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import okhttp3.Authenticator
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -45,20 +50,12 @@ class UserViewModel @Inject constructor(
 
     }
 
-    fun getRefresh(refreshBody: RefreshBody) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            //val apiResult =
-        }catch (e: Exception) {
-
-        }
-    }
-
     fun getToken(userName: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
             try {
                 val apiResult = getTokenUseCase.execute(userName, password)
                 apiResult.data?.let { apiTokenResponse ->
                     screenState.value.token =
-                        mutableListOf(Token(id = 1, token = apiTokenResponse.token))
+                        mutableListOf(Token(id = 1, token = apiTokenResponse.token, refreshToken = apiTokenResponse.refreshToken))
                 }
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
@@ -92,7 +89,8 @@ class UserViewModel @Inject constructor(
                         saveTokenUseCase.execute(
                             TokenRoom(
                                 id = 1,
-                                token = screenState.value.token[0].token
+                                token = screenState.value.token[0].token,
+                                refreshToken = screenState.value.token[0].refreshToken
                             )
                         )
                         saveUserUseCase.execute(
@@ -128,6 +126,7 @@ class UserViewModel @Inject constructor(
                 )
             }
     }
+
 
     fun getSavedToken() = liveData {
         getSavedTokenUseCase.execute().collect {

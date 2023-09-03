@@ -13,14 +13,12 @@ class AddressRemoteDataSourceImpl(
     override suspend fun getAddress(
         locale: String,
         page: Int,
-        query: String,
-        token: String
+        query: String
     ): Response<List<Address>> {
         return addressAPIService.getAddress(
             locale,
             page,
-            query,
-            token
+            query
         )
     }
 

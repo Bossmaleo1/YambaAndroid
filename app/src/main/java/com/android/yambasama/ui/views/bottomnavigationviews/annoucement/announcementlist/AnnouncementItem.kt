@@ -67,7 +67,7 @@ fun AnnouncementItem(
 ) {
 
     var visibleImage by remember { mutableStateOf(false) }
-    val userName by rememberSaveable { mutableStateOf("${announcement.user?.firstName} ${announcement.user?.lastName}") }
+    val userName by rememberSaveable { mutableStateOf("${announcement.user.firstName} ${announcement.user.lastName}") }
     val isDark = isSystemInDarkTheme()
     val destinationDate by rememberSaveable { mutableStateOf(util.getDateTimeFormatter(announcement.arrivingTime)) }
     val postDateTime by rememberSaveable { mutableStateOf(util.getDateFormatter(announcement.published)) }
@@ -152,9 +152,9 @@ fun AnnouncementItem(
             }
 
             Row {
-                Divider(
-                    color = MaterialTheme.colorScheme.background,
-                    modifier = Modifier.padding(bottom = 10.dp, top = 0.dp)
+                HorizontalDivider(
+                    modifier = Modifier.padding(bottom = 10.dp, top = 0.dp),
+                    color = MaterialTheme.colorScheme.background
                 )
             }
 
@@ -260,12 +260,12 @@ fun AnnouncementItem(
                 )
             }
 
-            Divider(
-                color = MaterialTheme.colorScheme.primary,
+            HorizontalDivider(
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .fillMaxWidth()
                     .height(0.20.dp),
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

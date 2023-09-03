@@ -390,7 +390,7 @@ fun handleLocationData(locationData: LocationData) {
     //Log.d("MALEO93939393939393", "Latitude : ${locationData.location!!.latitude}")
     //Log.d("MALEO93939393939393", "Longitude :  ${locationData.location!!.longitude}")
     Log.d("MALEO9393", "Last location ${locationData.addressLocation!!.country}")
-    Log.d("MALEO9393", "Last location ${locationData.addressLocation!!.city}")
+    Log.d("MALEO9393", "Last location ${locationData.addressLocation.city}")
 }
 
 

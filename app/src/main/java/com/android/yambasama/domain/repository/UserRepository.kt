@@ -27,6 +27,8 @@ interface UserRepository {
 
     suspend fun saveToken(token: TokenRoom)
 
+    suspend fun updateToken(token: TokenRoom)
+
     suspend fun deleteToken(token: TokenRoom)
 
     //Flow for Room Data backup

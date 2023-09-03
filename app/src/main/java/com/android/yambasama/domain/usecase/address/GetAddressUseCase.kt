@@ -8,9 +8,8 @@ class GetAddressUseCase(private val addressRepository: AddressRepository) {
     suspend fun execute(
         locale: String,
         page: Int,
-        query: String,
-        token: String
+        query: String
     ): Resource<List<Address>> {
-        return addressRepository.getAddress(locale,page,query,token)
+        return addressRepository.getAddress(locale,page,query)
     }
 }

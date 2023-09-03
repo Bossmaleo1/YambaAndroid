@@ -75,7 +75,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.isContainer
+import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -664,8 +664,10 @@ fun AddAnnouncementView(
                             },
                             shape = RoundedCornerShape(30)
                         ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     shape = RoundedCornerShape(30),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -697,6 +699,7 @@ fun AddAnnouncementView(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
+                val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                 OutlinedTextField(
                     modifier = Modifier
                         .width(280.dp)
@@ -708,8 +711,10 @@ fun AddAnnouncementView(
                             },
                             shape = RoundedCornerShape(30)
                         ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = containerColor,
+                        unfocusedContainerColor = containerColor,
+                        disabledContainerColor = containerColor,
                     ),
                     shape = RoundedCornerShape(30),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -757,8 +762,10 @@ fun AddAnnouncementView(
                                 BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary)
                             }, shape = RoundedCornerShape(30)
                         ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     shape = RoundedCornerShape(30),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -801,8 +808,10 @@ fun AddAnnouncementView(
                             },
                             shape = RoundedCornerShape(30)
                         ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     shape = RoundedCornerShape(30),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -964,7 +973,7 @@ fun AddAnnouncementView(
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .semantics { isContainer = true }
+                            .semantics { isTraversalGroup = true }
                     ) {
                         IconButton(
                             modifier = Modifier
@@ -1040,7 +1049,7 @@ fun AddAnnouncementView(
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .semantics { isContainer = true }
+                            .semantics { isTraversalGroup = true }
                     ) {
                         IconButton(
                             modifier = Modifier

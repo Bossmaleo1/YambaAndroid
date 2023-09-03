@@ -1,6 +1,8 @@
 package com.android.yambasama.data.repository
 
+import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.api.ApiTokenResponse
+import com.android.yambasama.data.model.api.RefreshBody
 import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.User
@@ -20,6 +22,10 @@ class UserRepositoryImpl(
         return responseToResourceUser(userRemoteDataSource.getUser(userName, token))
     }
 
+    override suspend fun getRefreshToken(refreshBody: RefreshBody): Resource<ApiRefreshTokenResponse> {
+        return responseToResourceRefreshToken(userRemoteDataSource.getRefreshToken(refreshBody))
+    }
+
     private fun responseToResourceUser(response: Response<List<User>>): Resource<List<User>> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
@@ -35,6 +41,10 @@ class UserRepositoryImpl(
 
     override suspend fun saveToken(token: TokenRoom) {
         userLocalDataSource.saveTokenToDB(token)
+    }
+
+    override suspend fun updateToken(token: TokenRoom) {
+        userLocalDataSource.updateTokenRoom(token)
     }
 
     override suspend fun deleteUser(user: UserRoom) {
@@ -70,7 +80,16 @@ class UserRepositoryImpl(
         return Resource.Error(response.message())
     }
 
+    private fun responseToResourceRefreshToken(response: Response<ApiRefreshTokenResponse>): Resource<ApiRefreshTokenResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
+                return Resource.Success(result)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
     override suspend fun deleteToken(token: TokenRoom) {
-        TODO("Not yet implemented")
+        userLocalDataSource.deleteTokenToDB(token)
     }
 }

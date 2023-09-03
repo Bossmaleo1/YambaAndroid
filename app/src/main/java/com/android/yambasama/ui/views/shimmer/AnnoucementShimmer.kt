@@ -48,7 +48,7 @@ fun getBrush(): Brush {
             )
         )
     )
-    return Brush.linearGradient(
+    return linearGradient(
         colors = gradient,
         start = Offset(200f, 200f),
         end = Offset(

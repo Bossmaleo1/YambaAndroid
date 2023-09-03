@@ -1,10 +1,5 @@
 package com.android.yambasama.presentation.viewModel.address
 
-
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -48,8 +43,7 @@ class AddressViewModel @Inject constructor(
                 getAddressUseCase.execute(
                     locale = locale,
                     page = screenState.value.currentPage,
-                    query = screenState.value.searchInputValue,
-                    token = "Bearer $token"
+                    query = screenState.value.searchInputValue
                 )
             apiResult.data?.let { apiAddressResponse ->
                 getAdressResult(apiAddressResponse)

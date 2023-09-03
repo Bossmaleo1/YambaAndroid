@@ -8,7 +8,6 @@ interface AddressRemoteDataSource {
     suspend fun getAddress(
         locale: String,
         page: Int,
-        query: String,
-        token: String
+        query: String
     ): Response<List<Address>>
 }

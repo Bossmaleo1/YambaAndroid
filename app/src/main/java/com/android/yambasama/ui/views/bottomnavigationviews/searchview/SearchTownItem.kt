@@ -270,12 +270,12 @@ fun SearchTownItem(
                 )
             }
 
-            Divider(
-                color = MaterialTheme.colorScheme.primary,
+            HorizontalDivider(
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .fillMaxWidth()
                     .height(0.20.dp),
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

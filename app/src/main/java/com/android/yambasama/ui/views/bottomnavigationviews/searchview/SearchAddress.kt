@@ -112,12 +112,15 @@ fun SearchAddress(
                             )
                         }
 
+                        val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                         OutlinedTextField(
                             value = searchAddress,
                             singleLine = true,
                             textStyle = TextStyle(fontSize = 12.sp),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = containerColor,
+                                unfocusedContainerColor = containerColor,
+                                disabledContainerColor = containerColor,
                             ),
                             onValueChange = {
                                 searchAddress = it

@@ -135,7 +135,7 @@ class UserDAOTest {
         val user = dao.getUser(userToken = "XXXX1")
         user.test {
             val user = awaitItem()
-            Truth.assertThat(user?.id).isEqualTo(11)
+            Truth.assertThat(user.id).isEqualTo(11)
         }
     }
 

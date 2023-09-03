@@ -35,7 +35,6 @@ import com.android.yambasama.ui.util.Util
 import com.android.yambasama.ui.views.bottomnavigationviews.annoucement.announcementlist.InfiniteAnnouncementList
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

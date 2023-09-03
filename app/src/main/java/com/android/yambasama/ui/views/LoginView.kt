@@ -112,8 +112,10 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
 
                 OutlinedTextField(
                     value = email,
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     ),
                     onValueChange = {
                         email = it
@@ -139,10 +141,13 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                     shape = RoundedCornerShape(12.dp)
                 )
 
+                val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                 OutlinedTextField(
                     value = password,
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = containerColor,
+                        unfocusedContainerColor = containerColor,
+                        disabledContainerColor = containerColor,
                     ),
                     onValueChange = {
                         password = it

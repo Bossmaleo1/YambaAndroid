@@ -15,8 +15,6 @@ interface AddressAPIService {
         @Query("page")
         page: Int,
         @Query("q")
-        query: String,
-        @Header("Authorization")
-        token: String
+        query: String
     ): Response<List<Address>>
 }

@@ -12,5 +12,7 @@ data class TokenRoom(
     @ColumnInfo(name = "token_id")
     var id: Int?,
     @ColumnInfo(name = "token_token")
-    var token: String
+    var token: String,
+    @ColumnInfo(name = "refresh_token")
+    var refreshToken: String
 )

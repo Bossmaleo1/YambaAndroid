@@ -23,15 +23,13 @@ class AddressRepositoryImpl(
     override suspend fun getAddress(
         locale: String,
         page: Int,
-        query: String,
-        token: String
+        query: String
     ): Resource<List<Address>> {
         return responseToResourceAddress(
             addressRemoteDataSource.getAddress(
                 locale,
                 page,
-                query,
-                token
+                query
             )
         )
     }

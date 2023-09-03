@@ -9,8 +9,7 @@ interface AddressRepository {
     suspend fun getAddress(
         locale: String,
         page: Int,
-        query: String,
-        token: String
+        query: String
     ): Resource<List<Address>>
 
 }

@@ -82,4 +82,28 @@ class UserUseCaseModule {
     ): DeleteTableTokenUseCase {
         return DeleteTableTokenUseCase(userRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetRefreshTokenUseCase(
+        userRepository: UserRepository
+    ): GetRefreshTokenUseCase {
+        return GetRefreshTokenUseCase(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUpdateSavedTokenUseCase(
+        userRepository: UserRepository
+    ): UpdateSavedTokenUseCase {
+        return UpdateSavedTokenUseCase(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetSavedTokenInterceptorUseCase(
+        userRepository: UserRepository
+    ): GetSavedTokenInterceptorUseCase {
+        return GetSavedTokenInterceptorUseCase(userRepository)
+    }
 }
