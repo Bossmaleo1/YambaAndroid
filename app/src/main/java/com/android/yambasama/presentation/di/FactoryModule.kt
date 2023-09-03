@@ -1,6 +1,7 @@
 package com.android.yambasama.presentation.di
 
 import android.app.Application
+import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.domain.usecase.address.GetAddressUseCase
 import com.android.yambasama.domain.usecase.annoucement.CreateAnnouncementUseCase
 import com.android.yambasama.domain.usecase.annoucement.GetAnnouncementUseCase
@@ -10,6 +11,7 @@ import com.android.yambasama.presentation.viewModel.announcement.AnnouncementVie
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
+import com.android.yambasama.presentation.viewModel.token.TokenViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -81,6 +83,16 @@ class FactoryModule {
             getAnnouncementsUseCase,
             getAnnouncementUseCase,
             createAnnouncementUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideTokenViewModelFactory(
+         tokenManager: TokenManager
+    ): TokenViewModelFactory {
+        return TokenViewModelFactory(
+            tokenManager = tokenManager
         )
     }
 }
