@@ -93,7 +93,8 @@ class NetModule {
     @Singleton
     @Provides
     fun providerRetrofit(
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        authAuthenticator: AuthAuthenticator
     ): Retrofit {
         /*val getSavedTokenUseCase: GetSavedTokenInterceptorUseCase
        val authInterceptor: AuthInterceptor = AuthInterceptor(getSavedTokenUseCase)*/
@@ -104,6 +105,7 @@ class NetModule {
         val client = OkHttpClient.Builder().apply {
             this.addInterceptor(interceptor)
                 .addInterceptor(authInterceptor)
+                .authenticator(authAuthenticator)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(25, TimeUnit.SECONDS)

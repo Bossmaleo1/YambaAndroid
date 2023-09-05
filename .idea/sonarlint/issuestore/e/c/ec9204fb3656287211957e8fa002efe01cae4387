@@ -1,0 +1,10 @@
+
+@kotlin:S63105"Avoid hardcoded dispatchers.(­•çþÿÿÿÿ8”Î™ð£1
+:kotlin:S6310R"Avoid hardcoded dispatchers.(Åºö/8”Î™ð£1
+Lkotlin:S1081")Either remove or fill this block of code.(×ØÆãùÿÿÿÿ8˜Î™ð£1
+Mkotlin:S108—")Either remove or fill this block of code.(±ß–ûÿÿÿÿ8˜Î™ð£1
+9kotlin:S1128"Remove this unused import.(ŽšÕ‹8žÎ™ð£1
+9kotlin:S1128"Remove this unused import.(¬û»¥8žÎ™ð£1
+>kotlin:S1128"Remove this unused import.(²ùÕ³üÿÿÿÿ8žÎ™ð£1
+>kotlin:S1128"Remove this unused import.(Ýó¸£þÿÿÿÿ8žÎ™ð£1
+rkotlin:S1871ÿ"MThis branch's code block is the same as the block for the branch on line 236.(…‹áõÿÿÿÿÿ8 Î™ð£1

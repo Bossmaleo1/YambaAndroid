@@ -28,6 +28,11 @@ class AuthAuthenticator  @Inject constructor(
                 val apiResult = tokenRefreshToken?.let { RefreshBody(refreshToken = it) }
                     ?.let { getRefreshTokenUseCase.execute( refreshBody = it) }
                 apiResult?.data?.let { apiTokenResponse ->
+                    //we stock our token in DataStore
+                    tokenManager.saveToken(apiTokenResponse.token)
+                    // we save our refresh token
+                    tokenManager.saveRefreshToken(apiTokenResponse.refreshToken)
+                    //we upgrade our savedToken
                     updateSavedTokenUseCase.execute(tokenRoom = TokenRoom(
                         id = 1,
                         token = apiTokenResponse.token,

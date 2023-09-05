@@ -11,7 +11,7 @@ import com.android.yambasama.presentation.viewModel.announcement.AnnouncementVie
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
-import com.android.yambasama.presentation.viewModel.token.TokenViewModelFactory
+import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -88,10 +88,10 @@ class FactoryModule {
 
     @Singleton
     @Provides
-    fun provideTokenViewModelFactory(
+    fun provideTokenDataStoreViewModelFactory(
          tokenManager: TokenManager
-    ): TokenViewModelFactory {
-        return TokenViewModelFactory(
+    ): TokenDataStoreViewModelFactory {
+        return TokenDataStoreViewModelFactory(
             tokenManager = tokenManager
         )
     }
