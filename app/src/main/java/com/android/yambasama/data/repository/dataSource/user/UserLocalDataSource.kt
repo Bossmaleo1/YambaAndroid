@@ -12,7 +12,6 @@ interface UserLocalDataSource {
     fun getSavedUser(userToken: String): Flow<UserRoom>
     suspend fun deleteUserFromDB(user: UserRoom)
 
-    suspend fun updateTokenRoom(token: TokenRoom)
     suspend fun deleteTokenToDB(token: TokenRoom)
 
     suspend fun deleteUserTable()

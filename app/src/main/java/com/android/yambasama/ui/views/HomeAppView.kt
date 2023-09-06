@@ -55,7 +55,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.Brush
-import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModel
 
 @Composable
 @ExperimentalMaterial3Api
@@ -68,8 +67,7 @@ fun HomeApp(
     visibleCurrentForm: MutableState<Boolean>,
     visibleNextForm: MutableState<Boolean>,
     switch: MutableState<Boolean>,
-    selectedItem: MutableState<Int>,
-    tokenDataStoreViewModel: TokenDataStoreViewModel
+    selectedItem: MutableState<Int>
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -463,10 +461,10 @@ fun HomeApp(
         delay(3)
         visibleSearch = true
         //we upgrade our token and refresh token
-        if (screenState.tokenRoom.isNotEmpty()) {
+        /*if (screenState.tokenRoom.isNotEmpty()) {
             tokenDataStoreViewModel.saveToken(token = screenState.tokenRoom[0].token)
             tokenDataStoreViewModel.saveRefreshToken(refreshToken = screenState.tokenRoom[0].refreshToken)
-        }
+        }*/
     }
 }
 

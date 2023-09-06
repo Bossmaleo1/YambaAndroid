@@ -33,9 +33,6 @@ class UserLocalDataSourceImpl(
         userDAO.deleteUser(user)
     }
 
-    override suspend fun updateTokenRoom(token: TokenRoom) {
-        userDAO.updateToken(token = token)
-    }
 
     override suspend fun deleteTokenToDB(token: TokenRoom) {
         userDAO.deleteToken(token = token)

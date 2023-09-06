@@ -22,9 +22,4 @@ interface UserAPIService {
         token: String
     ): Response<List<User>>
 
-    @POST("/api/token/refresh")
-    suspend fun getRefresh(
-        @Body refreshBody: RefreshBody
-    ): Response<ApiRefreshTokenResponse>
-
 }

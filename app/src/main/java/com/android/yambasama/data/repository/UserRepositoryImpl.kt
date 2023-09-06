@@ -22,9 +22,7 @@ class UserRepositoryImpl(
         return responseToResourceUser(userRemoteDataSource.getUser(userName, token))
     }
 
-    override suspend fun getRefreshToken(refreshBody: RefreshBody): Resource<ApiRefreshTokenResponse> {
-        return responseToResourceRefreshToken(userRemoteDataSource.getRefreshToken(refreshBody))
-    }
+
 
     private fun responseToResourceUser(response: Response<List<User>>): Resource<List<User>> {
         if (response.isSuccessful) {
@@ -43,9 +41,7 @@ class UserRepositoryImpl(
         userLocalDataSource.saveTokenToDB(token)
     }
 
-    override suspend fun updateToken(token: TokenRoom) {
-        userLocalDataSource.updateTokenRoom(token)
-    }
+
 
     override suspend fun deleteUser(user: UserRoom) {
         userLocalDataSource.deleteUserFromDB(user)
@@ -80,14 +76,7 @@ class UserRepositoryImpl(
         return Resource.Error(response.message())
     }
 
-    private fun responseToResourceRefreshToken(response: Response<ApiRefreshTokenResponse>): Resource<ApiRefreshTokenResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let { result ->
-                return Resource.Success(result)
-            }
-        }
-        return Resource.Error(response.message())
-    }
+
 
     override suspend fun deleteToken(token: TokenRoom) {
         userLocalDataSource.deleteTokenToDB(token)

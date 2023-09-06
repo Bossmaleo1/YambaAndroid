@@ -1,20 +1,23 @@
 package com.android.yambasama.presentation.viewModel.AuthAuthenticator
 
+import com.android.yambasama.data.api.service.AuthenticatorAPIService
 import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.data.model.api.RefreshBody
+import com.android.yambasama.data.model.dataLocal.TokenRoom
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 import javax.inject.Inject
-import com.android.yambasama.data.model.dataLocal.TokenRoom
-import com.android.yambasama.domain.usecase.user.GetRefreshTokenUseCase
 import com.android.yambasama.domain.usecase.user.UpdateSavedTokenUseCase
 import kotlinx.coroutines.flow.first
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AuthAuthenticator  @Inject constructor(
-    private val getRefreshTokenUseCase: GetRefreshTokenUseCase,
     private val updateSavedTokenUseCase: UpdateSavedTokenUseCase,
     private val tokenManager: TokenManager
 ) : Authenticator {
@@ -25,24 +28,39 @@ class AuthAuthenticator  @Inject constructor(
         }
 
         return runBlocking {
-                val apiResult = tokenRefreshToken?.let { RefreshBody(refreshToken = it) }
-                    ?.let { getRefreshTokenUseCase.execute( refreshBody = it) }
-                apiResult?.data?.let { apiTokenResponse ->
-                    //we stock our token in DataStore
-                    tokenManager.saveToken(apiTokenResponse.token)
-                    // we save our refresh token
-                    tokenManager.saveRefreshToken(apiTokenResponse.refreshToken)
-                    //we upgrade our savedToken
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://jwt-test-api.onrender.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build()
+
+            val service = retrofit.create(AuthenticatorAPIService::class.java)
+            tokenRefreshToken?.let { RefreshBody(refreshToken = it) }
+                ?.let { service.getRefresh(it) }?.body()?.let {apiRefreshTokenResponse ->
+                    tokenManager.deleteToken()
+                    tokenManager.deleteRefreshToken()
+                    tokenManager.saveRefreshToken(apiRefreshTokenResponse.refreshToken)
+                    tokenManager.saveToken(apiRefreshTokenResponse.token)
                     updateSavedTokenUseCase.execute(tokenRoom = TokenRoom(
                         id = 1,
-                        token = apiTokenResponse.token,
-                        refreshToken = apiTokenResponse.refreshToken
-                    ))
+                        token = apiRefreshTokenResponse.token,
+                        refreshToken = apiRefreshTokenResponse.refreshToken
+                    )
+                    )
                 }
 
+            runBlocking {
+                val token = tokenManager.getToken().first()
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer $tokenRefreshToken")
+                    .header("Authorization", "Bearer $token")
                     .build()
+            }
+
+
         }
     }
 

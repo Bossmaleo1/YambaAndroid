@@ -15,4 +15,6 @@ import com.android.yambasama.data.model.dataLocal.UserRoom
 )
 abstract class YambaDatabase: RoomDatabase() {
     abstract fun getUserDAO():UserDAO
+
+    abstract fun getAuthenticator():AuthenticatorDAO
 }

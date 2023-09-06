@@ -11,7 +11,6 @@ import com.android.yambasama.presentation.viewModel.announcement.AnnouncementVie
 import com.android.yambasama.presentation.viewModel.address.AddressViewModelFactory
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
-import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -86,13 +85,4 @@ class FactoryModule {
         )
     }
 
-    @Singleton
-    @Provides
-    fun provideTokenDataStoreViewModelFactory(
-         tokenManager: TokenManager
-    ): TokenDataStoreViewModelFactory {
-        return TokenDataStoreViewModelFactory(
-            tokenManager = tokenManager
-        )
-    }
 }

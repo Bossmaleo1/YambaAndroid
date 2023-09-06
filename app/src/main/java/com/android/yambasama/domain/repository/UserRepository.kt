@@ -13,8 +13,6 @@ interface UserRepository {
     //resource for retrofit requests
     suspend fun getUsers(userName: String, token: String): Resource<List<User>>
 
-    suspend fun getRefreshToken(refreshBody: RefreshBody): Resource<ApiRefreshTokenResponse>
-
     suspend fun saveUser(user: UserRoom)
 
     suspend fun deleteUser(user: UserRoom)
@@ -26,8 +24,6 @@ interface UserRepository {
     suspend fun getToken(userName: String, password: String): Resource<ApiTokenResponse>
 
     suspend fun saveToken(token: TokenRoom)
-
-    suspend fun updateToken(token: TokenRoom)
 
     suspend fun deleteToken(token: TokenRoom)
 

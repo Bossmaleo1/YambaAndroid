@@ -20,7 +20,4 @@ class UserRemoteDataSourceImpl(
         return userAPIService.getUser(userName, token)
     }
 
-    override suspend fun getRefreshToken(refreshBody: RefreshBody): Response<ApiRefreshTokenResponse> {
-        return  userAPIService.getRefresh(refreshBody)
-    }
 }
