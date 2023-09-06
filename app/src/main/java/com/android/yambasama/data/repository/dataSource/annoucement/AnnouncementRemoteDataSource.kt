@@ -14,18 +14,15 @@ interface AnnouncementRemoteDataSource {
         departureTimeAfter: String,
         departureTimeBefore: String,
         departureAddress: Int,
-        destinationAddress: Int,
-        token: String
+        destinationAddress: Int
     ): Response<List<Announcement>>
 
     suspend fun getAnnouncement(
-        id: Int,
-        token: String
+        id: Int
     ): Response<Announcement>
 
     suspend fun createAnnouncement(
-        announcementBody: AnnouncementBody,
-        token: String
+        announcementBody: AnnouncementBody
     ): Response<String>
 
 }

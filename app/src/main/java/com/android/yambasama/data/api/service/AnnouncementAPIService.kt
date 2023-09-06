@@ -25,26 +25,20 @@ interface AnnouncementAPIService {
         @Query("departureAddress")
         departureAddress: Int,
         @Query("destinationAddress")
-        destinationAddress: Int,
-        @Header("Authorization")
-        token: String
+        destinationAddress: Int
     ): Response<List<Announcement>>
 
 
     @GET("/api/announcement/{id}")
     suspend fun getAnnouncement(
         @Path("id")
-        id: Int,
-        @Header("Authorization")
-        token: String
+        id: Int
     ): Response<Announcement>
 
     @POST("/api/announcement/create")
     suspend fun createAnnouncement(
         @Body
-        announcementBody: AnnouncementBody,
-        @Header("Authorization")
-        token: String
+        announcementBody: AnnouncementBody
     ): Response<String>
 
 }
