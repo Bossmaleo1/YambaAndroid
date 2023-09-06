@@ -7,12 +7,10 @@ import com.android.yambasama.domain.repository.AnnouncementRepository
 class CreateAnnouncementUseCase(private val annoucementRepository: AnnouncementRepository) {
 
     suspend fun execute(
-        announcementBody: AnnouncementBody,
-        token: String
+        announcementBody: AnnouncementBody
     ): Resource<String> {
         return annoucementRepository.createAnnouncement(
-            announcementBody = announcementBody,
-            token = token
+            announcementBody = announcementBody
         )
     }
 }

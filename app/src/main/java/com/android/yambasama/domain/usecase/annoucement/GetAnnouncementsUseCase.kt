@@ -11,8 +11,7 @@ class GetAnnouncementsUseCase(private val annoucementRepository: AnnouncementRep
         arrivingTimeAfter: String,
         arrivingTimeBefore: String,
         departureAddress: Int,
-        destinationAddress: Int,
-        token: String
+        destinationAddress: Int
     ): Resource<List<Announcement>> {
         return annoucementRepository.getAnnouncements(
             page = page,
@@ -20,8 +19,7 @@ class GetAnnouncementsUseCase(private val annoucementRepository: AnnouncementRep
             arrivingTimeAfter = arrivingTimeAfter,
             arrivingTimeBefore = arrivingTimeBefore,
             departureAddress = departureAddress,
-            destinationAddress = destinationAddress,
-            token = token
+            destinationAddress = destinationAddress
         )
     }
 }

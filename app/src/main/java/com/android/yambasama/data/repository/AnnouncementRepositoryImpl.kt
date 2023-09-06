@@ -44,8 +44,7 @@ class AnnouncementRepositoryImpl(
         arrivingTimeAfter: String,
         arrivingTimeBefore: String,
         departureAddress: Int,
-        destinationAddress: Int,
-        token: String
+        destinationAddress: Int
     ): Resource<List<Announcement>> {
         return responseToRessourceAnnouncements(
             annoucementRemoteDataSource.getAnnouncements(
@@ -59,7 +58,7 @@ class AnnouncementRepositoryImpl(
         )
     }
 
-    override suspend fun getAnnouncement(id: Int, token: String): Resource<Announcement> {
+    override suspend fun getAnnouncement(id: Int): Resource<Announcement> {
         return  responseToRessourceAnnouncement(
             annoucementRemoteDataSource.getAnnouncement(
                 id = id
@@ -68,8 +67,7 @@ class AnnouncementRepositoryImpl(
     }
 
     override suspend fun createAnnouncement(
-        announcementBody: AnnouncementBody,
-        token: String
+        announcementBody: AnnouncementBody
     ): Resource<String> {
         return responseToRessourceCreateAnnouncement(
             annoucementRemoteDataSource.createAnnouncement(

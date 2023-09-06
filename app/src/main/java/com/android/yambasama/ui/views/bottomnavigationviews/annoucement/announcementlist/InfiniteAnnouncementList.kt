@@ -104,7 +104,6 @@ fun InfiniteAnnouncementList(
                 searchFormViewModel.screenState.value.addressDestination?.id?.let { it2 ->
                     searchFormViewModel.screenState.value.addressDeparture?.id?.let { it3 ->
                         announcementViewModel.getAnnouncements(
-                            token = screenStateUser.tokenRoom[0].token,
                             arrivingTimeAfter = it,
                             arrivingTimeBefore = it1,
                             destinationAddressId = it2,

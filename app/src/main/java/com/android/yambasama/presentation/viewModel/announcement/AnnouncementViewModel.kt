@@ -66,8 +66,7 @@ class AnnouncementViewModel @Inject constructor(
     val currentPage: MutableState<Int> = mutableStateOf(1)
 
     private fun createAnnouncement(
-        announcementBody: AnnouncementBody,
-        token: String
+        announcementBody: AnnouncementBody
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             _screenAnnouncementBodyState.value = _screenAnnouncementBodyState.value.copy(
@@ -78,8 +77,7 @@ class AnnouncementViewModel @Inject constructor(
             )
 
             val apiResult = createAnnouncementUseCase.execute(
-                announcementBody = announcementBody,
-                token = "Bearer $token"
+                announcementBody = announcementBody
             )
 
             apiResult.data?.let {
@@ -88,10 +86,6 @@ class AnnouncementViewModel @Inject constructor(
                     isLoad = false,
                     isNetworkError = false,
                     isDoneAnnouncementCreate = true
-                )
-                Log.d(
-                    "MALEOMALEO9393MALEO9393",
-                    "MALEO-SAMA ${screenAnnouncementCreateScreenState.value.isDoneAnnouncementCreate}"
                 )
             }
 
@@ -107,7 +101,6 @@ class AnnouncementViewModel @Inject constructor(
 
 
     fun getAnnouncements(
-        token: String,
         departureAddressId: Int,
         destinationAddressId: Int,
         arrivingTimeAfter: String,
@@ -119,7 +112,6 @@ class AnnouncementViewModel @Inject constructor(
                 isLoad = true,
                 isNetworkError = false,
                 initCall = screenState.value.initCall++,
-                // currentPage = screenState.value.currentPage++
             )
             val apiResult =
                 getAnnoucementsUseCase.execute(
@@ -128,8 +120,7 @@ class AnnouncementViewModel @Inject constructor(
                     arrivingTimeAfter = arrivingTimeAfter,
                     arrivingTimeBefore = arrivingTimeBefore,
                     departureAddress = departureAddressId,
-                    destinationAddress = destinationAddressId,
-                    token = "Bearer $token"
+                    destinationAddress = destinationAddressId
                 )
             apiResult.data?.let { apiAnnouncementResponse ->
                 screenState.value.announcementList.addAll(apiAnnouncementResponse)
@@ -160,13 +151,17 @@ class AnnouncementViewModel @Inject constructor(
                 isLoad = false,
                 refreshing = false
             )
+
+            Log.d("MALEOException939393", "Hello World !!")
+            Log.d("MALEOException939393", "${e.message}}" )
+            Log.d("MALEOException939393", " ${e.toString()}" )
+            Log.d("MALEOException939393", "${e.printStackTrace()}}" )
         }
     }
 
     fun getAnnouncement(
         app: Context,
-        id: Int,
-        token: String
+        id: Int
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             _screenAnnouncementState.value = _screenAnnouncementState.value.copy(
@@ -175,7 +170,7 @@ class AnnouncementViewModel @Inject constructor(
                 isNetworkError = false,
             )
 
-            val apiResult = getAnnouncementUseCase.execute(id = id, token = "Bearer $token")
+            val apiResult = getAnnouncementUseCase.execute(id = id)
             apiResult.data?.let { apiAnnouncementResponse ->
                 screenAnnouncementState.value.announcementDetails = apiAnnouncementResponse
                 screenAnnouncementState.value.refreshing = false
@@ -207,7 +202,6 @@ class AnnouncementViewModel @Inject constructor(
 
                 if (isNetworkAvailable(event.app)) {
                     getAnnouncements(
-                        token = event.token,
                         arrivingTimeAfter = event.arrivingTimeAfter,
                         arrivingTimeBefore = event.arrivingTimeBefore,
                         destinationAddressId = event.destinationAddressId,
@@ -248,7 +242,6 @@ class AnnouncementViewModel @Inject constructor(
 
                 if (isNetworkAvailable(event.app)) {
                     createAnnouncement(
-                        token = event.token,
                         announcementBody = event.announcementBody
                     )
                 } else {
@@ -271,7 +264,6 @@ class AnnouncementViewModel @Inject constructor(
                 if (isNetworkAvailable(event.app)) {
                     getAnnouncement(
                         app = event.app,
-                        token = event.token,
                         id = event.id
                     )
                 } else {

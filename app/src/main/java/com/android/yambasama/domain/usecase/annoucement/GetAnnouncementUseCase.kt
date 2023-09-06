@@ -7,9 +7,8 @@ import com.android.yambasama.domain.repository.AnnouncementRepository
 class GetAnnouncementUseCase(private val annoucementRepository: AnnouncementRepository) {
 
     suspend fun execute(
-        id: Int,
-        token: String
+        id: Int
     ): Resource<Announcement> {
-        return annoucementRepository.getAnnouncement(id,token)
+        return annoucementRepository.getAnnouncement(id)
     }
 }

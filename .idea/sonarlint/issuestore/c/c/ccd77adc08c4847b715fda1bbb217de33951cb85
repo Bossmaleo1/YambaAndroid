@@ -1,6 +1,11 @@
 
-Okotlin:S1481"*Remove this unused "color" local variable.(á¦É¥ûÿÿÿÿ8ñÚñ¶¦1
->kotlin:S1128"Remove this unused import.(ÊÒÅ­ùÿÿÿÿ8öÚñ¶¦1
->kotlin:S1128"Remove this unused import.(£“×”ıÿÿÿÿ8÷Úñ¶¦1
-9kotlin:S1128"Remove this unused import.(ŠëÙ 8÷Úñ¶¦1
-8kotlin:S1128"Remove this unused import.(†™¹$8÷Úñ¶¦1
+Ckotlin:S125›"Remove this commented out code.(†Àçşÿÿÿÿ8—ÅôÒ¦1
+>kotlin:S125²"Remove this commented out code.(†ÁÚô8™ÅôÒ¦1
+Ckotlin:S125õ"Remove this commented out code.(†Àçşÿÿÿÿ8œÅôÒ¦1
+Ckotlin:S125£"Remove this commented out code.(½ª¥éşÿÿÿÿ8ÅôÒ¦1
+Ukotlin:S1481ª"0Remove this unused "inputString" local variable.(‡¢×êıÿÿÿÿ8µÅôÒ¦1
+Okotlin:S1481‹"*Remove this unused "color" local variable.(á¦É¥ûÿÿÿÿ8µÅôÒ¦1
+>kotlin:S1128"Remove this unused import.(ÊÒÅ­ùÿÿÿÿ8ºÅôÒ¦1
+>kotlin:S1128"Remove this unused import.(£“×”ıÿÿÿÿ8ºÅôÒ¦1
+9kotlin:S1128"Remove this unused import.(ŠëÙ 8ºÅôÒ¦1
+8kotlin:S1128"Remove this unused import.(†™¹$8ºÅôÒ¦1

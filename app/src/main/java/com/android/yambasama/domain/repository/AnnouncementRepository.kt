@@ -11,17 +11,14 @@ interface AnnouncementRepository {
         arrivingTimeAfter: String,
         arrivingTimeBefore: String,
         departureAddress: Int,
-        destinationAddress: Int,
-        token: String
+        destinationAddress: Int
     ): Resource<List<Announcement>>
 
     suspend fun getAnnouncement(
-        id: Int,
-        token: String
+        id: Int
     ): Resource<Announcement>
 
     suspend fun createAnnouncement(
-        announcementBody: AnnouncementBody,
-        token: String
+        announcementBody: AnnouncementBody
     ): Resource<String>
 }
