@@ -1,5 +1,6 @@
 package com.android.yambasama.ui.views
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.*
 import androidx.compose.animation.slideInHorizontally
@@ -245,6 +246,7 @@ fun HomeApp(
                         },
                         scrollBehavior = scrollBehavior,
                         title = {
+                            Log.d("MALEOIMAGETEST1", "${screenState.userRoom.toString()}}")
                             if (screenState.userRoom.isNotEmpty() && screenState.userRoom[0] !== null) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     AnimatedVisibility(
@@ -267,6 +269,7 @@ fun HomeApp(
                                         } + fadeOut()
                                     ) {
 
+                                        Log.d("MALEOIMAGETEST1", "${screenState.userRoom[0].imageUrl}}")
                                         if (screenState.userRoom[0].imageUrl?.length == 0) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.ic_profile_colorier),
@@ -318,7 +321,10 @@ fun HomeApp(
                                                     },
                                                 contentDescription = "Profile picture description"
                                             )
+                                            Log.d("MALEOIMAGETEST1", "${screenState.userRoom[0].imageUrl}}")
                                         } else {
+
+                                            Log.d("MALEOIMAGETEST", "${screenState.userRoom[0].imageUrl}}")
                                             Image(
                                                 painter = rememberAsyncImagePainter(
                                                     model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom[0].imageUrl}",

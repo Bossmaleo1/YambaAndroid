@@ -2,6 +2,7 @@ package com.android.yambasama.presentation.viewModel.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.domain.usecase.user.*
 
 class UserViewModelFactory(
@@ -10,7 +11,8 @@ class UserViewModelFactory(
     private val saveUserUseCase: SaveUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
     private val getSavedUserUseCase: GetSavedUserUseCase,
-    private val getSavedTokenUseCase: GetSavedTokenUseCase
+    private val getSavedTokenUseCase: GetSavedTokenUseCase,
+    private val tokenManager: TokenManager
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return UserViewModel(
@@ -19,7 +21,8 @@ class UserViewModelFactory(
             saveUserUseCase,
             saveTokenUseCase,
             getSavedUserUseCase,
-            getSavedTokenUseCase
+            getSavedTokenUseCase,
+            tokenManager
         ) as T
     }
 }

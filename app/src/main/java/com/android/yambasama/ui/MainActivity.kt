@@ -118,9 +118,12 @@ class MainActivity : ComponentActivity() {
                     notificationManager =
                         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-                    userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
-                        this.token = token?.token
+                    tokenDataStoreViewModel.token.observe(this as LifecycleOwner){ token ->
+                        this.token = token
                     }
+                    /*userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
+                        this.token = token?.token
+                    }*/
 
                     receiveInput()
 

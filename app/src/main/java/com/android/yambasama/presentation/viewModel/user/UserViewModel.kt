@@ -3,6 +3,7 @@ package com.android.yambasama.presentation.viewModel.user
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.api.RefreshBody
 import com.android.yambasama.data.model.dataLocal.TokenRoom
@@ -32,7 +33,8 @@ class UserViewModel @Inject constructor(
     private val saveUserUseCase: SaveUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
     private val getSavedUserUseCase: GetSavedUserUseCase,
-    private val getSavedTokenUseCase: GetSavedTokenUseCase
+    private val getSavedTokenUseCase: GetSavedTokenUseCase,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _screenState = mutableStateOf(
@@ -56,6 +58,8 @@ class UserViewModel @Inject constructor(
                 apiResult.data?.let { apiTokenResponse ->
                     screenState.value.token =
                         mutableListOf(Token(id = 1, token = apiTokenResponse.token, refreshToken = apiTokenResponse.refreshToken))
+                    tokenManager.saveToken(apiTokenResponse.token)
+                    tokenManager.saveRefreshToken(apiTokenResponse.refreshToken)
                 }
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
