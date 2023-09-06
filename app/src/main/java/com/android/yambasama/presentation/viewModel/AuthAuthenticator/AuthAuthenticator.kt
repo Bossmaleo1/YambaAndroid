@@ -1,5 +1,6 @@
 package com.android.yambasama.presentation.viewModel.AuthAuthenticator
 
+import com.android.yambasama.BuildConfig
 import com.android.yambasama.data.api.service.AuthenticatorAPIService
 import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.data.model.api.RefreshBody
@@ -33,7 +34,7 @@ class AuthAuthenticator  @Inject constructor(
             val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://jwt-test-api.onrender.com/api/")
+                .baseUrl(BuildConfig.BASE_URL_DEV)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

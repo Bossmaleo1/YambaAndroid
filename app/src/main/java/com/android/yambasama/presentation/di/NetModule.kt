@@ -73,12 +73,6 @@ class NetModule {
         return retrofit.create(UserAPIService::class.java)
     }
 
-    /*@Singleton
-    @Provides
-    fun provideAuthenticatorAPIService(retrofit: Retrofit): AuthenticatorAPIService {
-        return retrofit.create(AuthenticatorAPIService::class.java)
-    }*/
-
     @Singleton
     @Provides
     fun provideAddressAPIService(retrofit: Retrofit): AddressAPIService {

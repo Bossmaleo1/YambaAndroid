@@ -38,6 +38,8 @@ import com.android.yambasama.presentation.viewModel.drop.DropViewModel
 import com.android.yambasama.presentation.viewModel.drop.DropViewModelFactory
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModel
 import com.android.yambasama.presentation.viewModel.searchForm.SearchFormViewModelFactory
+import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModel
+import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModelFactory
 import com.android.yambasama.presentation.viewModel.user.UserViewModel
 import com.android.yambasama.presentation.viewModel.user.UserViewModelFactory
 import com.android.yambasama.ui.UIEvent.Event.AddressEvent
@@ -88,11 +90,15 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var announcementFactory: AnnouncementViewModelFactory
 
+    @Inject
+    lateinit var tokenDataStoreViewModelFactory: TokenDataStoreViewModelFactory
+
     private lateinit var userViewModel: UserViewModel
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var dropViewModel: DropViewModel
     private lateinit var searchFormViewModel: SearchFormViewModel
     private lateinit var announcementViewModel: AnnouncementViewModel
+    private lateinit var tokenDataStoreViewModel: TokenDataStoreViewModel
     var token: String? = null
 
     private val channelID = "com.android.yambasama.ui.views.channel1"
@@ -140,6 +146,8 @@ class MainActivity : ComponentActivity() {
             ViewModelProvider(this, searchFormFactory)[SearchFormViewModel::class.java]
         announcementViewModel =
             ViewModelProvider(this, announcementFactory)[AnnouncementViewModel::class.java]
+        tokenDataStoreViewModel =
+            ViewModelProvider(this, tokenDataStoreViewModelFactory)[TokenDataStoreViewModel::class.java]
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
@@ -375,7 +383,8 @@ class MainActivity : ComponentActivity() {
                     visibleCurrentForm = visibleCurrentForm,
                     visibleNextForm = visibleNextForm,
                     switch = switch,
-                    selectedItem = selectedItem
+                    selectedItem = selectedItem,
+                    tokenDataStoreViewModel = tokenDataStoreViewModel
                 )
             }
 
