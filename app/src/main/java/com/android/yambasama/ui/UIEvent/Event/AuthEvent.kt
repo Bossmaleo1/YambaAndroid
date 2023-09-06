@@ -8,7 +8,7 @@ import com.android.yambasama.data.model.dataRemote.User
 sealed class AuthEvent {
     data class GetToken(val app: Context, val userName: String, val password: String): AuthEvent()
     data class GetUser(val app: Context, val userName: String, val token: String): AuthEvent()
-    object GetSavedUserByToken: AuthEvent()
+    data class GetSavedUserByToken(val token: String): AuthEvent()
     object GetSavedToken: AuthEvent()
     object InitUserState: AuthEvent()
     data class IsNetworkConnected(val errorMessage: String): AuthEvent()

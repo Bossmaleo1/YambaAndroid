@@ -57,6 +57,8 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.Brush
 import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 @Composable
 @ExperimentalMaterial3Api
@@ -89,10 +91,17 @@ fun HomeApp(
         )
     )
 
-    userViewModel.onEvent(AuthEvent.GetSavedToken)
+    //we get our token in Data Store
+    val tokenValue = runBlocking {
+        tokenDataStoreViewModel.getToken().first()
+    }
+
+    //userViewModel.onEvent(AuthEvent.GetSavedToken)
     //We test is the token exist
-    if (screenState.tokenRoom.isNotEmpty()) {
-        userViewModel.onEvent(AuthEvent.GetSavedUserByToken)
+    if (tokenValue != null) {
+        if (screenState.tokenRoom.isNotEmpty() && tokenValue.isNotEmpty()) {
+            tokenValue?.let { AuthEvent.GetSavedUserByToken(it) }?.let { userViewModel.onEvent(it) }
+        }
     }
     var visibleSearch by remember { mutableStateOf(false) }
 

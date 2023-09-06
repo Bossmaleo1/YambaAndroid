@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.yambasama.data.db.dataStore.TokenManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -49,6 +50,14 @@ class TokenDataStoreViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             tokenManager.deleteRefreshToken()
         }
+    }
+
+    fun getToken(): Flow<String?> {
+        return tokenManager.getToken()
+    }
+
+    fun getRefreshToken(): Flow<String?> {
+        return tokenManager.getRefreshToken()
     }
 
 }

@@ -121,9 +121,6 @@ class MainActivity : ComponentActivity() {
                     tokenDataStoreViewModel.token.observe(this as LifecycleOwner){ token ->
                         this.token = token
                     }
-                    /*userViewModel.getSavedToken().observe(this as LifecycleOwner) { token ->
-                        this.token = token?.token
-                    }*/
 
                     receiveInput()
 

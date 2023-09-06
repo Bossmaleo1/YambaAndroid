@@ -60,11 +60,13 @@ class FactoryModule {
     fun provideDropViewModelFactory(
         application: Application,
         deleteTableUserUseCase: DeleteTableUserUseCase,
-        deleteTableTokenUseCase: DeleteTableTokenUseCase
+        deleteTableTokenUseCase: DeleteTableTokenUseCase,
+        tokenManager: TokenManager
     ): DropViewModelFactory {
         return DropViewModelFactory(
             deleteTableUserUseCase,
-            deleteTableTokenUseCase
+            deleteTableTokenUseCase,
+            tokenManager
         )
     }
 

@@ -65,9 +65,7 @@ fun SearchAddress(
     val context = LocalContext.current
 
     userViewModel.onEvent(AuthEvent.GetSavedToken)
-    if (screenStateUser.tokenRoom.isNotEmpty()) {
-        userViewModel.onEvent(AuthEvent.GetSavedUserByToken)
-    }
+
 
     AnimatedVisibility(
         visible = visibleSearch,

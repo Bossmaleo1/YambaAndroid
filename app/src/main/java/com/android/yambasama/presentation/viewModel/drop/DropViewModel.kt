@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.yambasama.data.db.dataStore.TokenManager
 import com.android.yambasama.domain.usecase.user.DeleteTableTokenUseCase
 import com.android.yambasama.domain.usecase.user.DeleteTableUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class DropViewModel @Inject constructor(
     private val deleteTableUserUseCase: DeleteTableUserUseCase,
     private val deleteTableTokenUseCase: DeleteTableTokenUseCase,
+    private val tokenManager: TokenManager
 ): ViewModel() {
     init {
 
@@ -22,5 +24,7 @@ class DropViewModel @Inject constructor(
     fun deleteAll() = viewModelScope.launch {
         deleteTableTokenUseCase.execute()
         deleteTableUserUseCase.execute()
+        tokenManager.deleteToken()
+        tokenManager.deleteRefreshToken()
     }
 }

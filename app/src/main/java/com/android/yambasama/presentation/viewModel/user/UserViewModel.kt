@@ -60,6 +60,10 @@ class UserViewModel @Inject constructor(
                         mutableListOf(Token(id = 1, token = apiTokenResponse.token, refreshToken = apiTokenResponse.refreshToken))
                     tokenManager.saveToken(apiTokenResponse.token)
                     tokenManager.saveRefreshToken(apiTokenResponse.refreshToken)
+                    getUser(
+                        userName = userName,
+                        token = screenState.value.token[0].token
+                    )
                 }
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
@@ -68,11 +72,6 @@ class UserViewModel @Inject constructor(
                     initCallToken = screenState.value.initCallToken++,
                     user = mutableListOf(),
                     currentPage = 1,
-                )
-
-                getUser(
-                    userName = userName,
-                    token = screenState.value.token[0].token
                 )
             } catch (e: Exception) {
                 _screenState.value = _screenState.value.copy(
@@ -205,7 +204,7 @@ class UserViewModel @Inject constructor(
             }
             is AuthEvent.GetSavedUserByToken -> {
                     viewModelScope.launch {
-                        getSavedUserUseCase.execute(screenState.value.tokenRoom[0].token).collect {
+                        getSavedUserUseCase.execute(event.token).collect {
                             _screenState.value = _screenState.value.copy(
                                 userRoom = mutableListOf(it)
                             )
