@@ -8,7 +8,6 @@ import com.android.yambasama.data.model.dataRemote.Announcement
 sealed class AnnouncementEvent {
     data class AnnouncementInt(
         val app: Context,
-        val token: String,
         val departureAddressId: Int,
         val destinationAddressId: Int,
         val arrivingTimeAfter: String,
@@ -30,13 +29,11 @@ sealed class AnnouncementEvent {
 
     data class CreateAnnouncement(
         val app: Context,
-        val announcementBody: AnnouncementBody,
-        val token: String
+        val announcementBody: AnnouncementBody
     ): AnnouncementEvent()
 
     data class AnnouncementDetails(
         val app: Context,
-        val token: String,
         val id: Int
     ): AnnouncementEvent()
     data class IsNetworkConnected(val errorMessage: String): AnnouncementEvent()

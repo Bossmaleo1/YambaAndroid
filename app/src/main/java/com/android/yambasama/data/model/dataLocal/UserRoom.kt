@@ -26,8 +26,6 @@ data class UserRoom(
     var sex: String?,
     @ColumnInfo(name = "user_state")
     var state: String?,
-    @ColumnInfo(name = "user_token")
-    var userToken: String?,
     @ColumnInfo(name = "user_email")
     var email: String?,
     @ColumnInfo(name = "user_user_name")

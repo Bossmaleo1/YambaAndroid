@@ -1,7 +1,6 @@
 package com.android.yambasama.domain.repository
 
 import com.android.yambasama.data.model.api.ApiTokenResponse
-import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.Image
 import com.android.yambasama.data.model.dataRemote.PushNotification

@@ -867,7 +867,7 @@ fun AddAnnouncementView(
 
                             searchFormViewModel.screenState.value.addressDestinationCreated?.id?.let {
                                 searchFormViewModel.screenState.value.addressDepartureCreated?.id?.let { it1 ->
-                                    screenState.userRoom[0].id?.let { it2 ->
+                                    screenState.userRoom!!.id?.let { it2 ->
                                         searchFormViewModel.screenState.value.dateDialogDepartureCreated?.let { it3 ->
                                             searchFormViewModel.screenState.value.timeHourDepartureCreated?.let { it4 ->
                                                 searchFormViewModel.screenState.value.timeMinuteDepartureCreated?.let { it5 ->
@@ -916,8 +916,7 @@ fun AddAnnouncementView(
                                 announcementViewModel.screenAnnouncementCreateScreenState.value.announcementBody?.let { it1 ->
                                     AnnouncementEvent.CreateAnnouncement(
                                         app = context,
-                                        announcementBody = it1,
-                                        token = screenState.tokenRoom[0].token
+                                        announcementBody = it1
                                     )
                                 }?.let { it2 ->
                                     announcementViewModel.onEvent(

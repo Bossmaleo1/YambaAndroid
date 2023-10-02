@@ -1,7 +1,6 @@
 package com.android.yambasama.presentation.viewModel.drop
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.android.yambasama.domain.usecase.user.DeleteTableTokenUseCase
 import com.android.yambasama.domain.usecase.user.DeleteTableUserUseCase
 import org.junit.Assert.*
 

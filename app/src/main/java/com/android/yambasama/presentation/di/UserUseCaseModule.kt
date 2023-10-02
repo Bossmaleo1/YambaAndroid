@@ -1,6 +1,5 @@
 package com.android.yambasama.presentation.di
 
-import com.android.yambasama.domain.repository.AuthenticatorRepository
 import com.android.yambasama.domain.repository.UserRepository
 import com.android.yambasama.domain.usecase.user.*
 import dagger.Module
@@ -36,13 +35,6 @@ class UserUseCaseModule {
         return SaveUserUseCase(userRepository)
     }
 
-    @Singleton
-    @Provides
-    fun provideSaveTokenUseCase(
-        userRepository: UserRepository
-    ): SaveTokenUseCase {
-        return SaveTokenUseCase(userRepository)
-    }
 
     @Singleton
     @Provides
@@ -62,33 +54,10 @@ class UserUseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGetSavedTokenUseCase(
-        userRepository: UserRepository
-    ): GetSavedTokenUseCase {
-        return GetSavedTokenUseCase(userRepository)
-    }
-
-    @Singleton
-    @Provides
     fun provideDeleteSavedUserUseCase(
         userRepository: UserRepository
     ): DeleteSavedUserUseCase {
         return DeleteSavedUserUseCase(userRepository)
     }
 
-    @Singleton
-    @Provides
-    fun provideDeleteTableTokenUseCase(
-        userRepository: UserRepository
-    ): DeleteTableTokenUseCase {
-        return DeleteTableTokenUseCase(userRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetSavedTokenInterceptorUseCase(
-        userRepository: UserRepository
-    ): GetSavedTokenInterceptorUseCase {
-        return GetSavedTokenInterceptorUseCase(userRepository)
-    }
 }

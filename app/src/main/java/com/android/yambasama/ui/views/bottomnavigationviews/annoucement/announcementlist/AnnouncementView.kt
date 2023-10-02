@@ -71,7 +71,6 @@ fun AnnouncementView(
                     searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
                         AnnouncementEvent.AnnouncementInt(
                             app = context,
-                            token = screenStateUser.tokenRoom[0].token,
                             destinationAddressId = it1,
                             departureAddressId = it,
                             arrivingTimeAfter = it2,
@@ -141,7 +140,6 @@ fun AnnouncementView(
                                 searchFormViewModel.screenState.value.arrivingTimeBefore?.let { it3 ->
                                     AnnouncementEvent.AnnouncementInt(
                                         app = context,
-                                        token = screenStateUser.tokenRoom[0].token,
                                         destinationAddressId = it1,
                                         departureAddressId = it,
                                         arrivingTimeAfter = it2,

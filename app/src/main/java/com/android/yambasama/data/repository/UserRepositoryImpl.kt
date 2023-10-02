@@ -1,9 +1,6 @@
 package com.android.yambasama.data.repository
 
-import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
 import com.android.yambasama.data.model.api.ApiTokenResponse
-import com.android.yambasama.data.model.api.RefreshBody
-import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.User
 import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
@@ -19,10 +16,8 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override suspend fun getUsers(userName: String, token: String): Resource<List<User>> {
-        return responseToResourceUser(userRemoteDataSource.getUser(userName, token))
+        return responseToResourceUser(userRemoteDataSource.getUser(userName))
     }
-
-
 
     private fun responseToResourceUser(response: Response<List<User>>): Resource<List<User>> {
         if (response.isSuccessful) {
@@ -37,30 +32,16 @@ class UserRepositoryImpl(
         userLocalDataSource.saveUserToDB(user)
     }
 
-    override suspend fun saveToken(token: TokenRoom) {
-        userLocalDataSource.saveTokenToDB(token)
-    }
-
-
-
     override suspend fun deleteUser(user: UserRoom) {
         userLocalDataSource.deleteUserFromDB(user)
     }
 
-    override fun getSavedUser(userToken: String): Flow<UserRoom> {
-        return userLocalDataSource.getSavedUser(userToken)
-    }
-
-    override fun getSavedToken(): Flow<TokenRoom> {
-        return userLocalDataSource.getSavedToken()
+    override fun getSavedUser(userId: Int): Flow<UserRoom> {
+        return userLocalDataSource.getSavedUser(userId)
     }
 
     override suspend fun deleteUserTable() {
         userLocalDataSource.deleteUserTable()
-    }
-
-    override suspend fun deleteTokenTable() {
-        userLocalDataSource.deleteTokenTable()
     }
 
     override suspend fun getToken(userName: String, password: String): Resource<ApiTokenResponse> {
@@ -74,11 +55,5 @@ class UserRepositoryImpl(
             }
         }
         return Resource.Error(response.message())
-    }
-
-
-
-    override suspend fun deleteToken(token: TokenRoom) {
-        userLocalDataSource.deleteTokenToDB(token)
     }
 }

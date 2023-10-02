@@ -8,7 +8,6 @@ import com.android.yambasama.data.api.service.AnnouncementAPIService
 import com.android.yambasama.data.api.service.AuthenticatorAPIService
 import com.android.yambasama.data.api.service.UserAPIService
 import com.android.yambasama.data.db.dataStore.TokenManager
-import com.android.yambasama.domain.usecase.user.UpdateSavedTokenUseCase
 import com.android.yambasama.presentation.viewModel.AuthAuthenticator.AuthAuthenticator
 import dagger.Module
 import dagger.Provides
@@ -25,34 +24,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetModule {
-   /* @Singleton
-    @Provides
-    fun provideOkHttpClient(
-        authInterceptor: AuthInterceptor,
-        authAuthenticator: AuthAuthenticator,
-    ): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-
-        return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(25, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .authenticator(authAuthenticator)
-            .build()
-    }*/
-
 
     @Singleton
     @Provides
     fun provideAuthAuthenticator(
-        updateSavedTokenUseCase: UpdateSavedTokenUseCase,
         tokenManager: TokenManager
     ): AuthAuthenticator = AuthAuthenticator(
-        updateSavedTokenUseCase = updateSavedTokenUseCase,
         tokenManager = tokenManager
     )
 

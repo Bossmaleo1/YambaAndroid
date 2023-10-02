@@ -1,11 +1,9 @@
 package com.android.yambasama.presentation.viewModel.user
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.android.yambasama.domain.usecase.user.GetSavedTokenUseCase
 import com.android.yambasama.domain.usecase.user.GetSavedUserUseCase
 import com.android.yambasama.domain.usecase.user.GetTokenUseCase
 import com.android.yambasama.domain.usecase.user.GetUserUseCase
-import com.android.yambasama.domain.usecase.user.SaveTokenUseCase
 import com.android.yambasama.domain.usecase.user.SaveUserUseCase
 import org.junit.Assert.*
 

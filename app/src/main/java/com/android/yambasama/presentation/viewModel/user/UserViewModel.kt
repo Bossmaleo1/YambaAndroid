@@ -1,12 +1,10 @@
 package com.android.yambasama.presentation.viewModel.user
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.android.yambasama.data.db.dataStore.TokenManager
-import com.android.yambasama.data.model.api.ApiRefreshTokenResponse
-import com.android.yambasama.data.model.api.RefreshBody
-import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.android.yambasama.data.model.dataRemote.Token
 import com.android.yambasama.domain.usecase.user.*
@@ -19,10 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import okhttp3.Authenticator
-import okhttp3.Request
-import okhttp3.Response
-import okhttp3.Route
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -31,9 +25,7 @@ class UserViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val getTokenUseCase: GetTokenUseCase,
     private val saveUserUseCase: SaveUserUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase,
     private val getSavedUserUseCase: GetSavedUserUseCase,
-    private val getSavedTokenUseCase: GetSavedTokenUseCase,
     private val tokenManager: TokenManager
 ) : ViewModel() {
 
@@ -41,7 +33,7 @@ class UserViewModel @Inject constructor(
         AuthScreenState(
             emailInputValue = "",
             passwordInputValue = "",
-            token = mutableListOf()
+            token = null
         )
     )
     val screenState: State<AuthScreenState> = _screenState
@@ -55,14 +47,14 @@ class UserViewModel @Inject constructor(
     fun getToken(userName: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
             try {
                 val apiResult = getTokenUseCase.execute(userName, password)
+                Log.d("MALEO93939319931013", "Testing 1")
                 apiResult.data?.let { apiTokenResponse ->
-                    screenState.value.token =
-                        mutableListOf(Token(id = 1, token = apiTokenResponse.token, refreshToken = apiTokenResponse.refreshToken))
+                    screenState.value.token = Token(id = 1, token = apiTokenResponse.token, refreshToken = apiTokenResponse.refreshToken)
                     tokenManager.saveToken(apiTokenResponse.token)
                     tokenManager.saveRefreshToken(apiTokenResponse.refreshToken)
                     getUser(
                         userName = userName,
-                        token = screenState.value.token[0].token
+                        token = screenState.value.token!!.token
                     )
                 }
                 _screenState.value = _screenState.value.copy(
@@ -70,7 +62,7 @@ class UserViewModel @Inject constructor(
                     isLoad = true,
                     isNetworkError = false,
                     initCallToken = screenState.value.initCallToken++,
-                    user = mutableListOf(),
+                    user = null,
                     currentPage = 1,
                 )
             } catch (e: Exception) {
@@ -87,33 +79,29 @@ class UserViewModel @Inject constructor(
                 val apiResult = getUserUseCase.execute(userName, "Bearer $token")
 
                 apiResult.data?.let { apiUserResponse ->
-                    screenState.value.user = apiUserResponse
+                    screenState.value.user = apiUserResponse[0]
+                    val userRoom = UserRoom(
+                        screenState.value.user!!.id,
+                        screenState.value.user!!.firstName,
+                        screenState.value.user!!.lastName,
+                        screenState.value.user!!.roles[0],
+                        screenState.value.user!!.phone,
+                        screenState.value.user!!.nationality,
+                        screenState.value.user!!.sex,
+                        screenState.value.user!!.state,
+                        screenState.value.user!!.email,
+                        screenState.value.user!!.username,
+                        screenState.value.user!!.pushNotifications?.get(0)?.keyPush,
+                        (if (screenState.value.user!!.images.isNotEmpty()) screenState.value.user!!.images[0].imageName else "")
+                    )
                     viewModelScope.launch {
-                        saveTokenUseCase.execute(
-                            TokenRoom(
-                                id = 1,
-                                token = screenState.value.token[0].token,
-                                refreshToken = screenState.value.token[0].refreshToken
-                            )
-                        )
                         saveUserUseCase.execute(
-                            UserRoom(
-                                screenState.value.user[0].id,
-                                screenState.value.user[0].firstName,
-                                screenState.value.user[0].lastName,
-                                screenState.value.user[0].roles[0],
-                                screenState.value.user[0].phone,
-                                screenState.value.user[0].nationality,
-                                screenState.value.user[0].sex,
-                                screenState.value.user[0].state,
-                                screenState.value.token[0].token,
-                                screenState.value.user[0].email,
-                                screenState.value.user[0].username,
-                                screenState.value.user[0].pushNotifications?.get(0)?.keyPush,
-                                (if (screenState.value.user[0].images.isNotEmpty()) screenState.value.user[0].images[0].imageName else "")
-                            )
+                            user = userRoom
                         )
                     }
+
+                    screenState.value.userRoom = userRoom
+                    screenState.value.user!!.id?.let { tokenManager.saveUserId(it) }
                 }
                 _screenState.value = _screenState.value.copy(
                     isNetworkConnected = true,
@@ -130,13 +118,6 @@ class UserViewModel @Inject constructor(
             }
     }
 
-
-    fun getSavedToken() = liveData {
-        getSavedTokenUseCase.execute().collect {
-            emit(it)
-        }
-    }
-
     fun onEvent(event: AuthEvent) {
         when (event) {
             is AuthEvent.IsInitField -> {
@@ -148,10 +129,9 @@ class UserViewModel @Inject constructor(
             is AuthEvent.EmailValueEntered -> {
                 _screenState.value = _screenState.value.copy(
                     emailInputValue = event.value,
-                    userRoom = mutableListOf(),
-                    user = mutableListOf(),
-                    token = mutableListOf(),
-                    tokenRoom = mutableListOf(),
+                    userRoom = null,
+                    user = null,
+                    token = null,
                     currentPage = 1,
                     isLoad = false
                 )
@@ -159,10 +139,9 @@ class UserViewModel @Inject constructor(
             is AuthEvent.PasswordValueEntered -> {
                 _screenState.value = _screenState.value.copy(
                     passwordInputValue = event.value,
-                    userRoom = mutableListOf(),
-                    user = mutableListOf(),
-                    token = mutableListOf(),
-                    tokenRoom = mutableListOf(),
+                    userRoom = null,
+                    user = null,
+                    token = null,
                     currentPage = 1,
                     isLoad = false
                 )
@@ -173,7 +152,7 @@ class UserViewModel @Inject constructor(
                     passwordInputValue = event.password,
                     isLoad = false,
                     currentPage = 1,
-                    token = mutableListOf()
+                    token = null
                 )
 
                 if (isNetworkAvailable(event.app)) {
@@ -195,30 +174,23 @@ class UserViewModel @Inject constructor(
                     emailInputValue = event.userName,
                     isLoad = true,
                     currentPage = 1,
-                    user = mutableListOf()
+                    user = null
                 )
                 getUser(
                     userName = event.userName,
                     token = event.token
                 )
             }
-            is AuthEvent.GetSavedUserByToken -> {
+            is AuthEvent.GetSavedUser -> {
                     viewModelScope.launch {
-                        getSavedUserUseCase.execute(event.token).collect {
+                        getSavedUserUseCase.execute(event.userId).collect {
                             _screenState.value = _screenState.value.copy(
-                                userRoom = mutableListOf(it)
+                                userRoom = it
                             )
+
+                            Log.d("MALEO93939319239394949123", "${it.toString()}")
                         }
                     }
-            }
-            is AuthEvent.GetSavedToken -> {
-                viewModelScope.launch {
-                    getSavedTokenUseCase.execute().collect {
-                        _screenState.value = _screenState.value.copy(
-                            tokenRoom = mutableListOf(it)
-                        )
-                    }
-                }
             }
             is AuthEvent.InitUserState -> {
                 _screenState.value = _screenState.value.copy(
@@ -228,10 +200,9 @@ class UserViewModel @Inject constructor(
                     currentPage = 1,
                     initCallToken = 0,
                     initCallUser = 0,
-                    user = mutableListOf(),
-                    userRoom = mutableListOf(),
-                    token = mutableListOf(),
-                    tokenRoom = mutableListOf(),
+                    user = null,
+                    userRoom = null,
+                    token = null,
                     emailInputValue = "",
                     passwordInputValue = ""
                 )
@@ -247,10 +218,9 @@ class UserViewModel @Inject constructor(
             }
             is AuthEvent.ConnectionAction -> {
                 _screenState.value = _screenState.value.copy(
-                    userRoom = mutableListOf(),
-                    user = mutableListOf(),
-                    token = mutableListOf(),
-                    tokenRoom = mutableListOf(),
+                    userRoom = null,
+                    user = null,
+                    token = null,
                     currentPage = 1,
                     isLoad = true
                 )

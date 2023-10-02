@@ -9,9 +9,7 @@ class UserViewModelFactory(
     private val getUserUseCase: GetUserUseCase,
     private val getTokenUseCase: GetTokenUseCase,
     private val saveUserUseCase: SaveUserUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase,
     private val getSavedUserUseCase: GetSavedUserUseCase,
-    private val getSavedTokenUseCase: GetSavedTokenUseCase,
     private val tokenManager: TokenManager
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -19,9 +17,7 @@ class UserViewModelFactory(
             getUserUseCase,
             getTokenUseCase,
             saveUserUseCase,
-            saveTokenUseCase,
             getSavedUserUseCase,
-            getSavedTokenUseCase,
             tokenManager
         ) as T
     }

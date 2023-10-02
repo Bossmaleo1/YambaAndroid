@@ -87,7 +87,6 @@ fun AnnouncementDetails(
         announcementViewModel.onEvent(
             AnnouncementEvent.AnnouncementDetails(
                 app = context,
-                token = screenStateUser.tokenRoom[0].token,
                 id = screenState.announcement[0].id
             )
         )
@@ -103,7 +102,6 @@ fun AnnouncementDetails(
         announcementViewModel.onEvent(
             AnnouncementEvent.AnnouncementDetails(
                 app = context,
-                token = screenStateUser.tokenRoom[0].token,
                 id = screenState.announcement[0].id
             )
         )

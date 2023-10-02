@@ -1,8 +1,6 @@
 package com.android.yambasama.data.api.interceptor
 
 import com.android.yambasama.data.db.dataStore.TokenManager
-import com.android.yambasama.data.model.dataLocal.TokenRoom
-import com.android.yambasama.domain.usecase.user.GetSavedTokenInterceptorUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

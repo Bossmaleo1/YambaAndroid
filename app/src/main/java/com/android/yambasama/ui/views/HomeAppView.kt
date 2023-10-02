@@ -1,6 +1,5 @@
 package com.android.yambasama.ui.views
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.*
 import androidx.compose.animation.slideInHorizontally
@@ -46,7 +45,7 @@ import com.android.yambasama.ui.views.model.BottomNavigationItem
 import com.android.yambasama.ui.views.model.Route
 import kotlinx.coroutines.delay
 import androidx.compose.material.Scaffold
-import androidx.compose.foundation.background
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.CompositingStrategy
@@ -55,7 +54,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.drawscope.clipPath
-import androidx.compose.ui.graphics.Brush
 import com.android.yambasama.presentation.viewModel.token.TokenDataStoreViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -91,18 +89,25 @@ fun HomeApp(
         )
     )
 
+
+    var tokenValue by rememberSaveable { mutableStateOf("") }
+    var userId by rememberSaveable { mutableStateOf("") }
+
     //we get our token in Data Store
-    val tokenValue = runBlocking {
-        tokenDataStoreViewModel.getToken().first()
+    runBlocking {
+        tokenValue = tokenDataStoreViewModel.getToken().first().toString()
+        userId = tokenDataStoreViewModel.getUserId().first().toString()
     }
 
-    //userViewModel.onEvent(AuthEvent.GetSavedToken)
-    //We test is the token exist
-    if (tokenValue != null) {
-        if (screenState.tokenRoom.isNotEmpty() && tokenValue.isNotEmpty()) {
-            tokenValue?.let { AuthEvent.GetSavedUserByToken(it) }?.let { userViewModel.onEvent(it) }
-        }
+    if (screenState.userRoom === null && userId !== null) {
+        userViewModel.onEvent(AuthEvent.GetSavedUser(userId = userId.toInt()))
     }
+
+
+
+
+
+
     var visibleSearch by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -255,8 +260,7 @@ fun HomeApp(
                         },
                         scrollBehavior = scrollBehavior,
                         title = {
-                            Log.d("MALEOIMAGETEST1", "${screenState.userRoom.toString()}}")
-                            if (screenState.userRoom.isNotEmpty() && screenState.userRoom[0] !== null) {
+                            if (screenState.userRoom !== null) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     AnimatedVisibility(
                                         visible = visibleSearch,
@@ -277,9 +281,7 @@ fun HomeApp(
                                             200
                                         } + fadeOut()
                                     ) {
-
-                                        Log.d("MALEOIMAGETEST1", "${screenState.userRoom[0].imageUrl}}")
-                                        if (screenState.userRoom[0].imageUrl?.length == 0) {
+                                        if (screenState.userRoom!!.imageUrl?.length == 0) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.ic_profile_colorier),
                                                 contentScale = ContentScale.Crop,
@@ -330,16 +332,15 @@ fun HomeApp(
                                                     },
                                                 contentDescription = "Profile picture description"
                                             )
-                                            Log.d("MALEOIMAGETEST1", "${screenState.userRoom[0].imageUrl}}")
                                         } else {
 
-                                            Log.d("MALEOIMAGETEST", "${screenState.userRoom[0].imageUrl}}")
                                             Image(
                                                 painter = rememberAsyncImagePainter(
-                                                    model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom[0].imageUrl}",
+                                                    model = "${BuildConfig.BASE_URL_DEV}/images/${screenState.userRoom!!.imageUrl}",
                                                     placeholder = painterResource(id = R.drawable.ic_profile_colorier),
                                                     error = painterResource(id = R.drawable.ic_profile_colorier),
                                                 ),
+                                                contentScale = ContentScale.Crop,
                                                 modifier = Modifier
                                                     .size(40.dp)
                                                     .aspectRatio(1f)
@@ -349,7 +350,7 @@ fun HomeApp(
                                                     .clickable {
                                                         navController.navigate(Route.accountView)
                                                     }
-                                                    .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+                                                    //.clip(RoundedCornerShape(corner = CornerSize(20.dp)))
                                                     .drawWithCache {
                                                         val path = Path()
                                                         path.addOval(
@@ -377,7 +378,7 @@ fun HomeApp(
                                                             )
                                                             //draw the red circle indication
                                                             drawCircle(
-                                                                Color(0xFFEF5350),
+                                                                Color(0xFF4CAF50),
                                                                 radius = dotSize * 0.8f,
                                                                 center = Offset(
                                                                     x = size.width - dotSize,
@@ -388,7 +389,6 @@ fun HomeApp(
                                                     }
                                                 ,
                                                 contentDescription = "Profile picture description",
-                                                contentScale = ContentScale.Crop,
                                             )
                                         }
                                     }
@@ -405,7 +405,7 @@ fun HomeApp(
                                         Text(
                                             modifier = Modifier.padding(start = 10.dp),
                                             fontSize = 15.sp,
-                                            text = "${screenState.userRoom[0].firstName} ${screenState.userRoom[0].lastName}",
+                                            text = "${screenState.userRoom!!.firstName} ${screenState.userRoom!!.lastName}",
                                             fontWeight = FontWeight.Normal
                                         )
                                     }
@@ -477,15 +477,6 @@ fun HomeApp(
     LaunchedEffect(true) {
         delay(3)
         visibleSearch = true
-        //we upgrade our token and refresh token
-        if (screenState.tokenRoom.isNotEmpty()) {
-            //we delete our token
-            tokenDataStoreViewModel.deleteToken()
-            tokenDataStoreViewModel.deleteRefreshToken()
-            //we save our token
-            tokenDataStoreViewModel.saveToken(token = screenState.tokenRoom[0].token)
-            tokenDataStoreViewModel.saveRefreshToken(refreshToken = screenState.tokenRoom[0].refreshToken)
-        }
     }
 }
 

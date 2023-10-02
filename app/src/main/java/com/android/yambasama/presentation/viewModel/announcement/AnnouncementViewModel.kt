@@ -151,11 +151,6 @@ class AnnouncementViewModel @Inject constructor(
                 isLoad = false,
                 refreshing = false
             )
-
-            Log.d("MALEOException939393", "Hello World !!")
-            Log.d("MALEOException939393", "${e.message}}" )
-            Log.d("MALEOException939393", " ${e.toString()}" )
-            Log.d("MALEOException939393", "${e.printStackTrace()}}" )
         }
     }
 

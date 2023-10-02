@@ -70,6 +70,8 @@ import com.android.yambasama.ui.views.bottomnavigationviews.tracking.TrackerPack
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
@@ -99,7 +101,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var searchFormViewModel: SearchFormViewModel
     private lateinit var announcementViewModel: AnnouncementViewModel
     private lateinit var tokenDataStoreViewModel: TokenDataStoreViewModel
-    var token: String? = null
 
     private val channelID = "com.android.yambasama.ui.views.channel1"
     private var notificationManager: NotificationManager? = null
@@ -118,15 +119,17 @@ class MainActivity : ComponentActivity() {
                     notificationManager =
                         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-                    tokenDataStoreViewModel.token.observe(this as LifecycleOwner){ token ->
-                        this.token = token
+                    var token by rememberSaveable { mutableStateOf("") }
+                    //we get our token in Data Store
+                    runBlocking {
+                        token = tokenDataStoreViewModel.getToken().first().toString()
                     }
 
                     receiveInput()
 
                     CoroutineScope(Dispatchers.Main).launch {
                         delay(200)
-                        if (token === null) {
+                        if (token === "null") {
                             navController.navigate(Route.loginView)
                         } else {
                            navController.navigate(Route.homeView)
@@ -354,9 +357,7 @@ class MainActivity : ComponentActivity() {
                 )*/
             ) {
 
-                if (userViewModel.screenState.value.userRoom.isEmpty()
-                    && userViewModel.screenState.value.tokenRoom.isEmpty()
-                ) {
+                if (userViewModel.screenState.value.userRoom != null) {
                     addressViewModel.onEvent(AddressEvent.InitAddressState)
                 }
 
@@ -432,19 +433,23 @@ class MainActivity : ComponentActivity() {
             composable(
                 route = Route.accountView
             ) {
-                AccountView(
-                    navController = navController,
-                    user = userViewModel.screenState.value.userRoom[0]
-                )
+                userViewModel.screenState.value.userRoom?.let { it1 ->
+                    AccountView(
+                        navController = navController,
+                        user = it1
+                    )
+                }
             }
 
             composable(
                 route = Route.accountEditView
             ) {
-                AccountEditView(
-                    navController = navController,
-                    user = userViewModel.screenState.value.userRoom[0]
-                )
+                userViewModel.screenState.value.userRoom?.let { it1 ->
+                    AccountEditView(
+                        navController = navController,
+                        user = it1
+                    )
+                }
             }
 
             composable(

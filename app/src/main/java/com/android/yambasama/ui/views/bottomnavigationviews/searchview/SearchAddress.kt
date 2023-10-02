@@ -64,8 +64,6 @@ fun SearchAddress(
     val isDark = isSystemInDarkTheme()
     val context = LocalContext.current
 
-    userViewModel.onEvent(AuthEvent.GetSavedToken)
-
 
     AnimatedVisibility(
         visible = visibleSearch,
@@ -122,15 +120,12 @@ fun SearchAddress(
                             ),
                             onValueChange = {
                                 searchAddress = it
-                                if (screenStateUser.tokenRoom.isNotEmpty()) {
-                                    addressViewModel.onEvent(
-                                        AddressEvent.SearchValueEntered(
-                                            value = it,
-                                            token = screenStateUser.tokenRoom[0].token,
-                                            locale = "${Locale.getDefault().language}"
-                                        )
+                                addressViewModel.onEvent(
+                                    AddressEvent.SearchValueEntered(
+                                        value = it,
+                                        locale = "${Locale.getDefault().language}"
                                     )
-                                }
+                                )
 
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -165,16 +160,14 @@ fun SearchAddress(
             },
             content = { innerPadding ->
                 LaunchedEffect(key1 = true) {
-                    if (screenStateUser.tokenRoom.isNotEmpty()) {
-                        addressViewModel.onEvent(
-                            AddressEvent.AddressInit(
-                                app = context,
-                                value = screenState.searchInputValue,
-                                token = screenStateUser.tokenRoom[0].token,
-                                locale = screenState.locale
-                            )
+                    addressViewModel.onEvent(
+                        AddressEvent.AddressInit(
+                            app = context,
+                            value = screenState.searchInputValue,
+                            locale = screenState.locale
                         )
-                    }
+                    )
+
                 }
 
 

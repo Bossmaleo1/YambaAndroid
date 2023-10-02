@@ -292,8 +292,8 @@ fun login(navController: NavHostController, userViewModel: UserViewModel) {
                 }
             }
 
-            LaunchedEffect(key1 = screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
-                if (screenState.user.isNotEmpty() && screenState.token.isNotEmpty()) {
+            LaunchedEffect(key1 = screenState.user !== null && screenState.token !== null) {
+                if (screenState.user !== null && screenState.token !== null) {
                     navController.navigate(Route.homeView)
                 }
             }

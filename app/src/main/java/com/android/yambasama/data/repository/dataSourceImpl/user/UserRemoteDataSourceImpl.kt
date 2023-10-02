@@ -16,8 +16,8 @@ class UserRemoteDataSourceImpl(
         return userAPIService.getToken(ApiLogin(userName, password))
     }
 
-    override suspend fun getUser(userName: String, token: String): Response<List<User>> {
-        return userAPIService.getUser(userName, token)
+    override suspend fun getUser(userName: String): Response<List<User>> {
+        return userAPIService.getUser(userName)
     }
 
 }

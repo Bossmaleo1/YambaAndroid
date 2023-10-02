@@ -7,12 +7,10 @@ sealed class AddressEvent {
         val app: Context,
         val locale: String,
         val value : String,
-        val token: String
         ): AddressEvent()
     data class SearchValueEntered(
         val locale: String,
-        val value : String,
-        val token: String): AddressEvent()
+        val value : String): AddressEvent()
     object ItemClicked : AddressEvent()
     data class IsNetworkConnected(val errorMessage: String): AddressEvent()
     object InitAddressState:AddressEvent()

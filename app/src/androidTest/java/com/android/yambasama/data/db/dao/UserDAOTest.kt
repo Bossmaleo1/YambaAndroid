@@ -1,12 +1,10 @@
 package com.android.yambasama.data.db.dao
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
-import com.android.yambasama.data.model.dataLocal.TokenRoom
 import com.android.yambasama.data.model.dataLocal.UserRoom
 import com.google.common.truth.Truth
 import junit.framework.TestCase.assertEquals
@@ -14,7 +12,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -36,7 +33,6 @@ class UserDAOTest {
             nationality = "Congolese1",
             sex = "M1",
             state = "France1",
-            userToken = "XXXX1",
             email = "sidneymaleo@gmail.com1",
             userName = "Sidleo1",
             pushNotification = "xxxx1",
@@ -51,7 +47,6 @@ class UserDAOTest {
             nationality = "Congolese",
             sex = "M",
             state = "France",
-            userToken = "XXXX",
             email = "sidneymaleo@gmail.com",
             userName = "Sidleo",
             pushNotification = "xxxx",
@@ -82,14 +77,14 @@ class UserDAOTest {
         }
 
         //we test our get user method
-        dao.getUser(userToken = "XXXX").test {
+        dao.getUser(1).test {
             val user = awaitItem()
             Truth.assertThat(user).isEqualTo(users[1])
             cancel()
         }
 
         //we test our get user method
-        dao.getUser(userToken = "XXXX1").test {
+        dao.getUser(1).test {
             val user = awaitItem()
             Truth.assertThat(user).isEqualTo(users[0])
             cancel()
@@ -132,7 +127,7 @@ class UserDAOTest {
     @Test
     fun get__User_should_be_Test() = runTest {
         dao.insert(user = users[0])
-        val user = dao.getUser(userToken = "XXXX1")
+        val user = dao.getUser(1)
         user.test {
             val user = awaitItem()
             Truth.assertThat(user.id).isEqualTo(11)
@@ -148,13 +143,13 @@ class UserDAOTest {
         }
     }
 
-    @Test
+    /*@Test
     fun get_Token_Insert_Token_should_be_Test() = runTest {
         dao.insertToken(token = TokenRoom(id = 35, token= "xxxdffgg"))
         dao.getToken().test {
             val tokenRoom = awaitItem()
             Truth.assertThat(tokenRoom).isEqualTo(null)
         }
-    }
+    }*/
 
 }

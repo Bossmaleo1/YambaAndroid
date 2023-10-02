@@ -17,9 +17,7 @@ interface UserAPIService {
     @GET("/api/users")
     suspend fun getUser(
         @Query("username")
-        userName: String,
-        @Header("Authorization")
-        token: String
+        userName: String
     ): Response<List<User>>
 
 }

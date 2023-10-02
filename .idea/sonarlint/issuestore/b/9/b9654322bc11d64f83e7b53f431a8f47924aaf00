@@ -1,8 +1,8 @@
 
-Mkotlin:S108„")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8Ë·šÆŸ1
-Mkotlin:S108õ")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8Ì·šÆŸ1
-9kotlin:S1128"Remove this unused import.(™òæÜ8Ô·šÆŸ1
-Bkotlin:S1874w"#Deprecated code should not be used.(çŸ–÷8×·šÆŸ1
-vkotlin:S37763"RRefactor this method to reduce its Cognitive Complexity from 49 to the 15 allowed.(ô ¨ùþÿÿÿÿ8×·šÆŸ1
-]kotlin:S6511ã"=Merge chained "if" statements into a single "when" statement.(Â­£Ö8Û·šÆŸ1
-]kotlin:S6511Ê"=Merge chained "if" statements into a single "when" statement.(â¬¼ó8Û·šÆŸ1
+Mkotlin:S108þ")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8þÃ­Ø®1
+Mkotlin:S108ï")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8þÃ­Ø®1
+Skotlin:S1481="4Remove this unused "screenStateUser" local variable.(­Øµ»8ƒÄ­Ø®1
+9kotlin:S1128"Remove this unused import.(™òæÜ8†Ä­Ø®1
+vkotlin:S37763"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(ô ¨ùþÿÿÿÿ8‰Ä­Ø®1
+]kotlin:S6511Ý"=Merge chained "if" statements into a single "when" statement.(Â­£Ö8ŒÄ­Ø®1
+]kotlin:S6511Ä"=Merge chained "if" statements into a single "when" statement.(â¬¼ó8ŒÄ­Ø®1

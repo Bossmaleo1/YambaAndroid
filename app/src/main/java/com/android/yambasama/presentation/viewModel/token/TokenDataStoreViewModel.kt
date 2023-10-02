@@ -40,6 +40,12 @@ class TokenDataStoreViewModel @Inject constructor(
         }
     }
 
+    fun saveUserId(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            tokenManager.saveUserId(userId)
+        }
+    }
+
     fun deleteToken() {
         viewModelScope.launch(Dispatchers.IO) {
             tokenManager.deleteToken()
@@ -58,6 +64,10 @@ class TokenDataStoreViewModel @Inject constructor(
 
     fun getRefreshToken(): Flow<String?> {
         return tokenManager.getRefreshToken()
+    }
+
+    fun getUserId(): Flow<Int?> {
+        return tokenManager.getUserId()
     }
 
 }

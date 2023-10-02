@@ -46,8 +46,7 @@ fun InfiniteListAddressRemote(
 
     listState.OnBottomReached(buffer = 2) {
         addressViewModel.getAddress(
-            "${Locale.getDefault().language}",
-            townName,
+            "${Locale.getDefault().language}"
         )
     }
 

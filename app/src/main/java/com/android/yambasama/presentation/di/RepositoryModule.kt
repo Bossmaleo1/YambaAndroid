@@ -2,16 +2,13 @@ package com.android.yambasama.presentation.di
 
 import com.android.yambasama.data.repository.AddressRepositoryImpl
 import com.android.yambasama.data.repository.AnnouncementRepositoryImpl
-import com.android.yambasama.data.repository.AuthenticatorRepositoryImpl
 import com.android.yambasama.data.repository.UserRepositoryImpl
 import com.android.yambasama.data.repository.dataSource.address.AddressRemoteDataSource
 import com.android.yambasama.data.repository.dataSource.annoucement.AnnouncementRemoteDataSource
-import com.android.yambasama.data.repository.dataSource.authenticator.AuthenticatorLocalDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserLocalDataSource
 import com.android.yambasama.data.repository.dataSource.user.UserRemoteDataSource
 import com.android.yambasama.domain.repository.AddressRepository
 import com.android.yambasama.domain.repository.AnnouncementRepository
-import com.android.yambasama.domain.repository.AuthenticatorRepository
 import com.android.yambasama.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -45,15 +42,5 @@ class RepositoryModule {
         announcementRemoteDataSource: AnnouncementRemoteDataSource
     ): AnnouncementRepository {
         return AnnouncementRepositoryImpl(announcementRemoteDataSource)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthenticatorRepository(
-        authenticatorLocalDataSource: AuthenticatorLocalDataSource
-    ): AuthenticatorRepository {
-        return AuthenticatorRepositoryImpl(
-            authenticatorLocalDataSource
-        )
     }
 }

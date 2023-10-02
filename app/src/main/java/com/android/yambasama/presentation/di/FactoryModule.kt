@@ -29,18 +29,14 @@ class FactoryModule {
         getUserUseCase: GetUserUseCase,
         getTokenUseCase: GetTokenUseCase,
         saveUserUseCase: SaveUserUseCase,
-        saveTokenUseCase: SaveTokenUseCase,
         getSavedUserUseCase: GetSavedUserUseCase,
-        getSavedTokenUseCase: GetSavedTokenUseCase,
         tokenManager: TokenManager
     ): UserViewModelFactory {
         return UserViewModelFactory(
             getUserUseCase,
             getTokenUseCase,
             saveUserUseCase,
-            saveTokenUseCase,
             getSavedUserUseCase,
-            getSavedTokenUseCase,
             tokenManager
         )
     }
@@ -60,12 +56,10 @@ class FactoryModule {
     fun provideDropViewModelFactory(
         application: Application,
         deleteTableUserUseCase: DeleteTableUserUseCase,
-        deleteTableTokenUseCase: DeleteTableTokenUseCase,
         tokenManager: TokenManager
     ): DropViewModelFactory {
         return DropViewModelFactory(
             deleteTableUserUseCase,
-            deleteTableTokenUseCase,
             tokenManager
         )
     }

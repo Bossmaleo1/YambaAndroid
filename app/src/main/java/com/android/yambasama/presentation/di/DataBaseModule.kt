@@ -2,7 +2,6 @@ package com.android.yambasama.presentation.di
 
 import android.app.Application
 import androidx.room.Room
-import com.android.yambasama.data.db.dao.AuthenticatorDAO
 import com.android.yambasama.data.db.dao.UserDAO
 import com.android.yambasama.data.db.dao.YambaDatabase
 import dagger.Module
@@ -26,11 +25,5 @@ class DataBaseModule {
     @Provides
     fun provideUserDao(wazzabyDatabase: YambaDatabase): UserDAO {
         return wazzabyDatabase.getUserDAO()
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthenticatorDAO(wazzabyDatabase: YambaDatabase): AuthenticatorDAO {
-        return wazzabyDatabase.getAuthenticator()
     }
 }

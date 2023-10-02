@@ -17,6 +17,7 @@ class TokenManager(private val context: Context) {
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val TOKEN_REFRESH_KEY = stringPreferencesKey("jwt_token_refresh")
+        private val USER_ID_KEY = stringPreferencesKey("user_ID")
     }
 
     fun getToken(): Flow<String?> {
@@ -28,6 +29,18 @@ class TokenManager(private val context: Context) {
     fun getRefreshToken(): Flow<String?> {
         return context.dataStore.data.map { preferences ->
             preferences[TOKEN_REFRESH_KEY]
+        }
+    }
+
+    fun getUserId(): Flow<Int?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[USER_ID_KEY]!!.toInt()
+        }
+    }
+
+    suspend fun saveUserId(userId: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_ID_KEY] = userId.toString()
         }
     }
 

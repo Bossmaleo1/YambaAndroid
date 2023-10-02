@@ -35,8 +35,7 @@ class AddressViewModel @Inject constructor(
     val uiEventFlow = _uiEventFlow.asSharedFlow()
 
     fun getAddress(
-        locale: String,
-        token: String
+        locale: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             val apiResult =
@@ -82,7 +81,6 @@ class AddressViewModel @Inject constructor(
                     addressList = mutableListOf()
                 )
                 getAddress(
-                    token = event.token,
                     locale = event.locale
                 )
 
@@ -106,7 +104,6 @@ class AddressViewModel @Inject constructor(
 
                 if (isNetworkAvailable(event.app)) {
                     getAddress(
-                        token = event.token,
                         locale = event.locale
                     )
                 } else {
