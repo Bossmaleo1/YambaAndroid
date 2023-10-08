@@ -12,6 +12,15 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/database" />
+            <option value="$PROJECT_DIR$/core/domain" />
+            <option value="$PROJECT_DIR$/core/domain/domainaddress" />
+            <option value="$PROJECT_DIR$/core/domain/domainannouncement" />
+            <option value="$PROJECT_DIR$/core/domain/domainuser" />
+            <option value="$PROJECT_DIR$/core/model" />
+            <option value="$PROJECT_DIR$/core/network" />
+            <option value="$PROJECT_DIR$/core/notifications" />
           </set>
         </option>
       </GradleProjectSettings>

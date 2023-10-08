@@ -1,8 +1,0 @@
-
-jkotlin:S107"GThis function has 9 parameters, which is greater than the 7 authorized.(çıóÿÿÿÿÿ8»Êó”1
-Skotlin:S1481-"4Remove this unused "screenStateUser" local variable.(­Øµ»8ññ¯Õ¦1
-Vkotlin:S1481,"2Remove this unused "scaffoldState" local variable.(Úºíœüÿÿÿÿ8½Êó”1
->kotlin:S1128"Remove this unused import.(ÊÒÅ­ùÿÿÿÿ8¾Êó”1
-9kotlin:S1128"Remove this unused import.(™òæÜ8ŞŞÏ1
-9kotlin:S1128"Remove this unused import.(š¯ìÔ8¾Êó”1
-\kotlin:S6511G"=Merge chained "if" statements into a single "when" statement.(â¬¼ó8ÁÊó”1
