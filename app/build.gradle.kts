@@ -2,6 +2,16 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.firebase.perf) apply false
+    alias(libs.plugins.gms) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.secrets) apply false
+    id("jacoco")
+    id("kotlin-kapt")
 }
 
 android {
@@ -65,7 +75,36 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.foundation.layout)
+    implementation(libs.androidx.material.icons)
+    implementation(libs.androidx.animation)
+    implementation(libs.accompanist.swipe.refresh)
+    implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.system.ui)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit.squareup)
+    implementation(libs.retrofit.converter)
+    implementation(libs.okhttp3.squareup)
+    implementation(libs.okhttp3.squareup.logging)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    implementation(libs.androidx.preference)
+    implementation(libs.androidx.lifecycle.java)
+    implementation(libs.androidx.window)
+    implementation(libs.androidx.palette)
+    implementation(libs.androidx.datestore)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.coil.compose)
+    implementation(libs.google.gson)
+    implementation(libs.hilt.ext.compiler)
+    implementation(libs.hilt.ext.work)
+    coreLibraryDesugaring(libs.jdk.lib)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

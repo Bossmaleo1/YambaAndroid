@@ -5,3 +5,15 @@ C
 build.gradle.kts,d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d
 c
 3app/src/main/java/com/android/yamba/MainActivity.kt,3/f/3fb9ae03044ebe99055acba0f2ef9fd95e4e2ec5
+x
+Hbenchmark/src/main/java/com/android/benchmark/ExampleStartupBenchmark.kt,9/6/963df32861fad5dd214c38fead3c93b7c8f5ce1b
+„
+Tcore/designsystem/src/main/kotlin/com/android/yamba/core/designsystem/theme/Color.kt,c/7/c7f120b8ea80abc4375b921f303200ca5602e0db
+R
+"core/designsystem/build.gradle.kts,4/8/48c417db29ed7b936ecf7ac2b953f54da71f649a
+J
+benchmark/build.gradle.kts,2/8/2857a7492ff611b3123d5242ee7a654042d65d13
+I
+gradle/libs.versions.toml,d/7/d7595319a0658be6f1ed500ad590d42e4b28bc4f
+D
+app/build.gradle.kts,d/2/d2a4383452aad84a18429a5844d31330a012a9e6
