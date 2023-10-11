@@ -29,6 +29,20 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        //call the values ​​defined in gradle.properties in a safe way
+        val myFcmKey: String by project
+        val myUrl: String by project
+        val myUrlDev: String by project
+        val myUrlProd: String by project
+        val myUrlPreprod: String by project
+        val myUrlSandbox: String by project
+
+        buildConfigField("String","FCM_API_KEY",myFcmKey)
+        buildConfigField("String","BASE_URL",myUrl)
+        buildConfigField("String","BASE_URL_DEV",myUrlDev)
+        buildConfigField("String","BASE_URL_PROD",myUrlProd)
+        buildConfigField("String","BASE_URL_PREPROD",myUrlPreprod)
+        buildConfigField("String","BASE_URL_SANDBOX",myUrlSandbox)
     }
 
     buildTypes {
